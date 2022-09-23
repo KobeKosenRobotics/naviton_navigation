@@ -31,3 +31,7 @@ repositories:
     type: git
     url: https://github.com/koide3/hdl_global_localization
     version: master
+  ira_laser_tools:
+    type: git
+    url: https://github.com/iralabdisco/ira_laser_tools
+    version: ros1-master
