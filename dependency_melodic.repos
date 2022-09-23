@@ -1,0 +1,33 @@
+repositories:
+  hdl_localization:
+    type: git
+    url: https://github.com/koide3/hdl_localization
+    version: master
+  ndt_omp:
+    type: git
+    url: https://github.com/koide3/ndt_omp
+    version: master
+  fast_gicp:
+    type: git
+    url: https://github.com/SMRT-AIST/fast_gicp
+    version: master
+  Eigen:
+    type: git
+    url: https://gitlab.com/libeigen/eigen.git
+    version: 1fd5ce1
+  Sophus:
+    type: git
+    url: https://github.com/strasdat/Sophus
+    version: d63ad09177f6b99ba605d684bac7f4b8d6820f5a
+  nvbio:
+    type: git
+    url: https://github.com/NVlabs/nvbio
+    version: 9bb7e6363c65f65e46f21df09bef98e404250f10
+  pybind11:
+    type: git
+    url: https://github.com/pybind/pybind11
+    version: 0e01c243c7ffae3a2e52f998bacfe82f56aa96d9
+  hdl_global_localization:
+    type: git
+    url: https://github.com/koide3/hdl_global_localization
+    version: master
