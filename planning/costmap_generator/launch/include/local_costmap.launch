@@ -1,0 +1,10 @@
+<launch>
+    <arg name="param_file" default="$(find costmap_generator)/config/costmap_generator.yaml" />
+    <arg name="local_costmap_param_file" default="$(find costmap_generator)/config/local_costmap/local_costmap.yaml" />
+
+    <node pkg="costmap_generator" type="pc2costmap_node" name="pc2costmap_node">
+        <rosparam command="load" file="$(arg param_file)" />
+        <rosparam command="load" file="$(arg local_costmap_param_file)" />
+    </node>
+
+</launch>

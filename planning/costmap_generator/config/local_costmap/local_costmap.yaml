@@ -1,0 +1,18 @@
+frequency                 : 20              # [hz]
+
+pc_main_topic             : /scan_pc
+pc_main_cropping          : false
+pc_main_downsampling_rate : 0.2             # [m], negative value to disable
+pc_main_height_min        : 0.1             # [m]
+pc_main_height_max        : 0.1             # [m]
+
+use_pc_sub                : false
+pc_sub_topic              : /velodyne_points/obstacle
+pc_sub_cropping           : true
+pc_sub_downsampling_rate  : -0.1            # [m], negative value to disable
+pc_sub_height_min         : 0.1             # [m]
+pc_sub_height_max         : 0.1             # [m]
+
+costmap_topic             : local_costmap
+costmap_inflation_radius  : 0.5             # [m]
+

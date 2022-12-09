@@ -1,0 +1,9 @@
+<launch>
+    <arg name="param_file" default="$(find costmap_generator)/config/costmap_generator.yaml" />
+    <arg name="merged_costmap_param_file" default="$(find costmap_generator)/config/merged_costmap/merged_costmap.yaml" />
+
+    <node pkg="costmap_generator" type="costmap_merger_node" name="costmap_merger_node">
+        <rosparam command="load" file="$(arg param_file)" />
+        <rosparam command="load" file="$(arg merged_costmap_param_file)" />
+    </node>
+</launch>

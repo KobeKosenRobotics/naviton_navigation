@@ -1,0 +1,4 @@
+path_topic            : /path_topic
+costmap_topic         : path_costmap
+
+frequency             : 20    # [hz]
