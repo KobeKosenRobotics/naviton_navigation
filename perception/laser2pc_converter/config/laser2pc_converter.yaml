@@ -1,0 +1,4 @@
+frequency   : 20                  # [hz]
+
+laser_topic : /scan
+pc_topic    : /scan_pc
