@@ -1,0 +1,10 @@
+<launch>
+    <arg name="param_file" default="$(find velodyne_cloud_separator)/config/velodyne_cloud_separator.yaml" />
+
+    <group ns="velodyne_cloud_separator">
+        <node pkg="velodyne_cloud_separator" type="velodyne_cloud_separator_node" name="velodyne_cloud_separator_node">
+            <rosparam command="load" file="$(arg param_file)" />
+        </node>
+    </group>
+
+</launch>
