@@ -1,4 +1,4 @@
-frequency                 : 20    # [hz]
+frequency           : 20    # [hz]
 
 pc_raw_topic        : /velodyne_points
 pc_ground_topic     : /velodyne_points/ground
