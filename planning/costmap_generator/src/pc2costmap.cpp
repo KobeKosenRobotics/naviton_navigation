@@ -145,10 +145,10 @@ void PointCloud2Costmap::input2costmap(const pcl::PointCloud<pcl::PointXYZ>::Con
                 if(dist2 > _inflation_index2) continue;
 
                 const int index_ = index + j*_grid_width + k;
-                if(!is_validIndex(index_))continue;
+                if(!is_validIndex(index_)) continue;
                 
-                //const int cost = _cost_max*(1.0 - sqrt(dist2)/_inflation_index);
-                const int cost = _cost_max/exp((float)dist2*_resolution*_resolution);
+                const int cost = _cost_max*(1.0 - sqrt(dist2)/_inflation_index);
+                //const int cost = _cost_max/exp((float)dist2*_resolution*_resolution);
                 if(_costmap.data[index_] < cost)
                     _costmap.data[index_] = cost;
             }
@@ -198,7 +198,17 @@ void PointCloud2Costmap::pc_sub_cb(const sensor_msgs::PointCloud2::ConstPtr& pc_
 
     if(pc_msg->header.frame_id != _base_link_frame_id)
     {
-        geometry_msgs::TransformStamped transform_stamped = tfBuffer.lookupTransform(_base_link_frame_id, pc_msg->header.frame_id, ros::Time(0), ros::Duration(1.0));
+
+        geometry_msgs::TransformStamped transform_stamped;
+        try
+        {
+            transform_stamped = tfBuffer.lookupTransform(_base_link_frame_id, pc_msg->header.frame_id, ros::Time(0), ros::Duration(2.0));
+        }
+        catch (tf::TransformException ex)
+        {
+            ROS_ERROR("%s",ex.what());
+            return;
+        }
         sensor_msgs::PointCloud2 pc_msg_conv;
         Eigen::Matrix4f mat = tf2::transformToEigen(transform_stamped).matrix().cast<float>();
         pcl_ros::transformPointCloud(mat, *pc_msg, pc_msg_conv);
