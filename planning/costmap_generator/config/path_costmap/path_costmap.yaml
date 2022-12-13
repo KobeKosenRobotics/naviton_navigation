@@ -1,4 +1,7 @@
-path_topic            : /path_topic
+local_path_topic      : /sample_path
 costmap_topic         : path_costmap
+
+lane_width_min        : 2.0   # [m]
+lane_width_max        : 5.0   # [m]
 
 frequency             : 20    # [hz]
