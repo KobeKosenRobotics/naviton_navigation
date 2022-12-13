@@ -167,6 +167,9 @@ set(HEADERS include/costmap_generator/costmap_merger.h)
 add_executable(costmap_merger_node src/costmap_merger src/nodes/costmap_merger_node)
 target_link_libraries(costmap_merger_node ${catkin_LIBRARIES})
 
+add_executable(sample_path_publisher_node src/nodes/sample_path_publisher_node)
+target_link_libraries(sample_path_publisher_node ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############
