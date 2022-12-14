@@ -11,9 +11,11 @@ class Path2Costmap
         Path2Costmap(ros::NodeHandle &nh, ros::NodeHandle &pn);
         void update();
     private:
+        void input2costmap(const geometry_msgs::Pose pose);
         int get_y_index_from_index(const int index);
         int get_index_from_xy(const double x, const double y);
         bool is_validIndex(const int index);
+        bool is_validPoint(double x, double y);
         void path_cb(const nav_msgs::Path::ConstPtr& path_msg);
 
         ros::Subscriber _path_sub;
@@ -37,6 +39,9 @@ class Path2Costmap
         int _lane_width_index_max2;
 
         int _lane_width_index_diff;
+
+        float _path_interval_max;
+        float _path_interval_max2;
 
         bool _path_received;
 

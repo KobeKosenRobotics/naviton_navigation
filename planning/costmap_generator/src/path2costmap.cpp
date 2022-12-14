@@ -34,6 +34,9 @@ Path2Costmap::Path2Costmap(ros::NodeHandle &nh, ros::NodeHandle &pn)
 
     _lane_width_index_diff = _lane_width_index_max - _lane_width_index_min;
 
+    pn.param<float>("path_interval_max", _path_interval_max, 1.0);
+    _path_interval_max2 = _path_interval_max*_path_interval_max;
+
     _seq_id = 0;
 }
 
@@ -55,6 +58,41 @@ bool Path2Costmap::is_validIndex(const int index)
     return true;
 }
 
+bool Path2Costmap::is_validPoint(double x, double y)
+{
+    if(x <= -_width_2 || x >= _width_2 || y <= -_width_2 || y >= _width_2) return false;
+    const int index = get_index_from_xy(x, y);
+    return is_validIndex(index);
+} // is_validPoint()
+
+void Path2Costmap::input2costmap(const geometry_msgs::Pose pose)
+{
+    const auto& point = pose.position;
+    if(!is_validPoint(point.x, point.y)) return;
+    const int index = get_index_from_xy(point.x, point.y);
+    _costmap.data[index] = _cost_min;
+    for(int i = -_lane_width_index_max; i < _lane_width_index_max; i++)
+    {
+        for(int j = -_lane_width_index_max; j < _lane_width_index_max; j++)
+        {
+            const int dist2 = i*i+j*j;
+            if(dist2 > _lane_width_index_max2) continue;
+
+            const int index_ = index + i*_grid_width + j;
+            if(!is_validIndex(index_) || get_y_index_from_index(index) != get_y_index_from_index(index + j)) continue;
+
+            if(dist2 < _lane_width_index_min2){
+                _costmap.data[index_] = _cost_min;
+                continue;
+            }
+
+            const float t = (sqrt(dist2) - _lane_width_index_min)/(float)(_lane_width_index_diff);
+            const int cost = _cost_max * t + _cost_min * (1.0 - t);
+            if(cost < _costmap.data[index_]) _costmap.data[index_] = cost;
+        }
+    }
+}
+
 void Path2Costmap::update()
 {
     if(!_path_received) return;
@@ -62,33 +100,38 @@ void Path2Costmap::update()
 
     for(int i = 0; i < _grid_num; i++) _costmap.data[i] = _cost_max;
 
+    std::vector<geometry_msgs::Pose> path_interpolate;
+    for(int i = 1; i < _path.poses.size(); i++)
+    {
+        const auto& pos = _path.poses[i].pose.position;
+        const auto& pos_old = _path.poses[i - 1].pose.position;
+        const float x_diff = pos.x - pos_old.x;
+        const float y_diff = pos.y - pos_old.y;
+        const float z_diff = pos.z - pos_old.z;
+        const float dist2 = x_diff*x_diff + y_diff*y_diff + z_diff*z_diff;
+        if(dist2 < _path_interval_max2) continue;
+        const int num = sqrt(dist2)/_path_interval_max;
+
+        for(int j = 1; j <= num; j++)
+        {
+            const float t = (float)(j) / (float)(num + 1.0);
+            geometry_msgs::Pose p;
+            p.position.x = (1 - t)*pos_old.x + t*pos.x;
+            p.position.y = (1 - t)*pos_old.y + t*pos.y;
+            p.position.z = (1 - t)*pos_old.z + t*pos.z;
+            p.orientation.w = 1.0;
+            path_interpolate.push_back(p);
+        }
+    }
 
     for(int i = 0; i < _path.poses.size(); i++)
     {
-        const auto& point = _path.poses[i].pose.position;
-        const int index = get_index_from_xy(point.x, point. y);
-        if(!is_validIndex(index)) continue;
-        _costmap.data[index] = _cost_min;
-        for(int j = -_lane_width_index_max; j < _lane_width_index_max; j++)
-        {
-            for(int k = -_lane_width_index_max; k < _lane_width_index_max; k++)
-            {
-                const int dist2 = j*j+k*k;
-                if(dist2 > _lane_width_index_max2) continue;
+        input2costmap(_path.poses[i].pose);
+    }
 
-                const int index_ = index + j*_grid_width + k;
-                if(!is_validIndex(index_) || get_y_index_from_index(index) != get_y_index_from_index(index + k)) continue;
-
-                if(dist2 < _lane_width_index_min2){
-                    _costmap.data[index_] = _cost_min;
-                    continue;
-                }
-
-                const float t = (sqrt(dist2) - _lane_width_index_min)/(float)(_lane_width_index_diff);
-                const int cost = _cost_max * t + _cost_min * (1.0 - t);
-                if(cost < _costmap.data[index_]) _costmap.data[index_] = cost;
-            }
-        }
+    for(int i = 0; i < path_interpolate.size(); i++)
+    {
+        input2costmap(path_interpolate[i]);
     }
 
     _costmap.header.seq = _seq_id;
