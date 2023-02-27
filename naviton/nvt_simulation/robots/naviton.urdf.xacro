@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <robot name="naviton" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find kcctsim)/urdf/base/base.urdf.xacro"/>
-  <xacro:include filename="$(find kcctsim)/urdf/wheel/wheel.urdf.xacro"/>
-  <xacro:include filename="$(find kcctsim)/urdf/sensors/gps/gps.urdf.xacro"/>
-  <xacro:include filename="$(find kcctsim)/urdf/sensors/gim30/gim30.urdf.xacro"/>
-  <xacro:include filename="$(find kcctsim)/urdf/sensors/lrf/lrf.urdf.xacro"/>
+  <xacro:include filename="$(find nvt_simulation)/urdf/base/base.urdf.xacro"/>
+  <xacro:include filename="$(find nvt_simulation)/urdf/wheel/wheel.urdf.xacro"/>
+  <xacro:include filename="$(find nvt_simulation)/urdf/sensors/gps/gps.urdf.xacro"/>
+  <xacro:include filename="$(find nvt_simulation)/urdf/sensors/gim30/gim30.urdf.xacro"/>
+  <xacro:include filename="$(find nvt_simulation)/urdf/sensors/lrf/lrf.urdf.xacro"/>
 
   <xacro:arg name="use_nominal_extrinsics" default="false" />
   <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
 
   <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
-  <xacro:include filename="$(find kcctsim)/urdf/sensors/imu/imu.urdf.xacro" />
+  <xacro:include filename="$(find nvt_simulation)/urdf/sensors/imu/imu.urdf.xacro" />
 
   <!-- =============== Link & Joint =============== -->
   <!-- Base -->
@@ -45,8 +45,7 @@
 
   <!-- Front LRF -->
   <xacro:lrf_v0 prefix="front" parent="base_link">
-  	<!--origin xyz="0.225 0.0 0.195" /-->
-    <origin xyz="0.225 0.0 0.192" rpy="3.141592 0.0 0.0" />
+  	<origin xyz="0.225 0.0 0.195" />
   </xacro:lrf_v0>
   <link name="2d_blue"/>
     <joint name="2d_blue_joint" type="fixed">
