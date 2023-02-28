@@ -1,18 +1,31 @@
 <launch>
 
-    <rosparam file="$(find nvt_control)/config/naviton.yaml" command="load"/>
+        <arg name="model" default="naviton" />
+        <arg name="sim" default="false" />
 
-    <node   name="nvt_controller_spawner" pkg="controller_manager"
-		    type="spawner" 
-            output="screen"
-	        args="joint_state_controller diff_drive_controller">
-    </node>
+        <group unless="$(arg sim)">
+                <include file="$(find nvt_control)/launch/include/nvt_hwInterface.launch">
+                        <arg name="model" default="$(arg model)" />
+                </include>
+        </group>
 
-    <node   name="nvt_state_publisher" pkg="robot_state_publisher"
-		    type="robot_state_publisher"
-		    respawn="false" output="screen">
-    </node>
- 
-    <node name="nvt_hwInterface_node" pkg="nvt_control" type="nvt_hwInterface_node" output="screen" respawn="false" />
+        <rosparam command="load" file="$(find nvt_control)/config/naviton_control.yaml" />
+
+        <node   name="controller_spawner"
+                pkg="controller_manager"
+                type="spawner" 
+                respawn="false"
+                output="screen"
+	        ns="naviton"
+                args="joint_state_controller mobile_base_controller" />
+
+        <node   name="robot_state_publisher"
+                pkg="robot_state_publisher"
+	        type="robot_state_publisher"
+                respawn="false"
+                output="screen"
+	        ns="naviton">
+                <remap from="/joint_states" to="/naviton/joint_states" />
+        </node>
 
 </launch>
