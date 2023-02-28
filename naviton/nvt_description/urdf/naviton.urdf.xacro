@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
-<robot name="naviton" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="naviton">
 
+    <xacro:property name="package_name" value="nvt_description" />
+    <xacro:property name="robot_name" value="naviton" />
 
     <!-- ======== Include ======== -->
-    <xacro:include filename="$(find nvt_simulation)/urdf/base/base.urdf.xacro" />
-    <xacro:include filename="$(find nvt_simulation)/urdf/wheel/wheel.urdf.xacro" />
-    <xacro:include filename="$(find nvt_simulation)/urdf/wheel/wheel.transmission.xacro" />
+    <xacro:include filename="$(find ${package_name})/urdf/base/base.urdf.xacro" />
+    <xacro:include filename="$(find ${package_name})/urdf/wheel/wheel.urdf.xacro" />
+    <xacro:include filename="$(find ${package_name})/urdf/wheel/wheel.transmission.xacro" />
     <!--xacro:include filename="$(find nvt_simulation)/urdf/sensors/lrf/lrf.urdf.xacro" />
     <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro" />
     <xacro:include filename="$(find nvt_simulation)/urdf/sensors/imu/imu.urdf.xacro" /-->

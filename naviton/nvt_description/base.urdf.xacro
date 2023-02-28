@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-	<xacro:include filename="$(find nvt_simulation)/urdf/base/base.gazebo.xacro"/>
+	<!--xacro:include filename="$(find nvt_description)/urdf/base/base.gazebo.xacro"/>
 
 	<xacro:macro name="base_v0" params="parent *joint_origin">
 		<joint name="base_link_joint" type="fixed">
@@ -13,7 +13,7 @@
 		<link name="body_link">
 			<visual>
 				<geometry>
-					<mesh filename="package://nvt_simulation/meshes/STL/base/body.stl"/>
+					<mesh filename="package://nvt_description/meshes/STL/base/body.stl"/>
 				</geometry>
 		
 				<material name="gray">
@@ -23,7 +23,7 @@
 	  
 			<collision>
 				<geometry>
-		  			<mesh filename="package://nvt_simulation/meshes/STL/base/body.stl"/>
+		  			<mesh filename="package://nvt_description/meshes/STL/base/body.stl"/>
 				</geometry>
 			</collision>
 	  	
@@ -33,6 +33,6 @@
 				<inertia ixx="1.64890" ixy="0" ixz="-0.21424" iyy="2.24766" iyz="0" izz="1.25664" />
 	  		</inertial>
 		</link>
-	</xacro:macro>
+	</xacro:macro-->
   
 </robot>
