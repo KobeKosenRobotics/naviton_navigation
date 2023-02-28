@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   tf
+  controller_manager
 )
 
 ## System dependencies are found with CMake's conventions
@@ -104,9 +105,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES nvt_control
-#  CATKIN_DEPENDS roscpp rospy std_msgs tf
+  INCLUDE_DIRS include
+  LIBRARIES nvt_control
+  CATKIN_DEPENDS roscpp rospy std_msgs tf
 #  DEPENDS system_lib
 )
 
@@ -117,7 +118,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -150,6 +151,10 @@ include_directories(
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+
+set(HEADERS include/nvt_control/nvt_hwInterface.h)
+add_executable(nvt_hwInterface_node src/nvt_hwInterface src/nodes/nvt_hwInterface_node)
+target_link_libraries(nvt_hwInterface_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##

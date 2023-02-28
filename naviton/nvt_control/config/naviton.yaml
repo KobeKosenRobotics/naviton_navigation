@@ -1,4 +1,10 @@
-#fourth_robot:
+#naviton:
+
+  hardware_interface:
+     joints:
+        - left_wheel_joint
+        - right_wheel_joint
+
   joint_state_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 50
@@ -7,7 +13,7 @@
     type        : "diff_drive_controller/DiffDriveController"
     left_wheel  : 'left_wheel_joint'
     right_wheel : 'right_wheel_joint'
-    publish_rate: 50               # default: 50
+    publish_rate: 100               # default: 100
     pose_covariance_diagonal : [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
     twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
 
