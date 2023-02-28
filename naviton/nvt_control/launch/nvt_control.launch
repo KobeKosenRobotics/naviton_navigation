@@ -1,0 +1,18 @@
+<launch>
+
+    <rosparam file="$(find nvt_control)/config/naviton.yaml" command="load"/>
+
+    <node   name="nvt_controller_spawner" pkg="controller_manager"
+		    type="spawner" 
+            output="screen"
+	        args="joint_state_controller diff_drive_controller">
+    </node>
+
+    <node   name="nvt_state_publisher" pkg="robot_state_publisher"
+		    type="robot_state_publisher"
+		    respawn="false" output="screen">
+    </node>
+ 
+    <node name="nvt_hwInterface_node" pkg="nvt_control" type="nvt_hwInterface_node" output="screen" respawn="false" />
+
+</launch>

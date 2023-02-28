@@ -10,15 +10,6 @@
     <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro" />
     <xacro:include filename="$(find nvt_simulation)/urdf/sensors/imu/imu.urdf.xacro" /-->
 
-    <!-- ======== Gazebo ======== -->
-    <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so" />
-        <robotNamespace> /naviton </robotNamespace>
-        <robotSimType> gazebo_ros_control/DefaultRobotHWSim </robotSimType>
-        <robotParam> /naviton/robot_description </robotParam>
-        <legacyModeNS> true </legacyModeNS>
-    </gazebo>
-
     <!-- ======== Base ======== -->
     <link name="base_link"/>
     <xacro:base_v0 parent="base_link">
@@ -42,6 +33,14 @@
     </xacro:wheel_v0>
     <xacro:wheel_trans_v0 prefix="left" />
     <xacro:wheel_gazebo_v0 prefix="left" />
+
+    <!-- ======== Gazebo ======== -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace> /naviton </robotNamespace>
+            <robotSimType> gazebo_ros_control/DefaultRobotHWSim </robotSimType>
+        </plugin>
+    </gazebo>
 
 </robot>
 
