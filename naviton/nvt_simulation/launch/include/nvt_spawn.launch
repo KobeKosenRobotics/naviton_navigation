@@ -1,0 +1,19 @@
+<launch>
+    <arg name="model" default="naviton" />
+    <arg name="description_package" default="$(find nvt_description)" />
+    <arg name="urdf_file" default="$(find xacro)/xacro '$(arg description_package)/urdf/$(arg model).urdf.xacro'" />
+
+    <arg name="init_pos_x" default="0.0"/>
+    <arg name="init_pos_y" default="0.0"/>
+    <arg name="init_pos_z" default="0.0"/>
+
+    <param  name="naviton/robot_description"
+		    command="$(arg urdf_file)" />
+
+    <node   name="urdf_spawner"  
+            pkg="gazebo_ros" 
+            type="spawn_model" 
+            respawn="false" 
+            output="screen" 
+            args="-param /naviton/robot_description -urdf -model $(arg model) -x $(arg init_pos_x) -y $(arg init_pos_y) -z $(arg init_pos_z)" />
+</launch>

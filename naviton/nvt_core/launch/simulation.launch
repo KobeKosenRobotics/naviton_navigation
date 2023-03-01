@@ -1,0 +1,32 @@
+<launch>
+
+    <!-- ======== Parameters ======== -->
+    <arg name="model" default="naviton" />
+    <arg name="world_name" default="$(find nvt_simulation)/worlds/autoware.world" />
+    <arg name="use_sim_time" default="true"/>
+
+    <arg name="init_pos_x" default="0.0" />
+    <arg name="init_pos_y" default="0.0" />
+    <arg name="init_pos_z" default="0.0" />
+
+    <!-- ======== Simulation ======== -->
+    <include file="$(find nvt_simulation)/launch/nvt_simulation.launch">
+        <arg name="model" value="$(arg model)" />
+        <arg name="world_name" value="$(arg world_name)" />
+        <arg name="use_sim_time" value="$(arg use_sim_time)" />
+        <arg name="init_pos_x" value="$(arg init_pos_x)" />
+        <arg name="init_pos_y" value="$(arg init_pos_y)" />
+        <arg name="init_pos_z" value="$(arg init_pos_z)" />
+    </include>
+
+    <!-- ======== Perception ======== -->
+    <!--include file="$(find nvt_core)/launch/include/perception.launch" /-->
+    <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_core perception.launch" name="nvt_perception" output="screen" />
+
+    <!-- ======== Controller ======== -->
+    <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_control nvt_control.launch model:=$(arg model) sim:=true" name="nvt_control" output="screen" />
+
+    <!-- ======== Rviz ======== -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nvt_core)/rviz/simulation.rviz" required="true" />
+
+</launch>
