@@ -31,6 +31,7 @@ VelodyneCloudSeparator::VelodyneCloudSeparator(ros::NodeHandle &nh, ros::NodeHan
 
 void VelodyneCloudSeparator::update()
 {
+    if(_pc_input.header.frame_id == "") return;
     pcl::PointCloud<pcl::PointXYZ> pc_ground;
     pcl::PointCloud<pcl::PointXYZ> pc_obstacle;
     pc_ground.clear();

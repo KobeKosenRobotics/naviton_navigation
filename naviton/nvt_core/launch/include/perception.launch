@@ -1,0 +1,10 @@
+<launch>
+
+    <arg name="param_file_velodyne_cloud_separator" default="$(find nvt_core)/config/perception/velodyne_cloud_separator.yaml" />
+
+    <!-- ======== Velodyne Cloud Separator ======== -->
+    <include file="$(find velodyne_cloud_separator)/launch/velodyne_cloud_separator.launch">
+        <arg name="param_file" value="$(arg param_file_velodyne_cloud_separator)" />
+    </include>
+
+</launch>
