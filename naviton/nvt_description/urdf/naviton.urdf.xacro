@@ -38,7 +38,7 @@
 
     <!-- ======== Sensors ======== -->
     <!-- VHDL-32E -->
-    <HDL-32E parent="base_link" name="velodyne_link" topic="velodyne_points" hz="10" samples="1024" gpu="true">
+    <HDL-32E parent="base_link" name="velodyne_link" topic="velodyne_points/raw" hz="10" samples="1024" gpu="true">
         <origin xyz="0 0 0.8" rpy="0 0 0" />
     </HDL-32E>
 

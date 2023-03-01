@@ -19,6 +19,10 @@
         <arg name="init_pos_z" value="$(arg init_pos_z)" />
     </include>
 
+    <!-- ======== Perception ======== -->
+    <!--include file="$(find nvt_core)/launch/include/perception.launch" /-->
+    <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_core perception.launch" name="nvt_perception" output="screen" />
+
     <!-- ======== Controller ======== -->
     <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_control nvt_control.launch model:=$(arg model) sim:=true" name="nvt_control" output="screen" />
 
