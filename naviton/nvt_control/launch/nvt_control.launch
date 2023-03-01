@@ -1,7 +1,7 @@
 <launch>
 
         <arg name="model" default="naviton" />
-        <arg name="sim" default="false" />
+        <arg name="sim" default="true" />
 
         <group unless="$(arg sim)">
                 <include file="$(find nvt_control)/launch/include/nvt_hwInterface.launch">

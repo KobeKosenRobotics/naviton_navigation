@@ -8,9 +8,9 @@
     <xacro:include filename="$(find ${package_name})/urdf/base/base.urdf.xacro" />
     <xacro:include filename="$(find ${package_name})/urdf/wheel/wheel.urdf.xacro" />
     <xacro:include filename="$(find ${package_name})/urdf/wheel/wheel.transmission.xacro" />
-    <!--xacro:include filename="$(find nvt_simulation)/urdf/sensors/lrf/lrf.urdf.xacro" />
+    <!--xacro:include filename="$(find nvt_simulation)/urdf/sensors/lrf/lrf.urdf.xacro" /-->
     <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro" />
-    <xacro:include filename="$(find nvt_simulation)/urdf/sensors/imu/imu.urdf.xacro" /-->
+    <!-- xacro:include filename="$(find nvt_simulation)/urdf/sensors/imu/imu.urdf.xacro" /-->
 
     <!-- ======== Base ======== -->
     <link name="base_link"/>
@@ -19,7 +19,7 @@
     </xacro:base_v0>
     <xacro:base_gazebo_v0 />
 
-    <!-- ======== Wheel ======== -->
+    <!-- ======== Wheels ======== -->
     <!-- Right -->
     <xacro:wheel_v0 prefix="right" parent="base_link">
 	    <origin xyz="0 -0.2775 0.1575"/>
@@ -35,6 +35,12 @@
     </xacro:wheel_v0>
     <xacro:wheel_trans_v0 prefix="left" />
     <xacro:wheel_gazebo_v0 prefix="left" />
+
+    <!-- ======== Sensors ======== -->
+    <!-- VHDL-32E -->
+    <HDL-32E parent="base_link" name="velodyne_link" topic="velodyne_points" hz="10" samples="1024" gpu="true">
+        <origin xyz="0 0 0.8" rpy="0 0 0" />
+    </HDL-32E>
 
     <!-- ======== Gazebo ======== -->
     <gazebo>
