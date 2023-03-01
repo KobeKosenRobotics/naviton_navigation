@@ -1,0 +1,38 @@
+name: Noetic build
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * *
+  pull_request:
+  push:
+jobs:
+  job1:
+    name: BuildTest
+    runs-on: ubuntu-20.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        rosdistro: [noetic]
+    env:
+      ROS_DISTRO: ${{ matrix.rosdistro }}
+    container: hrjp/ros:${{ matrix.rosdistro }}
+    steps:
+      - name: get repository name
+        run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v2
+      - name: Copy repository
+        run: cp -rp /__w/${{ env.REPOSITORY_NAME }}/${{ env.REPOSITORY_NAME }} /home/catkin_ws/src
+
+      - name: Resolve rosdep
+        run: |
+          cd /home/catkin_ws
+          apt update
+          rosdep update
+          rosdep install -iry --from-paths src --rosdistro ${{ matrix.rosdistro }}
+      - name: Build packages
+        run: |
+          cd /home/catkin_ws
+          catkin build

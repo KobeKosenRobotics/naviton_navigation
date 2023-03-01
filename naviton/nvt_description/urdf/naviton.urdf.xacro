@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="naviton">
+
+    <xacro:property name="package_name" value="nvt_description" />
+    <xacro:property name="robot_name" value="naviton" />
+
+    <!-- ======== Include ======== -->
+    <xacro:include filename="$(find ${package_name})/urdf/base/base.urdf.xacro" />
+    <xacro:include filename="$(find ${package_name})/urdf/wheel/wheel.urdf.xacro" />
+    <xacro:include filename="$(find ${package_name})/urdf/wheel/wheel.transmission.xacro" />
+    <!--xacro:include filename="$(find nvt_simulation)/urdf/sensors/lrf/lrf.urdf.xacro" /-->
+    <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro" />
+    <!-- xacro:include filename="$(find nvt_simulation)/urdf/sensors/imu/imu.urdf.xacro" /-->
+
+    <!-- ======== Base ======== -->
+    <link name="base_link"/>
+    <xacro:base_v0 parent="base_link">
+	    <origin xyz="0 0 0"/>
+    </xacro:base_v0>
+    <xacro:base_gazebo_v0 />
+
+    <!-- ======== Wheels ======== -->
+    <!-- Right -->
+    <xacro:wheel_v0 prefix="right" parent="base_link">
+	    <origin xyz="0 -0.2775 0.1575"/>
+	    <axis xyz="0 1 0"/>
+    </xacro:wheel_v0>
+    <xacro:wheel_trans_v0 prefix="right" />
+    <xacro:wheel_gazebo_v0 prefix="right" />
+    
+    <!-- Left -->
+    <xacro:wheel_v0 prefix="left" parent="base_link">
+	    <origin xyz="0 0.2775 0.1575" rpy="0 0 ${M_PI}"/>
+	    <axis xyz="0 -1 0"/>
+    </xacro:wheel_v0>
+    <xacro:wheel_trans_v0 prefix="left" />
+    <xacro:wheel_gazebo_v0 prefix="left" />
+
+    <!-- ======== Sensors ======== -->
+    <!-- VHDL-32E -->
+    <HDL-32E parent="base_link" name="velodyne_link" topic="velodyne_points" hz="10" samples="1024" gpu="true">
+        <origin xyz="0 0 0.8" rpy="0 0 0" />
+    </HDL-32E>
+
+    <!-- ======== Gazebo ======== -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace> /naviton </robotNamespace>
+            <robotSimType> gazebo_ros_control/DefaultRobotHWSim </robotSimType>
+        </plugin>
+    </gazebo>
+
+</robot>
+
