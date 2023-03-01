@@ -1,6 +1,6 @@
 frequency           : 20    # [hz]
 
-pc_raw_topic        : /velodyne_points
+pc_raw_topic        : /velodyne_points/raw
 pc_ground_topic     : /velodyne_points/ground
 pc_obstacle_topic   : /velodyne_points/obstacle
 
