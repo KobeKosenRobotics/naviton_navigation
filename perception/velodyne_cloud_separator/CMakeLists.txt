@@ -17,6 +17,8 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
+find_package(OpenCV REQUIRED QUIET)
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -122,6 +124,7 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -156,7 +159,7 @@ include_directories(
 
 set(HEADERS include/velodyne_cloud_separator/velodyne_cloud_separator.h)
 add_executable(velodyne_cloud_separator_node src/velodyne_cloud_separator src/nodes/velodyne_cloud_separator_node)
-target_link_libraries(velodyne_cloud_separator_node ${catkin_LIBRARIES})
+target_link_libraries(velodyne_cloud_separator_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 #############
 ## Install ##
