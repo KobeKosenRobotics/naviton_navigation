@@ -11,7 +11,7 @@
     <arg name="map_file" default="autoware_world.pcd" />
 
     <!-- Initial Pose-->
-    <arg name="init_pos_x" default="10.0" />
+    <arg name="init_pos_x" default="0.0" />
     <arg name="init_pos_y" default="0.0" />
     <arg name="init_pos_z" default="0.0" />
 
