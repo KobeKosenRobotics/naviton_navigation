@@ -10,7 +10,7 @@ sudo apt install -y python3-vcstool
 cd ~/catkin_ws/src
 git clone https://github.com/KobeKosenRobotics/naviton_navigation.git
 cd naviton_navigation
-vcs import depend < depend_packages.repos
+vcs import depend < depend_packages.repos  --recursive
 cd ../..
 rosdep install -i -y --from-paths src
 catkin build
