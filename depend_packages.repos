@@ -1,0 +1,21 @@
+repositories:
+  hdl_localization:
+    type: git
+    url: https://github.com/koide3/hdl_localization
+    version: master
+  ndt_omp:
+    type: git
+    url: https://github.com/koide3/ndt_omp
+    version: master
+  fast_gicp:
+    type: git
+    url: https://github.com/SMRT-AIST/fast_gicp
+    version: master
+  hdl_global_localization:
+    type: git
+    url: https://github.com/koide3/hdl_global_localization
+    version: master
+  ira_laser_tools:
+    type: git
+    url: https://github.com/iralabdisco/ira_laser_tools
+    version: ros1-master
