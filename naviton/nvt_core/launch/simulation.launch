@@ -1,10 +1,16 @@
 <launch>
 
     <!-- ======== Parameters ======== -->
+    <!-- Basic -->
     <arg name="model" default="naviton" />
     <arg name="world_name" default="$(find nvt_simulation)/worlds/autoware.world" />
-    <arg name="use_sim_time" default="true"/>
+    <arg name="use_sim_time" value="true"/>
 
+    <!-- Map PCD -->
+    <arg name="map_file_dir" default="$(find nvt_core)/config/localization/map_files" />
+    <arg name="map_file" default="autoware_world.pcd" />
+
+    <!-- Initial Pose-->
     <arg name="init_pos_x" default="0.0" />
     <arg name="init_pos_y" default="0.0" />
     <arg name="init_pos_z" default="0.0" />
@@ -18,6 +24,14 @@
         <arg name="init_pos_y" value="$(arg init_pos_y)" />
         <arg name="init_pos_z" value="$(arg init_pos_z)" />
     </include>
+
+    <!-- ======== Localization ======== -->
+    <!--include file="$(find nvt_core)/launch/include/perception.launch" /-->
+    <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_core localization.launch init_pos_x:=$(arg init_pos_x) init_pos_y:=$(arg init_pos_y) init_pos_z:=$(arg init_pos_z)" name="nvt_localization" output="screen" />
+
+    <!-- ======== Perception ======== -->
+    <!--include file="$(find nvt_core)/launch/include/perception.launch" /-->
+    <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_core perception.launch" name="nvt_perception" output="screen" />
 
     <!-- ======== Controller ======== -->
     <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_control nvt_control.launch model:=$(arg model) sim:=true" name="nvt_control" output="screen" />

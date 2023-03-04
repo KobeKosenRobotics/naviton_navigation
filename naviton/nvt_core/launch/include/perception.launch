@@ -1,0 +1,16 @@
+<launch>
+
+    <arg name="param_file_velodyne_cloud_separator" default="$(find nvt_core)/config/perception/velodyne_cloud_separator.yaml" />
+    <arg name="param_file_laser2pc_converter" default="$(find nvt_core)/config/perception/laser2pc_converter.yaml" />
+
+    <!-- ======== Velodyne Cloud Separator ======== -->
+    <include file="$(find velodyne_cloud_separator)/launch/velodyne_cloud_separator.launch">
+        <arg name="param_file" value="$(arg param_file_velodyne_cloud_separator)" />
+    </include>
+
+    <!-- ======== Laser to PointCloud2 Converter ======== -->
+    <include file="$(find laser2pc_converter)/launch/laser2pc_converter.launch">
+        <arg name="param_file" value="$(arg param_file_laser2pc_converter)" />
+    </include>
+
+</launch>
