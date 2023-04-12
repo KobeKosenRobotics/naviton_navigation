@@ -1,0 +1,5 @@
+pc_topic      : /velodyne_points/obstacle
+costmap_topic : /costmap_generator/local_costmap/velodyne
+
+pc_frameId    : velodyne_link
+robot_frameId : base_link

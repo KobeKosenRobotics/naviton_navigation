@@ -1,0 +1,5 @@
+pc_topic      : /lrf_scan/front_pc
+costmap_topic : /costmap_generator/local_costmap/lrf
+
+pc_frameId    : front_lrf_link
+robot_frameId : base_link

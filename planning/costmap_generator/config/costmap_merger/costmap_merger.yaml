@@ -1,0 +1,5 @@
+costmap_1_topic      : /costmap_generator/local_costmap/lrf
+costmap_2_topic      : /costmap_generator/local_costmap/velodyne
+costmap_merged_topic : /costmap_generator/local_costmap/merged
+
+robot_frameId        : base_link

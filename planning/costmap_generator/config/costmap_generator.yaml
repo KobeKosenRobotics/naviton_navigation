@@ -1,0 +1,4 @@
+frequency     : 20                  # [hz]
+
+resolution    : 0.1
+width         : 10.0
