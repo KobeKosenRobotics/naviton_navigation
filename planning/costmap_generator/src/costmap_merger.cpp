@@ -27,6 +27,8 @@ CostmapMerger::CostmapMerger(ros::NodeHandle &nh, ros::NodeHandle &pn)
     _grid_num = _grid_width * _grid_width;
     _width_2 = width / 2;
 
+    _costmap_main.data.resize(_grid_num);
+    _costmap_sub.data.resize(_grid_num);
     _costmap_merged.data.resize(_grid_num);
 
     pn.param<int>("cost_min", _cost_min, 1);
