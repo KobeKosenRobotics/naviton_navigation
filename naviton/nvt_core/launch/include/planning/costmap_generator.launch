@@ -1,0 +1,32 @@
+<launch>
+
+    <arg name="param_file_costmap_generator" default="$(find costmap_generator)/config/costmap_generator.yaml"/>
+
+    <arg name="param_file_pc2costmap_lrf" default="$(find costmap_generator)/config/pc2costmap/pc2costmap_lrf.yaml"/>
+    <arg name="param_file_pc2costmap_velodyne" default="$(find costmap_generator)/config/pc2costmap/pc2costmap_velodyne.yaml"/>
+
+    <arg name="param_file_costmap_merger" default="$(find costmap_generator)/config/costmap_merger/costmap_merger.yaml"/>
+    
+    <group ns="costmap_generator">
+        
+        <!-- PointCloud to Costmap Converter LRF -->
+        <node pkg="costmap_generator" type="pc2costmap_node" name="pc2costmap_lrf_node" output="screen">
+            <rosparam command="load" file="$(arg param_file_costmap_generator)" />
+            <rosparam command="load" file="$(arg param_file_pc2costmap_lrf)" />
+        </node>
+
+        <!-- PointCloud to Costmap Converter Velodyne -->
+        <node pkg="costmap_generator" type="pc2costmap_node" name="pc2costmap_velodyne_node" output="screen">
+            <rosparam command="load" file="$(arg param_file_costmap_generator)" />
+            <rosparam command="load" file="$(arg param_file_pc2costmap_velodyne)" />
+        </node>
+
+        <!-- Costmap Merger-->
+        <node pkg="costmap_generator" type="costmap_merger_node" name="costmap_merger_node" output="screen">
+            <rosparam command="load" file="$(arg param_file_costmap_generator)" />
+            <rosparam command="load" file="$(arg param_file_costmap_merger)" />
+        </node>
+
+    </group>
+
+</launch>

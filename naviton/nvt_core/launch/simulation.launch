@@ -26,12 +26,13 @@
     </include>
 
     <!-- ======== Localization ======== -->
-    <!--include file="$(find nvt_core)/launch/include/perception.launch" /-->
     <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_core localization.launch init_pos_x:=$(arg init_pos_x) init_pos_y:=$(arg init_pos_y) init_pos_z:=$(arg init_pos_z)" name="nvt_localization" output="screen" />
 
     <!-- ======== Perception ======== -->
-    <!--include file="$(find nvt_core)/launch/include/perception.launch" /-->
     <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_core perception.launch" name="nvt_perception" output="screen" />
+
+    <!-- ======== Planning ======== -->
+    <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core planning.launch" name="nvt_planning" output="screen" />
 
     <!-- ======== Controller ======== -->
     <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_control nvt_control.launch model:=$(arg model) sim:=true" name="nvt_control" output="screen" />
