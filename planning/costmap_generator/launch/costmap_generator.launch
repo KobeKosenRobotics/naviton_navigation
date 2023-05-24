@@ -1,0 +1,32 @@
+<launch>
+
+    <arg name="param_file" default="$(find costmap_generator)/config/costmap_generator.yaml"/>
+    <arg name="obstacle_costmap_param_file" default="$(find costmap_generator)/config/obstacle_costmap/obstacle_costmap.yaml"/>
+    <arg name="path_costmap_param_file" default="$(find costmap_generator)/config/path_costmap/path_costmap.yaml"/>
+    <arg name="merged_costmap_param_file" default="$(find costmap_generator)/config/merged_costmap/merged_costmap.yaml"/>
+
+    <rosparam command="load" file="$(arg param_file)" />
+
+    <group ns="costmap_generator">
+        
+        <!-- Obstacle CostMap -->
+        <include file="$(find costmap_generator)/launch/include/obstacle_costmap.launch">
+            <arg name="param_file" value="$(arg param_file)" />
+            <arg name="obstacle_costmap_param_file" value="$(arg obstacle_costmap_param_file)" />
+        </include>
+
+        <!-- Path CostMap -->
+        <include file="$(find costmap_generator)/launch/include/path_costmap.launch">
+            <arg name="param_file" value="$(arg param_file)" />
+            <arg name="path_costmap_param_file" value="$(arg path_costmap_param_file)" />
+        </include>
+
+        <!-- Merged CostMap -->
+        <include file="$(find costmap_generator)/launch/include/merged_costmap.launch">
+            <arg name="param_file" value="$(arg param_file)" />
+            <arg name="merged_costmap_param_file" value="$(arg merged_costmap_param_file)" />
+        </include>
+
+    </group>
+
+</launch>

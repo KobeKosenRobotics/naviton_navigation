@@ -1,0 +1,9 @@
+<launch>
+
+    <!-- ======== Parameters ======== -->
+
+    <!-- ======== Costmap Generator ======== -->
+    <include file="$(find nvt_core)/launch/include/planning/costmap_generator.launch">
+    </include>
+    
+</launch>
