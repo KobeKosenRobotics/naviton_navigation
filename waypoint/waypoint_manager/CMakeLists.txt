@@ -61,6 +61,8 @@ add_service_files(
   FILES
   waypoint_recorder_start.srv
   waypoint_recorder_end.srv
+  waypoint_recorder_record.srv
+  waypoint_recorder_attributes.srv
 )
 
 ## Generate actions in the 'action' folder

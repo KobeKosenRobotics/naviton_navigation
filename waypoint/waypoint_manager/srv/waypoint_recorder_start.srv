@@ -1,4 +1,2 @@
-string file_name
-float32 pitch       # [m]
 -----
 string log
