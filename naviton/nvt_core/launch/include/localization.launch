@@ -1,0 +1,22 @@
+<launch>
+
+    <!-- ======== Parameters ======== -->
+    <!-- Map PCD -->
+    <arg name="map_file_dir" default="$(find nvt_core)/config/localization/map_files" />
+    <arg name="map_file" default="autoware_world.pcd" />
+
+    <!-- Initial Pose-->
+    <arg name="init_pos_x" default="0.0" />
+    <arg name="init_pos_y" default="0.0" />
+    <arg name="init_pos_z" default="0.0" />
+
+    <!-- ======== HDL Localization ======== -->
+    <include file="$(find nvt_core)/launch/include/localization/hdl_localization.launch">
+        <arg name="map_file_dir" value="$(arg map_file_dir)" />
+        <arg name="map_file" value="$(arg map_file)" />
+        <arg name="init_pos_x" value="$(arg init_pos_x)" />
+        <arg name="init_pos_y" value="$(arg init_pos_y)" />
+        <arg name="init_pos_z" value="$(arg init_pos_z)" />
+    </include>
+    
+</launch>

@@ -8,8 +8,8 @@
     <xacro:include filename="$(find ${package_name})/urdf/base/base.urdf.xacro" />
     <xacro:include filename="$(find ${package_name})/urdf/wheel/wheel.urdf.xacro" />
     <xacro:include filename="$(find ${package_name})/urdf/wheel/wheel.transmission.xacro" />
-    <!--xacro:include filename="$(find nvt_simulation)/urdf/sensors/lrf/lrf.urdf.xacro" /-->
     <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro" />
+    <xacro:include filename="$(find ${package_name})/urdf/sensors/lrf/lrf.urdf.xacro" />
     <!-- xacro:include filename="$(find nvt_simulation)/urdf/sensors/imu/imu.urdf.xacro" /-->
 
     <!-- ======== Base ======== -->
@@ -38,9 +38,17 @@
 
     <!-- ======== Sensors ======== -->
     <!-- VHDL-32E -->
-    <HDL-32E parent="base_link" name="velodyne_link" topic="velodyne_points" hz="10" samples="1024" gpu="true">
+    <HDL-32E parent="base_link" name="velodyne_link" topic="velodyne_points/raw" hz="10" samples="1024" gpu="true">
         <origin xyz="0 0 0.8" rpy="0 0 0" />
     </HDL-32E>
+
+    <!-- LRF -->
+    <xacro:lrf_v0 prefix="front" parent="base_link">
+  	    <origin xyz="0.225 0.0 0.195" />
+    </xacro:lrf_v0>
+    <xacro:lrf_gazebo_v0    topic_name="/lrf_scan/front" prefix="front"
+					        min_rad="-1.65806278939" max_rad="1.65806278939"
+					        min_range="0.10" max_range="60.0" />
 
     <!-- ======== Gazebo ======== -->
     <gazebo>

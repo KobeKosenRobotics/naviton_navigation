@@ -1,0 +1,14 @@
+<launch>
+
+    <arg name="param_file" default="$(find laser2pc_converter)/config/laser2pc_converter.yaml"/>
+    
+    <group ns="laser2pc_converter">
+        
+        <!-- Laser to PointCloud Converter -->
+        <node pkg="laser2pc_converter" type="laser2pc_node" name="laser2pc_node">
+            <rosparam command="load" file="$(arg param_file)" />
+        </node>
+
+    </group>
+
+</launch>
