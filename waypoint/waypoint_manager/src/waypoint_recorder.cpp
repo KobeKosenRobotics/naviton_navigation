@@ -55,7 +55,7 @@ WaypointRecorder::WaypointRecorder(ros::NodeHandle &nh, ros::NodeHandle &pn) : _
     });
 }
 
-bool WaypointRecorder::recorder_start_cb(waypoint_manager::waypoint_recorder_start::Request& req, waypoint_manager::waypoint_recorder_start::Response& res)
+bool WaypointRecorder::recorder_start_cb(waypoint_manager_msgs::waypoint_recorder_start::Request& req, waypoint_manager_msgs::waypoint_recorder_start::Response& res)
 {
     if(_recording) return false;
     std::cout << "WaypointRecorder: Start" << std::endl;
@@ -70,7 +70,7 @@ bool WaypointRecorder::recorder_start_cb(waypoint_manager::waypoint_recorder_sta
 }
 
 
-bool WaypointRecorder::recorder_end_cb(waypoint_manager::waypoint_recorder_end::Request& req, waypoint_manager::waypoint_recorder_end::Response& res)
+bool WaypointRecorder::recorder_end_cb(waypoint_manager_msgs::waypoint_recorder_end::Request& req, waypoint_manager_msgs::waypoint_recorder_end::Response& res)
 {
     if(!_recording) return false;
     _recording = false;
@@ -114,7 +114,7 @@ bool WaypointRecorder::recorder_end_cb(waypoint_manager::waypoint_recorder_end::
     return true;
 }
 
-bool WaypointRecorder::recorder_record_cb(waypoint_manager::waypoint_recorder_record::Request& req, waypoint_manager::waypoint_recorder_record::Response& res)
+bool WaypointRecorder::recorder_record_cb(waypoint_manager_msgs::waypoint_recorder_record::Request& req, waypoint_manager_msgs::waypoint_recorder_record::Response& res)
 {
     if(!_recording) return false;
     if(req.atrributes.size() != req.attribute_values.size()) return false;
@@ -150,7 +150,7 @@ bool WaypointRecorder::recorder_record_cb(waypoint_manager::waypoint_recorder_re
     return true;
 }
 
-bool WaypointRecorder::recorder_attributes_cb(waypoint_manager::waypoint_recorder_attributes::Request& req, waypoint_manager::waypoint_recorder_attributes::Response& res)
+bool WaypointRecorder::recorder_attributes_cb(waypoint_manager_msgs::waypoint_recorder_attributes::Request& req, waypoint_manager_msgs::waypoint_recorder_attributes::Response& res)
 {
     if(!_recording) return false;
     if(req.atrributes.size() != req.attribute_values.size()) return false;

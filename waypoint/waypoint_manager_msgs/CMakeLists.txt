@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(waypoint_manager)
+project(waypoint_manager_msgs)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -8,12 +8,9 @@ project(waypoint_manager)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
+  geometry_msgs
+  message_generation  
   std_msgs
-  tf
-  waypoint_msgs
-  waypoint_manager_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -50,14 +47,18 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-#add_message_files(
-#  FILES
-#)
+# add_message_files(
+#   FILES
+# )
 
 ## Generate services in the 'srv' folder
-#add_service_files(
-#  FILES
-#)
+add_service_files(
+  FILES
+  waypoint_recorder_start.srv
+  waypoint_recorder_end.srv
+  waypoint_recorder_record.srv
+  waypoint_recorder_attributes.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -67,11 +68,11 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-#generate_messages(
-#  DEPENDENCIES
-#  nav_msgs
-#  std_msgs
-#)
+generate_messages(
+  DEPENDENCIES
+  geometry_msgs
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -103,9 +104,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES waypoint_manager
-  CATKIN_DEPENDS roscpp rospy std_msgs tf
+INCLUDE_DIRS include
+#  LIBRARIES waypoint_msgs
+  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs
 #  DEPENDS system_lib
 )
 
@@ -116,13 +117,13 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
+# include
   ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/waypoint_manager.cpp
+#   src/${PROJECT_NAME}/waypoint_msgs.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -133,7 +134,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/waypoint_manager_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/waypoint_msgs_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -150,12 +151,6 @@ include_directories(
 #   ${catkin_LIBRARIES}
 # )
 
-set(HEADERS include/waypoint_manager/waypoint_recorder.h)
-add_executable(waypoint_recorder_node src/waypoint_recorder src/nodes/waypoint_recorder_node)
-add_dependencies(waypoint_recorder_node waypoint_msgs_generate_messages_cpp)
-add_dependencies(waypoint_recorder_node waypoint_manager_msgs_generate_messages_cpp)
-target_link_libraries(waypoint_recorder_node ${catkin_LIBRARIES})
-
 #############
 ## Install ##
 #############
@@ -171,7 +166,7 @@ target_link_libraries(waypoint_recorder_node ${catkin_LIBRARIES})
 # )
 
 ## Mark executables for installation
-## See http://docs.ros.org/melodic/api/canav_msgs tkin/html/howto/format1/building_executables.html
+## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
 # install(TARGETS ${PROJECT_NAME}_node
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
@@ -203,7 +198,7 @@ target_link_libraries(waypoint_recorder_node ${catkin_LIBRARIES})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_waypoint_manager.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_waypoint_msgs.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
