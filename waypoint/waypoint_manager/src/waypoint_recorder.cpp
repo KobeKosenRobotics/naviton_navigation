@@ -2,6 +2,10 @@
 
 WaypointRecorder::WaypointRecorder(ros::NodeHandle &nh, ros::NodeHandle &pn) : _buffer(), _listener(_buffer)
 {
+    std::string topic_path;
+    pn.param<std::string>("topic_path", topic_path, "wpRecorder/path");
+    _path_publisher = nh.advertise<nav_msgs::Path>(topic_path, 1);
+
     std::string service_recorder_start;
     pn.param<std::string>("service_recorder_start", service_recorder_start, "wpRecorder/start");
     _recorder_start_server = nh.advertiseService(service_recorder_start, &WaypointRecorder::recorder_start_cb, this);
@@ -38,9 +42,9 @@ WaypointRecorder::WaypointRecorder(ros::NodeHandle &nh, ros::NodeHandle &pn) : _
         if(!_recording) return;
         try
         {
-            _tf_stamped                     =   _buffer.lookupTransform(_frame_id_robot, _frame_id_map, ros::Time(0), ros::Duration(_lookupTimeout));
+            _tf_stamped                     =   _buffer.lookupTransform(_frame_id_map, _frame_id_robot, ros::Time(0), ros::Duration(_lookupTimeout));
             _pose_stamped.header            =   _tf_stamped.header;
-            _pose_stamped.header.frame_id   =   _frame_id_robot;
+            _pose_stamped.header.frame_id   =   _frame_id_map;
             _pose_stamped.pose.position.x   =   _tf_stamped.transform.translation.x;
             _pose_stamped.pose.position.y   =   _tf_stamped.transform.translation.y;
             _pose_stamped.pose.position.z   =   _tf_stamped.transform.translation.z;
@@ -53,6 +57,9 @@ WaypointRecorder::WaypointRecorder(ros::NodeHandle &nh, ros::NodeHandle &pn) : _
             return;
         }
     });
+
+    _path.header.frame_id = _frame_id_map;
+    _path.header.seq = 0;
 }
 
 bool WaypointRecorder::recorder_start_cb(waypoint_manager_msgs::waypoint_recorder_start::Request& req, waypoint_manager_msgs::waypoint_recorder_start::Response& res)
@@ -125,7 +132,7 @@ bool WaypointRecorder::recorder_record_cb(waypoint_manager_msgs::waypoint_record
     {
         _tf_stamped                     =   _buffer.lookupTransform(_frame_id_robot, _frame_id_map, ros::Time(0), ros::Duration(_lookupTimeout));
         _pose_stamped.header            =   _tf_stamped.header;
-        _pose_stamped.header.frame_id   =   _frame_id_robot;
+        _pose_stamped.header.frame_id   =   _frame_id_map;
         _pose_stamped.pose.position.x   =   _tf_stamped.transform.translation.x;
         _pose_stamped.pose.position.y   =   _tf_stamped.transform.translation.y;
         _pose_stamped.pose.position.z   =   _tf_stamped.transform.translation.z;
@@ -183,6 +190,8 @@ void WaypointRecorder::record()
     _point_old.z = point.z;
     _path.poses.push_back(_pose_stamped);
     _attributes.push_back(_attirbutes_permanent);
+
+    publishPath();
 }
 
 void WaypointRecorder::record(std::vector<Attribute> attributes)
@@ -194,4 +203,13 @@ void WaypointRecorder::record(std::vector<Attribute> attributes)
     _point_old.z = point.z;
     _path.poses.push_back(_pose_stamped);
     _attributes.push_back(attributes);
+
+    publishPath();
+}
+
+void WaypointRecorder::publishPath()
+{
+    _path.header.stamp = ros::Time::now();
+    _path_publisher.publish(_path);
+    _path.header.seq++;
 }

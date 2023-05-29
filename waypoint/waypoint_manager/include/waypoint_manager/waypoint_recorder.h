@@ -37,7 +37,9 @@ class WaypointRecorder
         bool recorder_attributes_cb(waypoint_manager_msgs::waypoint_recorder_attributes::Request& req, waypoint_manager_msgs::waypoint_recorder_attributes::Response& res);
         void record();
         void record(std::vector<Attribute> attributes);
+        void publishPath();
 
+        ros::Publisher _path_publisher;
         ros::ServiceServer _recorder_start_server;
         ros::ServiceServer _recorder_end_server;
         ros::ServiceServer _recorder_record_server;
