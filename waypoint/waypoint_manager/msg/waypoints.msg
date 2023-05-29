@@ -1,1 +1,0 @@
-waypoint_manager/waypoint[] waypoints

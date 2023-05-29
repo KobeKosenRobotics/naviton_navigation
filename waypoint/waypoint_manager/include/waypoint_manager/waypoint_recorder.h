@@ -6,8 +6,6 @@
 
 #include <ros/ros.h>
 
-#include <nav_msgs/Path.h>
-
 #include <geometry_msgs/TransformStamped.h>
 #include <geometry_msgs/PoseStamped.h>
 
@@ -15,10 +13,10 @@
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 
-#include "waypoint_manager/waypoint_recorder_start.h"
-#include "waypoint_manager/waypoint_recorder_end.h"
-#include "waypoint_manager/waypoint_recorder_record.h"
-#include "waypoint_manager/waypoint_recorder_attributes.h"
+#include <waypoint_manager_msgs/waypoint_recorder_start.h>
+#include <waypoint_manager_msgs/waypoint_recorder_end.h>
+#include <waypoint_manager_msgs/waypoint_recorder_record.h>
+#include <waypoint_manager_msgs/waypoint_recorder_attributes.h>
 
 class WaypointRecorder
 {
@@ -31,10 +29,10 @@ class WaypointRecorder
     public:
         WaypointRecorder(ros::NodeHandle &nh, ros::NodeHandle &pn);
     private:
-        bool recorder_start_cb(waypoint_manager::waypoint_recorder_start::Request& req, waypoint_manager::waypoint_recorder_start::Response& res);
-        bool recorder_end_cb(waypoint_manager::waypoint_recorder_end::Request& req, waypoint_manager::waypoint_recorder_end::Response& res);
-        bool recorder_record_cb(waypoint_manager::waypoint_recorder_record::Request& req, waypoint_manager::waypoint_recorder_record::Response& res);
-        bool recorder_attributes_cb(waypoint_manager::waypoint_recorder_attributes::Request& req, waypoint_manager::waypoint_recorder_attributes::Response& res);
+        bool recorder_start_cb(waypoint_manager_msgs::waypoint_recorder_start::Request& req, waypoint_manager_msgs::waypoint_recorder_start::Response& res);
+        bool recorder_end_cb(waypoint_manager_msgs::waypoint_recorder_end::Request& req, waypoint_manager_msgs::waypoint_recorder_end::Response& res);
+        bool recorder_record_cb(waypoint_manager_msgs::waypoint_recorder_record::Request& req, waypoint_manager_msgs::waypoint_recorder_record::Response& res);
+        bool recorder_attributes_cb(waypoint_manager_msgs::waypoint_recorder_attributes::Request& req, waypoint_manager_msgs::waypoint_recorder_attributes::Response& res);
         void record();
         void record(std::vector<Attribute> attributes);
 

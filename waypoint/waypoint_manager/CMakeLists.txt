@@ -8,12 +8,12 @@ project(waypoint_manager)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  nav_msgs
   roscpp
   rospy
   std_msgs
   tf
-  message_generation
+  waypoint_msgs
+  waypoint_manager_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -50,20 +50,14 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  waypoint.msg
-  waypoints.msg
-)
+#add_message_files(
+#  FILES
+#)
 
 ## Generate services in the 'srv' folder
-add_service_files(
-  FILES
-  waypoint_recorder_start.srv
-  waypoint_recorder_end.srv
-  waypoint_recorder_record.srv
-  waypoint_recorder_attributes.srv
-)
+#add_service_files(
+#  FILES
+#)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -73,11 +67,11 @@ add_service_files(
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  nav_msgs
-  std_msgs
-)
+#generate_messages(
+#  DEPENDENCIES
+#  nav_msgs
+#  std_msgs
+#)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -111,7 +105,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES waypoint_manager
-  CATKIN_DEPENDS nav_msgs roscpp rospy std_msgs tf message_runtime
+  CATKIN_DEPENDS roscpp rospy std_msgs tf
 #  DEPENDS system_lib
 )
 
@@ -158,6 +152,8 @@ include_directories(
 
 set(HEADERS include/waypoint_manager/waypoint_recorder.h)
 add_executable(waypoint_recorder_node src/waypoint_recorder src/nodes/waypoint_recorder_node)
+add_dependencies(waypoint_recorder_node waypoint_msgs_generate_messages_cpp)
+add_dependencies(waypoint_recorder_node waypoint_manager_msgs_generate_messages_cpp)
 target_link_libraries(waypoint_recorder_node ${catkin_LIBRARIES})
 
 #############
@@ -175,7 +171,7 @@ target_link_libraries(waypoint_recorder_node ${catkin_LIBRARIES})
 # )
 
 ## Mark executables for installation
-## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
+## See http://docs.ros.org/melodic/api/canav_msgs tkin/html/howto/format1/building_executables.html
 # install(TARGETS ${PROJECT_NAME}_node
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )

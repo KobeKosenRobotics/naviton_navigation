@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(waypoint_msgs)
+project(waypoint_manager_msgs)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -47,18 +47,18 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  waypoint.msg
-  waypoints.msg
-)
+# add_message_files(
+#   FILES
+# )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  waypoint_recorder_start.srv
+  waypoint_recorder_end.srv
+  waypoint_recorder_record.srv
+  waypoint_recorder_attributes.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
