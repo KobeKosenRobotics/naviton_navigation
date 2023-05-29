@@ -45,7 +45,7 @@ class WaypointRecorder
 
         ros::Timer _timer;
 
-        std::vector<geometry_msgs::PoseStamped> _poses;
+        nav_msgs::Path _path;
         std::vector<std::vector<Attribute>> _attributes;
         
         tf2_ros::Buffer _buffer;

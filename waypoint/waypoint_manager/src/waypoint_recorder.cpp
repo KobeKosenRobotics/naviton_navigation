@@ -60,7 +60,7 @@ bool WaypointRecorder::recorder_start_cb(waypoint_manager_msgs::waypoint_recorde
     if(_recording) return false;
     std::cout << "WaypointRecorder: Start" << std::endl;
     
-    _poses.clear();
+    _path.poses.clear();
     _attributes.clear();
     _attirbutes_permanent.clear();
     _recording = true;
@@ -92,9 +92,9 @@ bool WaypointRecorder::recorder_end_cb(waypoint_manager_msgs::waypoint_recorder_
     ofs_csv_file << "qw" << ',';
     ofs_csv_file << "attributes" << std::endl;
 
-    for(int i = 0; i < _poses.size(); i++)
+    for(int i = 0; i < _path.poses.size(); i++)
     {
-        const auto& pose = _poses[i].pose;
+        const auto& pose = _path.poses[i].pose;
         const auto& attributes = _attributes[i]; 
         ofs_csv_file << i << ',';
         ofs_csv_file << pose.position.x << ',';
@@ -181,7 +181,7 @@ void WaypointRecorder::record()
     _point_old.x = point.x;
     _point_old.y = point.y;
     _point_old.z = point.z;
-    _poses.push_back(_pose_stamped);
+    _path.poses.push_back(_pose_stamped);
     _attributes.push_back(_attirbutes_permanent);
 }
 
@@ -192,6 +192,6 @@ void WaypointRecorder::record(std::vector<Attribute> attributes)
     _point_old.x = point.x;
     _point_old.y = point.y;
     _point_old.z = point.z;
-    _poses.push_back(_pose_stamped);
+    _path.poses.push_back(_pose_stamped);
     _attributes.push_back(attributes);
 }
