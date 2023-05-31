@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <node pkg="behavior_tree_example" type="example_node" name="example_node" output="screen">
+        <param name="bt_file_path" value="$(find behavior_tree_example)/resources/sample_tree.xml" />
+    </node>
+</launch>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Fallback>
+            <Sequence>
+                <Action ID="HigeAction" action="{action}" switch_state="{switch_state}" />
+                <!-- Action ID="HogeAction" action="{action}" wait_duration="3" /-->
+            </Sequence>
+        </Fallback>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="HigeAction">
+            <output_port name="action"/>
+            <input_port default="False" name="switch_state"/>
+        </Action>
+        <Action ID="HogeAction">
+            <output_port name="action"/>
+            <input_port default="3" name="wait_duration"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
