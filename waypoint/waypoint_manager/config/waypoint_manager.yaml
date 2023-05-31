@@ -1,0 +1,5 @@
+frequency               : 10  # [Hz]
+
+topic_nowWp             : wpManager/nowWp
+topic_waypoints         : wpLoader/waypoints
+service_manager_set     : wpManager/set
