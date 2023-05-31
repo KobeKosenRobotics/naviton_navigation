@@ -54,6 +54,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
+  waypoint_manager_set.srv
   waypoint_recorder_start.srv
   waypoint_recorder_end.srv
   waypoint_recorder_record.srv
