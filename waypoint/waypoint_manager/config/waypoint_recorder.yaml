@@ -12,6 +12,4 @@ lookupTimeout           : 0.2 # [s]
 frame_id_robot          : base_link
 frame_id_map            : map
 
-file_dir                : /home
-
 pitch                   : 1.0 # [m]
