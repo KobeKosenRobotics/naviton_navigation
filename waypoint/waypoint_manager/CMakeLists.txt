@@ -164,6 +164,13 @@ add_executable(waypoint_loader_node src/waypoint_loader src/nodes/waypoint_loade
 add_dependencies(waypoint_loader_node waypoint_msgs_generate_messages_cpp)
 target_link_libraries(waypoint_loader_node ${catkin_LIBRARIES})
 
+# Waypoint Manager
+set(HEADERS include/waypoint_manager/waypoint_manager.h)
+add_executable(waypoint_manager_node src/waypoint_manager src/nodes/waypoint_manager_node)
+add_dependencies(waypoint_manager_node waypoint_msgs_generate_messages_cpp)
+add_dependencies(waypoint_manager_node waypoint_manager_msgs_generate_messages_cpp)
+target_link_libraries(waypoint_manager_node ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############
