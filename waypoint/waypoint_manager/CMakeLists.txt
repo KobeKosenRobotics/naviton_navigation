@@ -151,11 +151,18 @@ include_directories(
 #   ${catkin_LIBRARIES}
 # )
 
+# Waypoint Recorder
 set(HEADERS include/waypoint_manager/waypoint_recorder.h)
 add_executable(waypoint_recorder_node src/waypoint_recorder src/nodes/waypoint_recorder_node)
 add_dependencies(waypoint_recorder_node waypoint_msgs_generate_messages_cpp)
 add_dependencies(waypoint_recorder_node waypoint_manager_msgs_generate_messages_cpp)
 target_link_libraries(waypoint_recorder_node ${catkin_LIBRARIES})
+
+# Waypoint Loader
+set(HEADERS include/waypoint_manager/waypoint_loader.h)
+add_executable(waypoint_loader_node src/waypoint_loader src/nodes/waypoint_loader_node)
+add_dependencies(waypoint_loader_node waypoint_msgs_generate_messages_cpp)
+target_link_libraries(waypoint_loader_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##
