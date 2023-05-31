@@ -19,3 +19,7 @@ repositories:
     type: git
     url: https://github.com/iralabdisco/ira_laser_tools
     version: ros1-master
+  velodyne_simulator:
+    type: git
+    url: https://github.com/lmark1/velodyne_simulator
+    version: master
