@@ -1,0 +1,6 @@
+<launch>
+
+    <!-- ======== Rviz ======== -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nvt_core)/rviz/simulation.rviz" required="true" />
+
+</launch>

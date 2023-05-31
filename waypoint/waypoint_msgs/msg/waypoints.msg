@@ -1,0 +1,1 @@
+waypoint_msgs/waypoint[] waypoints

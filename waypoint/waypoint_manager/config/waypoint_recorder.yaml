@@ -1,0 +1,15 @@
+frequency               : 10  # [Hz]
+
+topic_path              : wpRecorder/path
+
+service_recorder_start  : wpRecorder/start
+service_recorder_end    : wpRecorder/end
+service_recorder_record  : wpRecorder/record
+service_recorder_attributes    : wpRecorder/attributes
+
+lookupTimeout           : 0.2 # [s]
+
+frame_id_robot          : base_link
+frame_id_map            : map
+
+pitch                   : 1.0 # [m]

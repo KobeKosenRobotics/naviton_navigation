@@ -1,0 +1,4 @@
+bool save
+string file_name
+-----
+string log
