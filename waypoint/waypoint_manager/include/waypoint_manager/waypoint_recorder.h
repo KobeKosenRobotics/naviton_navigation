@@ -1,5 +1,5 @@
-#ifndef WAYPOINT_GENERATOR_H
-#define WAYPOINT_GENERATOR_H
+#ifndef WAYPOINT_RECORDER_H
+#define WAYPOINT_RECORDER_H
 
 #include <fstream>
 #include <sstream>
