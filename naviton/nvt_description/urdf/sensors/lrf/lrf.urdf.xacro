@@ -16,6 +16,9 @@
 		<geometry>
 		  <mesh filename="package://nvt_description/meshes/STL/sensors/utm30lx.stl"/>
 		</geometry>
+		<material name="black">
+    	  <color rgba="0.2 0.2 0.2 1.0"/>
+        </material>
 	  </visual>
 	  <collision>
 		<geometry>
