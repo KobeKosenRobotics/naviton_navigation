@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 	
 	<!-- ====== Constant Values ====== -->
-	<property name="M_PI" value="3.14159265"/>
+	<xacro:property name="M_PI" value="3.14159265"/>
 
 	<!-- ====== Inertia ====== -->
 

@@ -4,16 +4,16 @@
     <xacro:include filename="$(find nvt_description)/urdf/utils/inertia.xacro" />
     <xacro:include filename="$(find nvt_description)/urdf/wheel/wheel.gazebo.xacro"/>
 
-    <property name="wheel_radius" value="0.1575"/>
-    <property name="wheel_length" value="0.032"/>
-    <property name="wheel_mass" value="2.0"/>
+    <xacro:property name="wheel_radius" value="0.1575"/>
+    <xacro:property name="wheel_length" value="0.032"/>
+    <xacro:property name="wheel_mass" value="2.0"/>
 
     <xacro:macro name="wheel_v0" params="prefix parent *joint_origin *joint_axis">
         <joint name="${prefix}_wheel_joint" type="continuous">
-	        <insert_block name="joint_origin"/>
+	        <xacro:insert_block name="joint_origin"/>
 	        <parent link="${parent}"/>
 	        <child link="${prefix}_wheel_link"/>
-	        <insert_block name="joint_axis"/>
+	        <xacro:insert_block name="joint_axis"/>
 	    </joint>
 
         <link name="${prefix}_wheel_link">
@@ -36,7 +36,7 @@
 	        
             <inertial>
 		        <origin xyz="0 -0.003 0" rpy="${-M_PI/2} 0 0"/>
-		        <cylinder_inertia mass="${wheel_mass}"
+		        <xacro:cylinder_inertia mass="${wheel_mass}"
 						   radius="${wheel_radius}" length="${wheel_length}"/>
 	        </inertial>
         </link>
