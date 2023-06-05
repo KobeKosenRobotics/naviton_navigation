@@ -34,14 +34,17 @@ class AStarSolver
             Node* parent;
         };
 
+        Node* findNode(std::vector<Node*> nodes, Vector2Int coordinates);
+        int coordinates2mapIndex(Vector2Int coordinates);
+        unsigned int calcHeuristic(Vector2Int source, Vector2Int target);
+
         nav_msgs::OccupancyGrid _map;
         Vector2Int _source;
         Vector2Int _target;
 
         const std::vector<Vector2Int> _directions = {
-                                                        {-1, 1}, {0, 1}, {1, 1}, 
-                                                        {-1, 0}, {0, 0}, {1, 0},
-                                                        {-1, -1}, {0, -1}, {1, -1}
+                                                        {0, 1}, {1, 0}, {0, -1}, {-1, 0},
+                                                        {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
                                                     };
 };
 
