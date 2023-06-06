@@ -5,9 +5,16 @@ Navigation system for outdoor mobile robot
 
 ## Setup
 ```bash
+cd catkin_ws/src
+git clone https://github.com/KobeKosenRobotics/naviton_navigation.git
+./naviton_navigation/setup.bash
+```
+
+## Manual Setup
+```bash
 sudo apt update
 sudo apt install -y python3-vcstool
-cd ~/catkin_ws/src
+cd catkin_ws/src
 git clone https://github.com/KobeKosenRobotics/naviton_navigation.git
 cd naviton_navigation
 vcs import depend < depend_packages.repos --recursive
