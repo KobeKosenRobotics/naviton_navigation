@@ -1,4 +1,4 @@
-name: ROS noetic image build 
+name: Docker Image
 on:
   workflow_dispatch:
   schedule:
