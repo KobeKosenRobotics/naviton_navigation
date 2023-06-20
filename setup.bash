@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CURRENT_PATH=$(cd $(dirname $0);pwd)
-cd CURRENT_PATH
+cd $CURRENT_PATH
 sudo apt update
 sudo apt install -y python3-vcstool
 vcs import depend < depend_packages.repos --recursive
