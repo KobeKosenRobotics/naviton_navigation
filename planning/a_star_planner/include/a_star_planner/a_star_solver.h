@@ -19,8 +19,10 @@ class AStarSolver
         void SetMap(nav_msgs::OccupancyGridConstPtr map);
         void SetSource(Vector2Int coordinates);
         void SetTarget(Vector2Int coordinates);
-        bool Solve();
-        bool Solve(Vector2Int source, Vector2Int target);
+        bool Solve(int cost_threshold);
+        bool Solve(int cost_threshold, Vector2Int source, Vector2Int target);
+
+        std::vector<Vector2Int> path;
     
     private:
         

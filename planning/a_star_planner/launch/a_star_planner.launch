@@ -1,0 +1,10 @@
+<launch>
+    <arg name="param_file" default="$(find a_star_planner)/config/a_star_planner.yaml" />
+
+    <group ns="a_star_planner">
+        <node pkg="a_star_planner" type="a_star_planner_node" name="a_star_planner_node" output="screen">
+            <rosparam command="load" file="$(arg param_file)" />
+        </node>
+    </group>
+
+</launch>

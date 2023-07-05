@@ -49,13 +49,20 @@ void AStarSolver::SetTarget(Vector2Int coordinates)
     _target = coordinates;
 }
 
-bool AStarSolver::Solve()
+bool AStarSolver::Solve(int cost_threshold)
 {
+    int mapIndex = coordinates2mapIndex(_source);
+    if(_map.data[mapIndex] > cost_threshold) return false;
+    mapIndex = coordinates2mapIndex(_target);
+    if(_map.data[mapIndex] > cost_threshold) return false;
+    
     Node *node_current = nullptr;
     std::vector<Node*> nodes_opened;
     std::vector<Node*> nodes_closed;
 
     nodes_opened.push_back(new Node(_source));
+
+    bool solved = false;
 
     while(!nodes_opened.empty())
     {
@@ -72,8 +79,11 @@ bool AStarSolver::Solve()
             }
         }
 
-        if(node_current->coordinates == _target) break;
-
+        if(node_current->coordinates == _target)
+        {
+            solved = true;
+            break;
+        }
         nodes_closed.push_back(node_current);
         nodes_opened.erase(it_current);
 
@@ -81,7 +91,7 @@ bool AStarSolver::Solve()
         {
             Vector2Int coordinates_new(node_current->coordinates + _directions[i]);
             int mapIndex = coordinates2mapIndex(coordinates_new);
-            if(mapIndex == -1 || _map.data[mapIndex] > 0 || findNode(nodes_closed, coordinates_new))
+            if(mapIndex == -1 || _map.data[mapIndex] > cost_threshold || findNode(nodes_closed, coordinates_new))
             {
                 continue;
             }
@@ -102,6 +112,14 @@ bool AStarSolver::Solve()
         }
     }
 
+    path.clear();
+    while(node_current != nullptr)
+    {
+        path.push_back(node_current->coordinates);
+        node_current = node_current->parent;
+    }
+    std::reverse(path.begin(), path.end());
+
     for(auto it = nodes_opened.begin(); it != nodes_opened.end();)
     {
         delete *it;
@@ -114,14 +132,14 @@ bool AStarSolver::Solve()
         it = nodes_closed.erase(it);
     }
 
-    return true;
+    return solved;
 }
 
-bool AStarSolver::Solve(Vector2Int source, Vector2Int target)
+bool AStarSolver::Solve(int cost_threshold, Vector2Int source, Vector2Int target)
 {
     SetSource(source);
     SetTarget(target);
-    return Solve();
+    return Solve(cost_threshold);
 }
 
 AStarSolver::Node* AStarSolver::findNode(std::vector<Node*> nodes, Vector2Int coordinates)

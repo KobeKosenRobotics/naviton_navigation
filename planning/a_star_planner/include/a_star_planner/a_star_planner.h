@@ -4,9 +4,15 @@
 #include <ros/ros.h>
 
 #include <nav_msgs/OccupancyGrid.h>
+#include <nav_msgs/Path.h>
 #include <geometry_msgs/PoseStamped.h>
 
 #include <nav_msgs/Path.h>
+
+#include <tf2_ros/buffer.h>
+#include <tf2_ros/transform_listener.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2/transform_datatypes.h>
 
 #include "a_star_solver.h"
 
@@ -21,15 +27,20 @@ class AStarPlanner
 
         AStarSolver _solver;
 
-        nav_msgs::OccupancyGrid _costmap;
-        geometry_msgs::PoseStamped _goal;
+        tf2_ros::Buffer tfBuffer;
+        tf2_ros::TransformListener* tf2_listener;
 
-        ros::Publisher _cmd_vel_publisher;
+        ros::Subscriber _costmap_subscriber;
+        ros::Subscriber _goal_subscriber;
+        ros::Publisher _path_publisher;
 
-        bool _updated = false;
+        std::string _robot_frame_id = "base_link";
+        nav_msgs::MapMetaData _mapData;
 
-        const float _dir_x[8] = {0};
-        const float _dir_y[8] = {0};
+        bool _costmapUpdated = false;
+        bool _goalUpdated = false;
+
+        AStarSolver::Vector2Int _source;
 };
 
 #endif
