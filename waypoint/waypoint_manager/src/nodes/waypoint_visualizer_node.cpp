@@ -15,7 +15,6 @@ int main(int argc, char **argv)
 
     while(ros::ok())
     {
-        visualizer.publish();
         ros::spinOnce();
         loop_rate.sleep();
     }

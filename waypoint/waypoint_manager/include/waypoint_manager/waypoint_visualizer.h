@@ -12,15 +12,15 @@ class WaypointVisualizer
 {
     public:
         WaypointVisualizer(ros::NodeHandle &nh, ros::NodeHandle &pn);
-        void publish();
     private:
-        visualization_msgs::MarkerArray generateMarkerArray();
         void waypoints_cb(waypoint_msgs::waypointsConstPtr msg);
 
-        ros::Publisher _markerArray_publisher;
         ros::Subscriber _wps_subscriber;
+        ros::Publisher _markerArray_publisher;
 
-        waypoint_msgs::waypoints _wps;
+        std::string _frame_id_map;
+        double _text_size;
+        double _z_offset;
 };
 
 #endif
