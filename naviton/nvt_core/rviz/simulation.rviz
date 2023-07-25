@@ -328,6 +328,14 @@ Visualization Manager:
       Topic: /a_star_planner/local_path
       Unreliable: false
       Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /waypoint_manager/wpVisualizer/makerArary
+      Name: MarkerArray
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -356,7 +364,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 33.48691177368164
+      Distance: 17.67211151123047
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -371,10 +379,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5847966074943542
+      Pitch: 0.6347965598106384
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.1467812061309814
+      Yaw: 3.7517852783203125
     Saved: ~
 Window Geometry:
   Displays:
