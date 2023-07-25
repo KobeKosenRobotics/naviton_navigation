@@ -1,9 +1,14 @@
 <launch>
 
     <!-- ======== Parameters ======== -->
+    <arg name="param_file_a_star_planner" default="$(find nvt_core)/config/planning/a_star_planner.yaml" />
 
     <!-- ======== Costmap Generator ======== -->
     <include file="$(find nvt_core)/launch/include/planning/costmap_generator.launch">
     </include>
-    
+
+    <!-- ======== A* Planner ======== -->
+    <include file="$(find a_star_planner)/launch/a_star_planner.launch">
+        <arg name="param_file" value="$(arg param_file_a_star_planner)" />
+    </include>
 </launch>

@@ -1,0 +1,7 @@
+frequency : 10
+
+goal_topic          : /waypoint_manager/wpManager/nowWpPose
+costmap_topic       : /costmap_generator/local_costmap
+path_topic          : local_path
+
+robot_frame_id      : base_link
