@@ -15,7 +15,8 @@ class WaypointVisualizer
     private:
         void waypoints_cb(waypoint_msgs::waypointsConstPtr msg);
 
-        ros::Subscriber _wps_subscriber;
+        ros::Subscriber _wps_subscriber_1;
+        ros::Subscriber _wps_subscriber_2;
         ros::Publisher _markerArray_publisher;
 
         std::string _frame_id_map;

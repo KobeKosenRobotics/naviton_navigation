@@ -2,13 +2,15 @@
 
 WaypointVisualizer::WaypointVisualizer(ros::NodeHandle &nh, ros::NodeHandle &pn)
 {
-    std::string topic_markerArray, topic_wps;
+    std::string topic_markerArray, topic_wps_1, topic_wps_2;
     
     pn.param<std::string>("topic_markerArray", topic_markerArray, "wpVisualizer/markerArray");
-    pn.param<std::string>("topic_waypoints", topic_wps, "wpLoader/waypoints");
+    pn.param<std::string>("topic_waypoints_1", topic_wps_1, "wpRecorder/waypoints");
+    pn.param<std::string>("topic_waypoints_2", topic_wps_2, "wpLoader/waypoints");
 
     _markerArray_publisher = nh.advertise<visualization_msgs::MarkerArray>(topic_markerArray, 1);
-    _wps_subscriber = nh.subscribe(topic_wps, 1, &WaypointVisualizer::waypoints_cb, this);
+    _wps_subscriber_1 = nh.subscribe(topic_wps_1, 1, &WaypointVisualizer::waypoints_cb, this);
+    _wps_subscriber_2 = nh.subscribe(topic_wps_2, 1, &WaypointVisualizer::waypoints_cb, this);
 
     pn.param<std::string>("frame_id_map", _frame_id_map, "map");
     pn.param<double>("scale", _text_size, 1.0);
