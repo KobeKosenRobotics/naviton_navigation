@@ -7,6 +7,8 @@ class Naviton
 {
     public:
         Naviton(ros::NodeHandle &nh, ros::NodeHandle &pn);
+        void Init();
+        void Update();
     private:
 };
 
