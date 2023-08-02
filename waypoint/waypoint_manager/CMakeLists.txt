@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   tf
+  visualization_msgs
   waypoint_msgs
   waypoint_manager_msgs
 )
@@ -170,6 +171,12 @@ add_executable(waypoint_manager_node src/waypoint_manager src/nodes/waypoint_man
 add_dependencies(waypoint_manager_node waypoint_msgs_generate_messages_cpp)
 add_dependencies(waypoint_manager_node waypoint_manager_msgs_generate_messages_cpp)
 target_link_libraries(waypoint_manager_node ${catkin_LIBRARIES})
+
+# Waypoint Visualizer
+set(HEADERS include/waypoint_manager/waypoint_visualizer.h)
+add_executable(waypoint_visualizer_node src/waypoint_visualizer src/nodes/waypoint_visualizer_node)
+add_dependencies(waypoint_visualizer_node waypoint_msgs_generate_messages_cpp)
+target_link_libraries(waypoint_visualizer_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##

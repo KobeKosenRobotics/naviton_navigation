@@ -1,0 +1,8 @@
+frequency               : 10  # [Hz]
+
+topic_waypoints_1       : wpRecorder/waypoints
+topic_waypoints_2       : wpLoader/waypoints
+topic_markerArray       : wpVisualizer/makerArary
+
+scale                   : 1.0
+z_offset                : 1.0

@@ -19,6 +19,7 @@ class WaypointLoader
         ros::Publisher _wps_publisher;
 
         waypoint_msgs::waypoints _wps;
+        std::string _frame_id_map;
 };
 
 #endif
