@@ -12,7 +12,6 @@ WaypointVisualizer::WaypointVisualizer(ros::NodeHandle &nh, ros::NodeHandle &pn)
     _wps_subscriber_1 = nh.subscribe(topic_wps_1, 1, &WaypointVisualizer::waypoints_cb, this);
     _wps_subscriber_2 = nh.subscribe(topic_wps_2, 1, &WaypointVisualizer::waypoints_cb, this);
 
-    pn.param<std::string>("frame_id_map", _frame_id_map, "map");
     pn.param<double>("scale", _text_size, 1.0);
     pn.param<double>("z_offset", _z_offset, 0.0);
 }
@@ -24,14 +23,14 @@ void WaypointVisualizer::waypoints_cb(waypoint_msgs::waypointsConstPtr msg)
     for(int i = 0; i < msg->waypoints.size(); i++)
     {
         visualization_msgs::Marker marker;
-        marker.header.frame_id = _frame_id_map;
+        marker.header.frame_id = msg->header.frame_id;
         marker.header.stamp = ros::Time::now();
         marker.id = msg->waypoints[i].index;
         marker.color.r = 0.0;
         marker.color.g = 0.0;
         marker.color.b = 0.0;
         marker.color.a = 1.0; 
-        marker.pose = msg->waypoints[i].pose;
+        marker.pose = msg->waypoints[i].pose.pose;
         marker.scale.x = _text_size;
         marker.scale.y = _text_size;
         marker.scale.z = _text_size;

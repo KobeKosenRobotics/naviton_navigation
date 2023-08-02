@@ -19,7 +19,6 @@ class WaypointVisualizer
         ros::Subscriber _wps_subscriber_2;
         ros::Publisher _markerArray_publisher;
 
-        std::string _frame_id_map;
         double _text_size;
         double _z_offset;
 };

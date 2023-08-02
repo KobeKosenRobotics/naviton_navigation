@@ -1,6 +1,6 @@
 frequency               : 10  # [Hz]
 
-topic_path              : wpRecorder/path
+topic_waypoints         : wpRecorder/waypoints
 
 service_recorder_start  : wpRecorder/start
 service_recorder_end    : wpRecorder/end

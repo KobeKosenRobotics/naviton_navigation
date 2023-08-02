@@ -27,9 +27,7 @@ void WaypointManager::publish()
     if(_index_now < 0 || _wps.waypoints.size() < _index_now) return;
     _nowWp_publisher.publish(_wps.waypoints[_index_now]);
     
-    geometry_msgs::PoseStamped pose;
-    pose.header.frame_id = _frame_id_map;
-    pose.pose = _wps.waypoints[_index_now].pose;
+    geometry_msgs::PoseStamped pose  = _wps.waypoints[_index_now].pose;
 
     try
     {

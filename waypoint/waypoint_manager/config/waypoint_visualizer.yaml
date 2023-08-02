@@ -4,7 +4,5 @@ topic_waypoints_1       : wpRecorder/waypoints
 topic_waypoints_2       : wpLoader/waypoints
 topic_markerArray       : wpVisualizer/makerArary
 
-frame_id_map            : map
-
 scale                   : 1.0
 z_offset                : 1.0
