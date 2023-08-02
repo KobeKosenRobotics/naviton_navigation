@@ -33,7 +33,7 @@
         </include>
     </group>
     
-    <!-- ======== Waypoint Loader ======== -->
+    <!-- ======== Waypoint Visualizer ======== -->
     <include file="$(find waypoint_manager)/launch/waypoint_visualizer.launch">
         <arg name="param_file" value="$(arg param_file_waypoint_visualizer)" />
     </include>
