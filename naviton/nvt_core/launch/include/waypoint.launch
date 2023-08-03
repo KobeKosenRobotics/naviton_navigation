@@ -1,0 +1,40 @@
+<launch>
+    <!-- ======== Parameters ======== -->
+    <arg name="param_file_waypoint_loader" default="$(find nvt_core)/config/waypoint/waypoint_loader.yaml" />
+    <arg name="param_file_waypoint_manager" default="$(find nvt_core)/config/waypoint/waypoint_manager.yaml" />
+    <arg name="param_file_waypoint_recorder" default="$(find nvt_core)/config/waypoint/waypoint_recorder.yaml" />
+    <arg name="param_file_waypoint_visualizer" default="$(find nvt_core)/config/waypoint/waypoint_visualizer.yaml" />
+
+    <arg name="file_directory" default="$(find nvt_core)/config/waypoint/recordedFiles" />
+    <arg name="file_name" default="wpData_lastest.csv" />
+
+    <!-- Mode-->
+    <arg name="mode" default="true" />    <!-- false: Recording, true: Tracking -->
+
+    <!-- ======== Waypoint Recorder ======== -->
+    <group unless="$(arg mode)">
+        <!-- Recorder -->
+        <include file="$(find waypoint_manager)/launch/waypoint_recorder.launch">
+            <arg name="param_file" value="$(arg param_file_waypoint_recorder)" />
+            <arg name="file_directory" value="$(arg file_directory)" />
+        </include>
+    </group>
+    
+    <!-- ======== Waypoint Loader ======== -->
+    <group if="$(arg mode)">
+        <!-- Loader -->
+       <include file="$(find waypoint_manager)/launch/waypoint_loader.launch">
+            <arg name="param_file" value="$(arg param_file_waypoint_loader)" />
+            <arg name="file_directory" value="$(arg file_directory)" />
+        </include>
+        <!-- Manager -->
+        <include file="$(find waypoint_manager)/launch/waypoint_manager.launch">
+            <arg name="param_file" value="$(arg param_file_waypoint_manager)" />
+        </include>
+    </group>
+    
+    <!-- ======== Waypoint Visualizer ======== -->
+    <include file="$(find waypoint_manager)/launch/waypoint_visualizer.launch">
+        <arg name="param_file" value="$(arg param_file_waypoint_visualizer)" />
+    </include>
+</launch>

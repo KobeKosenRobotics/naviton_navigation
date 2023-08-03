@@ -225,8 +225,8 @@ void PointCloud2Costmap::pc_sub_cb(const sensor_msgs::PointCloud2::ConstPtr& pc_
     if(_pc_sub_settings.cropping)
     {
         cropping(pc, pc, 
-                    Eigen::Vector4f(-_width_2, -_width_2, _pc_main_settings.height_min, 1), 
-                    Eigen::Vector4f(_width_2, _width_2, _pc_main_settings.height_max, 1));
+                    Eigen::Vector4f(-_width_2, -_width_2, _pc_sub_settings.height_min, 1), 
+                    Eigen::Vector4f(_width_2, _width_2, _pc_sub_settings.height_max, 1));
     }
     if(_pc_sub_settings.downsampling_rate > 0.0)
     {

@@ -1,7 +1,7 @@
 <launch>
     <arg name="param_file" default="$(find waypoint_manager)/config/waypoint_loader.yaml" />
     <arg name="file_directory" default="$(find waypoint_manager)/recordedFiles" />
-    <arg name="file_name" default="wpData_latest" />
+    <arg name="file_name" default="wpData_latest.csv" />
 
     <group ns="waypoint_manager">
         <node pkg="waypoint_manager" type="waypoint_loader_node" name="waypoint_loader_node" output="screen">

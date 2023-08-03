@@ -1,0 +1,60 @@
+<launch>
+
+    <!-- ======== Parameters ======== -->
+    <!-- Mode-->
+    <arg name="sim" value="true" />
+    <arg name="mode" value ="true" />    <!-- false: Recording, true: Tracking -->
+    
+    <!-- Basic -->
+    <arg name="model" value="naviton" />
+    <arg name="world_name" value="$(find nvt_simulation)/worlds/autoware.world" />
+
+    <!-- Map PCD -->
+    <arg name="map_file_dir" value="$(find nvt_core)/config/localization/map_files" />
+    <arg name="map_file" value="autoware_world.pcd" />
+
+    <arg name="waypoint_file" value="wpData_latest.csv" />
+
+    <!-- Initial Pose-->
+    <arg name="init_pos_x" value="0.0" />
+    <arg name="init_pos_y" value="0.0" />
+    <arg name="init_pos_z" value="0.0" />
+
+    <param name="/use_sim_time" value="true" />
+    
+    <!-- ======== Simulation ======== -->
+    <group if="$(arg sim)">
+        <include file="$(find nvt_simulation)/launch/nvt_simulation.launch">
+            <arg name="model" value="$(arg model)" />
+            <arg name="world_name" value="$(arg world_name)" />
+            <arg name="use_sim_time" value="true" />
+            <arg name="init_pos_x" value="$(arg init_pos_x)" />
+            <arg name="init_pos_y" value="$(arg init_pos_y)" />
+            <arg name="init_pos_z" value="$(arg init_pos_z)" />
+        </include>
+    </group>
+
+    <!-- ======== Control ======== -->
+    <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_control nvt_control.launch model:=$(arg model) sim:=$(arg sim)" name="nvt_control" output="screen" />
+
+    <!-- ======== Tracking ======== -->
+    <group if="$(arg mode)">
+        
+        <!-- ======== Perception ======== -->
+        <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_core perception.launch" name="nvt_perception" output="screen" />
+        
+        <!-- ======== Planning ======== -->
+        <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core planning.launch" name="nvt_core" output="screen" />
+   
+    </group>
+    
+    <!-- ======== Localization ======== -->
+    <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_core localization.launch init_pos_x:=$(arg init_pos_x) init_pos_y:=$(arg init_pos_y) init_pos_z:=$(arg init_pos_z)" name="nvt_localization" output="screen" />
+
+    <!-- ======== Waypoint ======== -->
+    <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_core waypoint.launch mode:=$(arg mode) file_name:=$(arg waypoint_file)" name="nvt_waypoint" output="screen" />
+
+    <!-- ======== Rviz ======== -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nvt_core)/rviz/simulation.rviz" required="true" />
+
+</launch>

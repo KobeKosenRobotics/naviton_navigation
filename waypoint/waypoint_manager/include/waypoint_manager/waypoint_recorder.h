@@ -15,6 +15,8 @@
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 
+#include <waypoint_msgs/waypoint.h>
+#include <waypoint_msgs/waypoints.h>
 #include <waypoint_manager_msgs/waypoint_recorder_start.h>
 #include <waypoint_manager_msgs/waypoint_recorder_end.h>
 #include <waypoint_manager_msgs/waypoint_recorder_record.h>
@@ -40,7 +42,7 @@ class WaypointRecorder
         void record(std::vector<Attribute> attributes);
         void publishPath();
 
-        ros::Publisher _path_publisher;
+        ros::Publisher _wps_publisher;
         ros::ServiceServer _recorder_start_server;
         ros::ServiceServer _recorder_end_server;
         ros::ServiceServer _recorder_record_server;
@@ -48,8 +50,8 @@ class WaypointRecorder
 
         ros::Timer _timer;
 
-        nav_msgs::Path _path;
-        std::vector<std::vector<Attribute>> _attributes;
+        waypoint_msgs::waypoints _wps;
+        int _wpIndex;
         
         tf2_ros::Buffer _buffer;
         tf2_ros::TransformListener _listener;
