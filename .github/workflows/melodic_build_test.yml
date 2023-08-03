@@ -16,7 +16,7 @@ jobs:
         rosdistro: [melodic]
     env:
       ROS_DISTRO: ${{ matrix.rosdistro }}
-    container: hrjp/ros:${{ matrix.rosdistro }}
+    container: hrjp/ros:${{ matrix.rosdistro }}_cudagl
     steps:
       - name: get repository name
         run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
