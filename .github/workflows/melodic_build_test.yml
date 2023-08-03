@@ -29,7 +29,6 @@ jobs:
         run: |
           cd /home/catkin_ws
           apt update
-          rosdep update
           rosdep install -i -y --from-paths src
       - name: Build packages
         run: |
