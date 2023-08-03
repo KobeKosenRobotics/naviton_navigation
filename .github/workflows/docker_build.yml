@@ -1,0 +1,40 @@
+name: Docker Image
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+    branches:
+      - main
+      - feature/docker/all_in_image
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Github Container registry
+    runs-on: ubuntu-20.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        rosdistro: [melodic,noetic]
+    env:
+      ROS_DISTRO: ${{ matrix.rosdistro }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Set up Docker Build
+        uses: docker/setup-buildx-action@v1
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push to Github Container registry
+        uses: docker/build-push-action@v2
+        with:
+          context: ./docker/naviton
+          build-args: BASE_IMAGE=hrjp/ros:${{ matrix.rosdistro }}_cudagl
+          push: true
+          tags: |
+            ghcr.io/kobekosenrobotics/naviton:${{ matrix.rosdistro }}
