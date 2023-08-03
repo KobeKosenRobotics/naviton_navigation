@@ -16,7 +16,7 @@ jobs:
         rosdistro: [melodic]
     env:
       ROS_DISTRO: ${{ matrix.rosdistro }}
-    container: hrjp/ros:${{ matrix.rosdistro }}_cudagl
+    container: hrjp/ros:${{ matrix.rosdistro }}
     steps:
       - name: get repository name
         run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
@@ -31,6 +31,8 @@ jobs:
           apt update
           rosdep update
           rosdep install -iry --from-paths src --rosdistro ${{ matrix.rosdistro }}
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: Build packages
         run: |
           cd /home/catkin_ws
