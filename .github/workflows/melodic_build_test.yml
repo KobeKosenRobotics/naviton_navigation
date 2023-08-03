@@ -30,9 +30,7 @@ jobs:
           cd /home/catkin_ws
           apt update
           rosdep update
-          rosdep install -iry --from-paths src --rosdistro ${{ matrix.rosdistro }}
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+          rosdep install -i -y --from-paths src
       - name: Build packages
         run: |
           cd /home/catkin_ws
