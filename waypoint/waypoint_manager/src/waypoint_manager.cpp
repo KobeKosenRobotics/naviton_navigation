@@ -2,15 +2,17 @@
 
 WaypointManager::WaypointManager(ros::NodeHandle &nh, ros::NodeHandle &pn) : _buffer(), _listener(_buffer)
 {
-    std::string topic_nowWp, topic_nowWpPose, topic_waypoints, service_manager_set;
+    std::string topic_nowWp, topic_nowWp_local, topic_nowWpPose_local, topic_waypoints, service_manager_set;
     
     pn.param<std::string>("topic_nowWp", topic_nowWp, "wpManager/nowWp");
-    pn.param<std::string>("topic_nowWpPose", topic_nowWpPose, "wpManager/nowWpPose");
+    pn.param<std::string>("topic_nowWp_local", topic_nowWp_local, "wpManager/nowWp_local");
+    pn.param<std::string>("topic_nowWpPose_local", topic_nowWpPose_local, "wpManager/nowWpPose_local");
     pn.param<std::string>("topic_waypoints", topic_waypoints, "wpLoader/waypoints");
     pn.param<std::string>("service_manager_set", service_manager_set, "wpManager/set");
 
     _nowWp_publisher = nh.advertise<waypoint_msgs::waypoint>(topic_nowWp, 1);
-    _nowWpPose_publisher = nh.advertise<geometry_msgs::PoseStamped>(topic_nowWpPose, 1);
+    _nowWp_local_publisher = nh.advertise<waypoint_msgs::waypoint>(topic_nowWp_local, 1);
+    _nowWpPose_local_publisher = nh.advertise<geometry_msgs::PoseStamped>(topic_nowWpPose_local, 1);
     _wps_subscriber = nh.subscribe(topic_waypoints, 1, &WaypointManager::waypoints_cb, this);
     _manager_set_server = nh.advertiseService(service_manager_set, &WaypointManager::manager_set_cb, this);
 
@@ -27,12 +29,15 @@ void WaypointManager::publish()
     if(_index_now < 0 || _wps.waypoints.size() < _index_now) return;
     _nowWp_publisher.publish(_wps.waypoints[_index_now]);
     
-    geometry_msgs::PoseStamped pose  = _wps.waypoints[_index_now].pose;
+    waypoint_msgs::waypoint wp_local = _wps.waypoints[_index_now];
 
     try
     {
+        geometry_msgs::PoseStamped pose  = wp_local.pose;
         _buffer.transform(pose, pose, _frame_id_robot, ros::Duration(_lookupTimeout));
-       _nowWpPose_publisher.publish(pose);
+        wp_local.pose = pose;
+        _nowWp_local_publisher.publish(wp_local);
+        _nowWpPose_local_publisher.publish(pose);
     }
     catch (tf2::TransformException& ex)
     {
