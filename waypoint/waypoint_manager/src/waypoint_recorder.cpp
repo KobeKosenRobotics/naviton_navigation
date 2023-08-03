@@ -2,9 +2,9 @@
 
 WaypointRecorder::WaypointRecorder(ros::NodeHandle &nh, ros::NodeHandle &pn) : _buffer(), _listener(_buffer)
 {
-    std::string topic_path;
-    pn.param<std::string>("topic_path", topic_path, "wpRecorder/path");
-    _path_publisher = nh.advertise<nav_msgs::Path>(topic_path, 1);
+    std::string topic_wps;
+    pn.param<std::string>("topic_waypoints", topic_wps, "wpRecorder/waypoints");
+    _wps_publisher = nh.advertise<waypoint_msgs::waypoints>(topic_wps, 1);
 
     std::string service_recorder_start;
     pn.param<std::string>("service_recorder_start", service_recorder_start, "wpRecorder/start");
@@ -58,8 +58,9 @@ WaypointRecorder::WaypointRecorder(ros::NodeHandle &nh, ros::NodeHandle &pn) : _
         }
     });
 
-    _path.header.frame_id = _frame_id_map;
-    _path.header.seq = 0;
+    _wps.header.frame_id = _frame_id_map;
+    _wps.header.seq = 0;
+    _wpIndex = 0;
 }
 
 bool WaypointRecorder::recorder_start_cb(waypoint_manager_msgs::waypoint_recorder_start::Request& req, waypoint_manager_msgs::waypoint_recorder_start::Response& res)
@@ -67,8 +68,7 @@ bool WaypointRecorder::recorder_start_cb(waypoint_manager_msgs::waypoint_recorde
     if(_recording) return false;
     std::cout << "WaypointRecorder: Start" << std::endl;
     
-    _path.poses.clear();
-    _attributes.clear();
+    _wps.waypoints.clear();
     _attirbutes_permanent.clear();
     _recording = true;
 
@@ -103,10 +103,10 @@ void WaypointRecorder::save(std::string file_name)
     ofs_csv_file << "qw" << ',';
     ofs_csv_file << "attributes" << std::endl;
 
-    for(int i = 0; i < _path.poses.size(); i++)
+    for(int i = 0; i < _wps.waypoints.size(); i++)
     {
-        const auto& pose = _path.poses[i].pose;
-        const auto& attributes = _attributes[i]; 
+        const auto& wp = _wps.waypoints[i];
+        const auto& pose = wp.pose.pose;
         ofs_csv_file << i << ',';
         ofs_csv_file << pose.position.x << ',';
         ofs_csv_file << pose.position.y << ',';
@@ -115,9 +115,9 @@ void WaypointRecorder::save(std::string file_name)
         ofs_csv_file << pose.orientation.y << ',';
         ofs_csv_file << pose.orientation.z << ',';
         ofs_csv_file << pose.orientation.w << ',';
-        for (const auto& attribute : attributes)
+        for (int j = 0; j < _wps.waypoints[i].attributes.size(); j++)
         {
-            ofs_csv_file << attribute.attribute << ':' << attribute.value << ',';
+            ofs_csv_file << _wps.waypoints[i].attributes[j] << ':' << _wps.waypoints[i].attribute_values[j] << ',';
         }
         ofs_csv_file << "" << std::endl;
     }
@@ -190,8 +190,20 @@ void WaypointRecorder::record()
     _point_old.x = point.x;
     _point_old.y = point.y;
     _point_old.z = point.z;
-    _path.poses.push_back(_pose_stamped);
-    _attributes.push_back(_attirbutes_permanent);
+
+    waypoint_msgs::waypoint wp;
+    wp.index = _wpIndex;
+    wp.pose = _pose_stamped;
+    for(const Attribute &attribute : _attirbutes_permanent)
+    {
+        wp.attributes.push_back(attribute.attribute);
+        wp.attribute_values.push_back(attribute.value);
+    }
+
+    _wps.waypoints.push_back(wp);
+
+    _wpIndex++;
+
 
     publishPath();
 }
@@ -203,15 +215,26 @@ void WaypointRecorder::record(std::vector<Attribute> attributes)
     _point_old.x = point.x;
     _point_old.y = point.y;
     _point_old.z = point.z;
-    _path.poses.push_back(_pose_stamped);
-    _attributes.push_back(attributes);
+
+    waypoint_msgs::waypoint wp;
+    wp.index = _wpIndex;
+    wp.pose = _pose_stamped;
+    for(const Attribute &attribute : attributes)
+    {
+        wp.attributes.push_back(attribute.attribute);
+        wp.attribute_values.push_back(attribute.value);
+    }
+
+    _wps.waypoints.push_back(wp);
+
+    _wpIndex++;
 
     publishPath();
 }
 
 void WaypointRecorder::publishPath()
 {
-    _path.header.stamp = ros::Time::now();
-    _path_publisher.publish(_path);
-    _path.header.seq++;
+    _wps.header.stamp = ros::Time::now();
+    _wps_publisher.publish(_wps);
+    _wps.header.seq++;
 }

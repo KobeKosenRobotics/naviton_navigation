@@ -1,5 +1,11 @@
 frequency               : 10  # [Hz]
 
 topic_nowWp             : wpManager/nowWp
+topic_nowWpPose         : wpManager/nowWpPose
 topic_waypoints         : wpLoader/waypoints
 service_manager_set     : wpManager/set
+
+lookupTimeout           : 0.2 # [s]
+
+frame_id_robot          : base_link
+frame_id_map            : map

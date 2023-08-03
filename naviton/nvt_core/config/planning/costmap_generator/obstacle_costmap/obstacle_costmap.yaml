@@ -1,18 +1,18 @@
-frequency                 : 20              # [hz]
+frequency                 : 10              # [hz]
 
 pc_main_topic             : /lrf_scan/front_pc
-pc_main_cropping          : false
-pc_main_downsampling_rate : 0.2             # [m], negative value to disable
-pc_main_height_min        : 0.1             # [m]
-pc_main_height_max        : 0.1             # [m]
+pc_main_cropping          : true
+pc_main_downsampling_rate : -0.0             # [m], negative value to disable
+pc_main_height_min        : -1.0             # [m]
+pc_main_height_max        : +1.0             # [m]
 
-use_pc_sub                : false
+use_pc_sub                : true
 pc_sub_topic              : /velodyne_points/obstacle
-pc_sub_cropping           : false
-pc_sub_downsampling_rate  : -0.1            # [m], negative value to disable
+pc_sub_cropping           : true
+pc_sub_downsampling_rate  : 0.05            # [m], negative value to disable
 pc_sub_height_min         : 0.0             # [m]
-pc_sub_height_max         : 1.0             # [m]
+pc_sub_height_max         : 1.5             # [m]
 
 costmap_topic             : obstacle_costmap
-costmap_inflation_radius  : 0.2             # [m]
+costmap_inflation_radius  : 0.4             # [m]
 

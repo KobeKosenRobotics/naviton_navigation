@@ -13,12 +13,12 @@ int main(int argc, char **argv)
     pn.param<std::string>("file_dir", file_dir, "/home");
 
     std::string file_name;
-    pn.param<std::string>("file_name", file_name, "wp_data.csv");
+    pn.param<std::string>("file_name", file_name, "wpData_latest.csv");
 
     ros::Rate loop_rate(frequency);
 
     WaypointLoader loader(nh, pn);
-    loader.load(file_dir + "/" + file_name + ".csv");
+    loader.load(file_dir + "/" + file_name);
 
     while(ros::ok())
     {
