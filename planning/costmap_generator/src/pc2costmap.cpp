@@ -19,7 +19,7 @@ PointCloud2Costmap::PointCloud2Costmap(ros::NodeHandle &nh, ros::NodeHandle &pn)
     if(_use_pc_sub)
         _pc_sub_sub = nh.subscribe(topic_sub2, 10, &PointCloud2Costmap::pc_sub_cb, this);
     
-    _costmap_pub = nh.advertise<nav_msgs::OccupancyGrid>(topic_pub, 1);
+    _costmap_pub = nh.advertise<nav_msgs::OccupancyGrid>(topic_pub, 10);
 
     pn.param<float>("width", _width, 20.0);
     pn.param<float>("resolution", _resolution, 0.1);

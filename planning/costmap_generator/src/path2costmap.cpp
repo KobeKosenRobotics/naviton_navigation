@@ -10,7 +10,7 @@ Path2Costmap::Path2Costmap(ros::NodeHandle &nh, ros::NodeHandle &pn)
     pn.param<std::string>("costmap_topic", topic_pub, "costmap_topic");
 
     _path_sub = nh.subscribe(topic_sub, 10, &Path2Costmap::path_cb, this);
-    _costmap_pub = nh.advertise<nav_msgs::OccupancyGrid>(topic_pub, 1);
+    _costmap_pub = nh.advertise<nav_msgs::OccupancyGrid>(topic_pub, 10);
 
     pn.param<float>("width", _width, 20.0);
     pn.param<float>("resolution", _resolution, 0.1);
