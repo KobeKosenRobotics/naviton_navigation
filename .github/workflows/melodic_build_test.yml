@@ -30,7 +30,7 @@ jobs:
           cd /home/catkin_ws
           apt update
           rosdep update --include-eol-distros
-          rosdep install -iry --from-paths src/${{ env.REPOSITORY_NAME }} --rosdistro ${{ matrix.rosdistro }}
+          rosdep install -iry --from-paths src --rosdistro ${{ matrix.rosdistro }}
       - name: Build packages
         run: |
           cd /home/catkin_ws
