@@ -1,7 +1,8 @@
 frequency               : 10  # [Hz]
 
 topic_nowWp             : wpManager/nowWp
-topic_nowWpPose         : wpManager/nowWpPose
+topic_nowWp_local       : wpManager/nowWp_local
+topic_nowWpPose_local   : wpManager/nowWpPose_local
 topic_waypoints         : wpLoader/waypoints
 service_manager_set     : wpManager/set
 

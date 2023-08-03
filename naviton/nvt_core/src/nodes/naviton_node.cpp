@@ -7,16 +7,16 @@ int main(int argc, char **argv)
     ros::NodeHandle pn("~");
 
     int frequency;
-    pn.param<int>("frequency", frequency, 1);
+    pn.param<int>("frequency", frequency, 20);
 
     ros::Rate loop_rate(frequency);
 
     Naviton nvt(nh, pn);
-    nvt.Init();
+    nvt.init();
 
     while(ros::ok())
     {
-        nvt.Update();
+        nvt.update();
         ros::spinOnce();
         loop_rate.sleep();
     }
