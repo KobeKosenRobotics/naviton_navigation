@@ -13,6 +13,7 @@ pc_sub_downsampling_rate  : -0.1            # [m], negative value to disable
 pc_sub_height_min         : 0.0             # [m]
 pc_sub_height_max         : 1.0             # [m]
 
-costmap_topic             : obstacle_costmap
+costmap_topic             : obstacle_costmap/raw
+costmap_inflated_topic    : obstacle_costmap/inflated
 costmap_inflation_radius  : 0.2             # [m]
 

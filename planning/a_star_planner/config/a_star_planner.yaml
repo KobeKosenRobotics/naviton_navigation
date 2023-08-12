@@ -1,7 +1,9 @@
 frequency : 10
-
-goal_topic          : goal
+goal_topic          : /move_base_simple/goal
 costmap_topic       : /costmap_generator/local_costmap
 path_topic          : local_path
+a_star_goal_topic   : goal
 
 robot_frame_id      : base_link
+
+goal_distance       : 1.0 # [m]
