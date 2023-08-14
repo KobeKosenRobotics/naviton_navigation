@@ -1,0 +1,17 @@
+<launch>
+    
+    <arg name="topic_name" default="/scan"/>
+    <arg name="frame_id" default="lrf_link"/>
+
+    <node name="urg_node" pkg="urg_node" type="urg_node" output="screen">
+ 	    <remap from="/scan" to="$(arg topic_name)" />	
+    	<param name="ip_address" value="192.168.1.10"/>
+   	    <param name="frame_id" value="$(arg frame_id)"/>
+   	    <param name="calibrate_time" value="false"/>
+   	    <param name="publish_intensity" value="false"/>
+   	    <param name="publish_multiecho" value="false"/>
+   	    <param name="angle_min" value="-1.5707963"/>
+  	    <param name="angle_max" value="1.5707963"/>
+	</node>
+
+</launch>
