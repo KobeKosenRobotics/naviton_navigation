@@ -32,6 +32,7 @@
     
     <!-- ======== Sensors ======== -->
     <group unless="$(arg sim)">
+        <include file="$(find nvt_core)/launch/include/sensors/sensors.launch" />
     </group>
 
     <!-- ======== Description ======== -->
