@@ -11,7 +11,7 @@
 
                 <!--include file="$(find nvt_control)/launch/include/nvt_hwInterface.launch">
                         <arg name="model" default="$(arg model)" />
-                </include -->
+                </include-->
         </group>
 
         <group if="$(arg sim)">
@@ -24,15 +24,14 @@
                         output="screen"
                         ns="naviton"
                         args="joint_state_controller mobile_base_controller" />
-
-                <node   name="robot_state_publisher"
-                        pkg="robot_state_publisher"
-                        type="robot_state_publisher"
-                        respawn="false"
-                        output="screen"
-                        ns="naviton">
-                        <remap from="/joint_states" to="/naviton/joint_states" />
-                </node>
         </group>
+
+        <!--node   name="robot_state_publisher"
+                pkg="robot_state_publisher"
+                type="robot_state_publisher"
+                respawn="false"
+                output="screen"
+                ns="naviton">
+        </node-->
 
 </launch>

@@ -22,6 +22,7 @@ class AStarPlanner
         AStarPlanner(ros::NodeHandle &nh, ros::NodeHandle &pn);
         void publish();
     private:
+        geometry_msgs::Quaternion euler2quat(double roll, double pitch, double yaw);
         void costmap_cb(nav_msgs::OccupancyGridConstPtr msg);
         void goal_cb(geometry_msgs::PoseStampedConstPtr msg);
 
@@ -33,9 +34,12 @@ class AStarPlanner
         ros::Subscriber _costmap_subscriber;
         ros::Subscriber _goal_subscriber;
         ros::Publisher _path_publisher;
+        ros::Publisher _goal_publisher;
 
         std::string _robot_frame_id = "base_link";
         nav_msgs::MapMetaData _mapData;
+
+        double _goal_distance;
 
         bool _costmapUpdated = false;
         bool _goalUpdated = false;

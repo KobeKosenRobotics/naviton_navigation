@@ -1,0 +1,6 @@
+<launch>
+
+<!-- ======== HDL-32E ======== -->
+<include file="$(find nvt_core)/launch/include/sensors/velodyne/velodyne.launch" />
+
+</launch>

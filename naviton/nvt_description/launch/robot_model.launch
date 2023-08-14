@@ -23,6 +23,5 @@
                 respawn="false"
                 output="screen"
                 ns="naviton">
-    </node>
-
+        </node>
 </launch>

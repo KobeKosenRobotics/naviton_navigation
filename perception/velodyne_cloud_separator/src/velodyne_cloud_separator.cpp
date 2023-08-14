@@ -8,8 +8,8 @@ VelodyneCloudSeparator::VelodyneCloudSeparator(ros::NodeHandle &nh, ros::NodeHan
     pn.param<std::string>("pc_obstacle_topic", topic_obstacle_pub, "/velodyne_points/obstacle");
 
     _pc_sub = nh.subscribe(topic_sub, 10, &VelodyneCloudSeparator::pc_cb, this);
-    _pc_ground_pub = nh.advertise<sensor_msgs::PointCloud2>(topic_ground_pub, 1);
-    _pc_obstacle_pub = nh.advertise<sensor_msgs::PointCloud2>(topic_obstacle_pub, 1);
+    _pc_ground_pub = nh.advertise<sensor_msgs::PointCloud2>(topic_ground_pub, 10);
+    _pc_obstacle_pub = nh.advertise<sensor_msgs::PointCloud2>(topic_obstacle_pub, 10);
 
     pn.param<float>("sensor_height", _sensor_height, 0.8);
 

@@ -8,7 +8,7 @@
     </include>
 
     <!-- ======== A* Planner ======== -->
-    <include file="$(find a_star_planner)/launch/a_star_planner.launch">
+    <!-- include file="$(find a_star_planner)/launch/a_star_planner.launch">
         <arg name="param_file" value="$(arg param_file_a_star_planner)" />
-    </include>
+    </include -->
 </launch>

@@ -23,7 +23,7 @@
     <!-- ======== Waypoint Loader ======== -->
     <group if="$(arg mode)">
         <!-- Loader -->
-       <include file="$(find waypoint_manager)/launch/waypoint_loader.launch">
+        <include file="$(find waypoint_manager)/launch/waypoint_loader.launch">
             <arg name="param_file" value="$(arg param_file_waypoint_loader)" />
             <arg name="file_directory" value="$(arg file_directory)" />
         </include>

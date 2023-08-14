@@ -26,7 +26,8 @@ class WaypointManager
         waypoint_msgs::waypoints _wps;
 
         ros::Publisher _nowWp_publisher;
-        ros::Publisher _nowWpPose_publisher;
+        ros::Publisher _nowWp_local_publisher;
+        ros::Publisher _nowWpPose_local_publisher;
         ros::Subscriber _wps_subscriber;
         ros::ServiceServer _manager_set_server;
 
