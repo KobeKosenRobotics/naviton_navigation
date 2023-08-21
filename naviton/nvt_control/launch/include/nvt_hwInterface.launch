@@ -2,10 +2,10 @@
 
     <arg name="model" default="naviton" />
     <arg name="description_package" default="$(find nvt_description)" />
-    <arg name="urdf_file" default="$(find xacro)/xacro '$(arg description_package)/urdf/$(arg model).urdf.xacro'" />
+    <!--arg name="urdf_file" default="$(find xacro)/xacro '$(arg description_package)/urdf/$(arg model).urdf.xacro'" /-->
 
-    <param  name="naviton/robot_description"
-		    command="$(arg urdf_file)" />
+    <!--param  name="naviton/robot_description"
+		    command="$(arg urdf_file)" /-->
 
     <node name="nvt_hwInterface_node" pkg="nvt_control" type="nvt_hwInterface_node" output="screen" respawn="false" ns="naviton" />
 
