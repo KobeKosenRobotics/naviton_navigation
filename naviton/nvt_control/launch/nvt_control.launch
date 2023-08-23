@@ -14,7 +14,12 @@
                 </include>
         </group>
 
-        <rosparam command="load" file="$(find nvt_control)/config/naviton_control.yaml" />
+        <group if="$(arg sim)">
+                <rosparam command="load" file="$(find nvt_control)/config/naviton_control_sim.yaml" />
+        </group>
+        <group unless="$(arg sim)">
+                <rosparam command="load" file="$(find nvt_control)/config/naviton_control.yaml" />
+        </group>
 
         <node   name="controller_spawner"
                 pkg="controller_manager"
