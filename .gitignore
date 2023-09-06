@@ -48,3 +48,6 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
+
+# pcd files
+/naviton/nvt_core/config/localization/map_files/*.pcd
