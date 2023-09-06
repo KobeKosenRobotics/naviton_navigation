@@ -36,7 +36,7 @@
   </include>
 
   <!-- start cloud nodelet -->
-  <include file="$(find velodyne_pointcloud)/launch/cloud_nodelet.launch">
+  <include file="$(find velodyne_pointcloud)/launch/cloud_nodelet.launch">	
     <arg name="calibration" value="$(arg calibration)"/>
     <arg name="manager" value="$(arg manager)" />
     <arg name="max_range" value="$(arg max_range)"/>

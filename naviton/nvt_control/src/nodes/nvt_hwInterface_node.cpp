@@ -9,9 +9,9 @@ int main(int argc, char **argv)
     ros::NodeHandle pn("~");
 
     int frequency;
-    pn.param<int>("frequency", frequency, 10);
+    pn.param<int>("frequency", frequency, 20);
 
-    Naviton nvt;
+    Naviton nvt(nh, pn);
     controller_manager::ControllerManager cm(&nvt);
 
     ros::AsyncSpinner spinner(1);

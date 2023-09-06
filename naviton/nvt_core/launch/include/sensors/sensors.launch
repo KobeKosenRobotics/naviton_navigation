@@ -3,4 +3,10 @@
 <!-- ======== HDL-32E ======== -->
 <include file="$(find nvt_core)/launch/include/sensors/velodyne/velodyne.launch" />
 
+<!-- ======== UTM30-LX ======== -->
+<include file="$(find nvt_core)/launch/include/sensors/hokuyo/hokuyo.launch">
+    <arg name="topic_name" value="/lrf_scan/front" />
+    <arg name="frame_id" value="front_lrf_link" />
+</include>
+
 </launch>

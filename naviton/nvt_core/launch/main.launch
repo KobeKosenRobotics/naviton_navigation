@@ -20,7 +20,7 @@
     <arg name="init_pos_y" value="0.0" />
     <arg name="init_pos_z" value="0.0" />
 
-    <param name="/use_sim_time" value="true" />
+    <param name="/use_sim_time" value="$(arg sim)" />
 
     <!-- ======== Simulation ======== -->
     <group if="$(arg sim)">
@@ -32,10 +32,11 @@
     
     <!-- ======== Sensors ======== -->
     <group unless="$(arg sim)">
+        <include file="$(find nvt_core)/launch/include/sensors/sensors.launch" />
     </group>
 
     <!-- ======== Description ======== -->
-    <node pkg="nvt_simulation" type="launch_delayed.sh" args="3 roslaunch nvt_simulation nvt_spawn.launch model:=$(arg model) init_pos_x:=$(arg init_pos_x) init_pos_y:=$(arg init_pos_y) init_pos_z:=$(arg init_pos_z)" name="nvt_spawn" output="screen" />
+    <node pkg="nvt_simulation" type="launch_delayed.sh" args="3 roslaunch nvt_description robot_model.launch model:=$(arg model) init_pos_x:=$(arg init_pos_x) init_pos_y:=$(arg init_pos_y) init_pos_z:=$(arg init_pos_z)" name="robot_model" output="screen" />
 
     <!-- ======== Control ======== -->
     <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_control nvt_control.launch model:=$(arg model) sim:=$(arg sim)" name="nvt_control" output="screen" />
