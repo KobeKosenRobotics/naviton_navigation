@@ -5,7 +5,7 @@
     <arg name="param_file_waypoint_recorder" default="$(find nvt_core)/config/waypoint/waypoint_recorder.yaml" />
     <arg name="param_file_waypoint_visualizer" default="$(find nvt_core)/config/waypoint/waypoint_visualizer.yaml" />
 
-    <arg name="file_directory" default="$(find nvt_core)/config/waypoint/recordedFiles" />
+    <arg name="file_directory" default="$(find nvt_core)/config/waypoint/recorded_files" />
     <arg name="file_name" default="wpData_lastest.csv" />
 
     <!-- Mode-->
