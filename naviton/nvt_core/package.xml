@@ -62,6 +62,12 @@
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>tf</exec_depend>
 
+  <build_depend>waypoint_msgs</build_depend>
+  <build_depend>waypoint_manager_msgs</build_depend>
+  <build_export_depend>waypoint_msgs</build_export_depend>
+  <build_export_depend>waypoint_manager_msgs</build_export_depend>
+  <exec_depend>waypoint_msgs</exec_depend>
+  <exec_depend>waypoint_manager_msgs</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

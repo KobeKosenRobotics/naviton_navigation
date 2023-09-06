@@ -12,7 +12,7 @@ CostmapMerger::CostmapMerger(ros::NodeHandle &nh, ros::NodeHandle &pn)
 
     _costmap_main_sub = nh.subscribe(topic_main_sub, 10, &CostmapMerger::costmap_main_cb, this);
     _costmap_sub_sub = nh.subscribe(topic_sub_sub, 10, &CostmapMerger::costmap_sub_cb, this);
-    _costmap_merged_pub = nh.advertise<nav_msgs::OccupancyGrid>(topic_pub, 1);
+    _costmap_merged_pub = nh.advertise<nav_msgs::OccupancyGrid>(topic_pub, 10);
 
     pn.param<float>("costmap_main_magnification", _costmap_main_magnification, 1.0);
     pn.param<float>("costmap_sub_magnification", _costmap_sub_magnification, 1.0);
