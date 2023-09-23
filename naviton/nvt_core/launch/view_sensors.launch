@@ -1,5 +1,7 @@
 <launch>
 
+<param name="/use_sim_time" value="false" />
+
 <!-- ======== Description ======== -->
 <include file="$(find nvt_description)/launch/robot_model.launch" />
 
