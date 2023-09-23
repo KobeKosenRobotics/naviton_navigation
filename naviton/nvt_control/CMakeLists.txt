@@ -156,6 +156,10 @@ set(HEADERS include/nvt_control/nvt_hwInterface.h)
 add_executable(nvt_hwInterface_node src/nvt_hwInterface src/nodes/nvt_hwInterface_node)
 target_link_libraries(nvt_hwInterface_node ${catkin_LIBRARIES})
 
+set(HEADERS include/nvt_control/teensy_handler.h)
+add_executable(teensy_handler_node src/teensy_handler src/nodes/teensy_handler_node)
+target_link_libraries(teensy_handler_node ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############

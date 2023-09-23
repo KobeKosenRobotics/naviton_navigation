@@ -9,9 +9,10 @@
 		        <param name="baud" type="int" value="57600"/>
 		</node>
 
-                <include file="$(find nvt_control)/launch/include/nvt_hwInterface.launch">
+                <!-- include file="$(find nvt_control)/launch/include/nvt_hwInterface.launch">
                         <arg name="model" default="$(arg model)" />
-                </include>
+                </include -->
+                <node name="teensy_handler_node" pkg="nvt_control" type="teensy_handler_node" output="screen" respawn="false" ns="naviton" />
         </group>
 
         <group if="$(arg sim)">

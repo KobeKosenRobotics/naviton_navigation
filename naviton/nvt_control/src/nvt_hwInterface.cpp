@@ -33,12 +33,11 @@ Naviton::Naviton(ros::NodeHandle &nh, ros::NodeHandle &pn)
 
 void Naviton::read()
 {
-    // ROS_INFO_STREAM("Commands for joints: " << _cmd[0] << ", " << _cmd[1]);
+    _vel[0] = _vel[1] = 1;
 }
 
 void Naviton::write()
 {
-
 }
 
 void Naviton::teensyData_cb(std_msgs::Float32MultiArrayConstPtr msg)
@@ -58,5 +57,7 @@ void Naviton::teensyData_cb(std_msgs::Float32MultiArrayConstPtr msg)
     transformStamped.transform.rotation.y = msg->data[5];
     transformStamped.transform.rotation.z = msg->data[6];
 
+    std::cout << "Left: " << msg->data[7] << ", Right: " << msg->data[8] << std::endl;
+    _vel[0] = _vel[1] = 1;
     _br.sendTransform(transformStamped);
 }
