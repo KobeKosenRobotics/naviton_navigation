@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(nvt_dwa_planner)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+#add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+find_package(Eigen3 REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -105,9 +106,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES nvt_dwa_planner
-#  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy tf
+  INCLUDE_DIRS include
+  LIBRARIES nvt_dwa_planner
+  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy tf
 #  DEPENDS system_lib
 )
 
@@ -118,8 +119,9 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -151,6 +153,10 @@ include_directories(
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+
+set(HEADERS include/nvt_dwa_planner/dwa_planner.h)
+add_executable(dwa_planner_node src/dwa_planner src/nodes/dwa_planner_node)
+target_link_libraries(dwa_planner_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 #############
 ## Install ##

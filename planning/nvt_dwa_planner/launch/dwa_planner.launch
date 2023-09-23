@@ -1,0 +1,13 @@
+<launch>
+
+    <arg name="param_file" default="$(find nvt_dwa_planner)/config/dwa_planner.yaml"/>
+
+    <group ns="nvt_dwa_planner">
+        
+        <node pkg="nvt_dwa_planner" type="dwa_planner_node" name="dwa_planner_node" output="screen">
+            <rosparam command="load" file="$(arg param_file)" />
+        </node>
+
+    </group>
+
+</launch>
