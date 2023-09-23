@@ -97,11 +97,13 @@ void PointCloud2Costmap::downsampling(const pcl::PointCloud<pcl::PointXYZ>::Cons
     voxel_grid_filter.filter(*pc_output); 
 }
 
-int PointCloud2Costmap::get_x_index_from_index(const int index){
+int PointCloud2Costmap::get_x_index_from_index(const int index)
+{
     return index % _grid_width;
 }
 
-int PointCloud2Costmap::get_y_index_from_index(const int index){
+int PointCloud2Costmap::get_y_index_from_index(const int index)
+{
     return index / _grid_width;
 }
 
