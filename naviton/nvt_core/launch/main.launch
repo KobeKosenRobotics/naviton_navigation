@@ -10,10 +10,10 @@
     <arg name="world_name" value="$(find nvt_simulation)/worlds/autoware.world" />
 
     <!-- Map PCD -->
-    <arg name="map_file_dir" value="$(find nvt_core)/config/localization/map_files" />
-    <arg name="map_file" value="autoware_world.pcd" />
+    <arg name="map_file" value="kcct_circuit.pcd" />
 
-    <arg name="waypoint_file" value="wpData_latest.csv" />
+    <!-- Waypoint CSV -->
+    <arg name="waypoint_file" value="kcct_circuit_short.csv" />
 
     <!-- Initial Pose -->
     <arg name="init_pos_x" value="0.0" />
@@ -53,10 +53,13 @@
     </group>
     
     <!-- ======== Localization ======== -->
-    <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core localization.launch init_pos_x:=$(arg init_pos_x) init_pos_y:=$(arg init_pos_y) init_pos_z:=$(arg init_pos_z)" name="nvt_localization" output="screen" />
+    <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core localization.launch map_file:=$(arg map_file) init_pos_x:=$(arg init_pos_x) init_pos_y:=$(arg init_pos_y) init_pos_z:=$(arg init_pos_z)" name="nvt_localization" output="screen" />
 
     <!-- ======== Waypoint ======== -->
-    <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core waypoint.launch mode:=$(arg mode) file_name:=$(arg waypoint_file)" name="nvt_waypoint" output="screen" />
+    <include file="$(find nvt_core)/launch/include/waypoint.launch">
+            <arg name="mode" value="$(arg mode)" />
+            <arg name="file_name" value="$(arg waypoint_file)" />
+    </include>
 
     <!-- ======== Rviz ======== -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nvt_core)/rviz/simulation.rviz" required="true" />
