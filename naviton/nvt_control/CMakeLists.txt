@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
   controller_manager
+  nav_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -107,7 +108,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES nvt_control
-  CATKIN_DEPENDS roscpp rospy std_msgs tf
+  CATKIN_DEPENDS roscpp rospy std_msgs tf nav_msgs
 #  DEPENDS system_lib
 )
 
