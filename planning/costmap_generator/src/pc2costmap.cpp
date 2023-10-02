@@ -6,11 +6,12 @@ PointCloud2Costmap::PointCloud2Costmap(ros::NodeHandle &nh, ros::NodeHandle &pn)
 
     pn.param<std::string>("base_link_frame_id", _base_link_frame_id, "base_link");
 
-    std::string topic_sub, topic_sub2, topic_pub;
+    std::string topic_sub, topic_sub2, topic_pub, topic_pub2;
 
     pn.param<std::string>("pc_main_topic", topic_sub, "pc_main_topic");
     pn.param<std::string>("pc_sub_topic", topic_sub2, "pc_sub_topic");
     pn.param<std::string>("costmap_topic", topic_pub, "costmap_topic");
+    pn.param<std::string>("costmap_inflated_topic", topic_pub2, "costmap_inflated_topic");
 
     pn.param<bool>("use_pc_sub", _use_pc_sub, true);
 
@@ -19,7 +20,8 @@ PointCloud2Costmap::PointCloud2Costmap(ros::NodeHandle &nh, ros::NodeHandle &pn)
     if(_use_pc_sub)
         _pc_sub_sub = nh.subscribe(topic_sub2, 10, &PointCloud2Costmap::pc_sub_cb, this);
     
-    _costmap_pub = nh.advertise<nav_msgs::OccupancyGrid>(topic_pub, 1);
+    _costmap_pub = nh.advertise<nav_msgs::OccupancyGrid>(topic_pub, 10);
+    _costmap_inflated_pub = nh.advertise<nav_msgs::OccupancyGrid>(topic_pub2, 10);
 
     pn.param<float>("width", _width, 20.0);
     pn.param<float>("resolution", _resolution, 0.1);
@@ -29,7 +31,8 @@ PointCloud2Costmap::PointCloud2Costmap(ros::NodeHandle &nh, ros::NodeHandle &pn)
     _grid_width_2 = _grid_width / 2.0;
 
     _costmap.data.resize(_grid_num);
-    for(int i = 0; i < _grid_num; i++) _costmap.data[i] = _cost_min;
+    _costmap_inflated.data.resize(_grid_num);
+    for(int i = 0; i < _grid_num; i++) _costmap.data[i] = _costmap_inflated.data[i] = _cost_min;
 
     pn.param<bool>("pc_main_cropping", _pc_main_settings.cropping, "false");
     pn.param<float>("pc_main_downsampling_rate", _pc_main_settings.downsampling_rate, -0.1);
@@ -50,6 +53,13 @@ PointCloud2Costmap::PointCloud2Costmap(ros::NodeHandle &nh, ros::NodeHandle &pn)
     _inflation_index2 = _inflation_index*_inflation_index;
 
     _seq_id = 0;
+    _costmap.header.frame_id = _costmap_inflated.header.frame_id = _base_link_frame_id;
+    _costmap.info.resolution = _costmap_inflated.info.resolution = _resolution;
+    _costmap.info.width = _costmap_inflated.info.width = _grid_width;
+    _costmap.info.height = _costmap_inflated.info.height = _grid_width;
+    _costmap.info.origin.position.x = _costmap_inflated.info.origin.position.x = -_width_2;
+    _costmap.info.origin.position.y = _costmap_inflated.info.origin.position.y = -_width_2;
+    _costmap.info.origin.orientation.w = _costmap_inflated.info.origin.orientation.w = 1.0;
 }
 
 void PointCloud2Costmap::update()
@@ -57,19 +67,13 @@ void PointCloud2Costmap::update()
     if(!_pc_main_received) return;
     _pc_main_received = false;
 
-    _costmap.header.seq = _seq_id;
-    _costmap.header.stamp = ros::Time::now();
-    _costmap.header.frame_id = _base_link_frame_id;
-    _costmap.info.resolution = _resolution;
-    _costmap.info.width = _grid_width;
-    _costmap.info.height = _grid_width;
-    _costmap.info.origin.position.x = -_width_2;
-    _costmap.info.origin.position.y = -_width_2;
-    _costmap.info.origin.orientation.w = 1.0;
+    _costmap.header.seq = _costmap_inflated.header.seq = _seq_id;
+    _costmap.header.stamp = _costmap_inflated.header.stamp = ros::Time::now();
     _costmap_pub.publish(_costmap);
+    _costmap_inflated_pub.publish(_costmap_inflated);
     _seq_id++;
 
-    for(int i = 0; i < _grid_num; i++) _costmap.data[i] = _cost_min;
+    for(int i = 0; i < _grid_num; i++) _costmap.data[i] = _costmap_inflated.data[i] = _cost_min;
 }
 
 void PointCloud2Costmap::cropping(const pcl::PointCloud<pcl::PointXYZ>::ConstPtr& pc_input, pcl::PointCloud<pcl::PointXYZ>::Ptr pc_output, Eigen::Vector4f minPoint, Eigen::Vector4f maxPoint)
@@ -93,11 +97,13 @@ void PointCloud2Costmap::downsampling(const pcl::PointCloud<pcl::PointXYZ>::Cons
     voxel_grid_filter.filter(*pc_output); 
 }
 
-int PointCloud2Costmap::get_x_index_from_index(const int index){
+int PointCloud2Costmap::get_x_index_from_index(const int index)
+{
     return index % _grid_width;
 }
 
-int PointCloud2Costmap::get_y_index_from_index(const int index){
+int PointCloud2Costmap::get_y_index_from_index(const int index)
+{
     return index / _grid_width;
 }
 
@@ -134,8 +140,8 @@ void PointCloud2Costmap::input2costmap(const pcl::PointCloud<pcl::PointXYZ>::Con
         const int index = get_index_from_xy(p.x, p.y);
         if(!is_validIndex(index)) continue;
 
-        if(_costmap.data[get_index_from_xy(p.x, p.y)] < _cost_max)
-            _costmap.data[get_index_from_xy(p.x, p.y)] = _cost_max;
+        if(_costmap.data[index] < _cost_max)
+            _costmap.data[index] = _costmap_inflated.data[index] = _cost_max;
         
         for(int j = -_inflation_index; j <= _inflation_index; j++)
         {
@@ -149,8 +155,8 @@ void PointCloud2Costmap::input2costmap(const pcl::PointCloud<pcl::PointXYZ>::Con
                 
                 const int cost = _cost_max*(1.0 - sqrt(dist2)/_inflation_index);
                 //const int cost = _cost_max/exp((float)dist2*_resolution*_resolution);
-                if(_costmap.data[index_] < cost)
-                    _costmap.data[index_] = cost;
+                if(_costmap_inflated.data[index_] < cost)
+                    _costmap_inflated.data[index_] = cost;
             }
         }
     }

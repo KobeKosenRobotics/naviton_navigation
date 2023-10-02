@@ -1,7 +1,0 @@
-base_link_frame_id  : base_link
-
-width               : 20          # [m]
-resolution          : 0.1         # [m]
-
-cost_min            : 1
-cost_max            : 100

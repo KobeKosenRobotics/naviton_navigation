@@ -7,7 +7,7 @@
     <arg name="init_pos_y" default="0.0"/>
     <arg name="init_pos_z" default="0.0"/>
 
-    <param  name="naviton/robot_description"
+    <param  name="/naviton/robot_description"
 		    command="$(arg urdf_file)" />
 
     <node   name="urdf_spawner"  
@@ -15,5 +15,15 @@
             type="spawn_model" 
             respawn="false" 
             output="screen" 
+            tf_prefix = "master"
             args="-param /naviton/robot_description -urdf -model $(arg model) -x $(arg init_pos_x) -y $(arg init_pos_y) -z $(arg init_pos_z)" />
+
+    <node   name="robot_state_publisher"
+                pkg="robot_state_publisher"
+                type="robot_state_publisher"
+                respawn="false"
+                output="screen"
+                ns="naviton">
+    </node>
+
 </launch>

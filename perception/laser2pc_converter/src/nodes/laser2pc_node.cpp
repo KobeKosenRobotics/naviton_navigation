@@ -15,6 +15,7 @@ int main(int argc, char **argv)
 
     while(ros::ok())
     {
+        laser2pc.update();
         ros::spinOnce();
         loop_rate.sleep();
     }

@@ -54,8 +54,10 @@ class PointCloud2Costmap
         ros::Subscriber _pc_main_sub;
         ros::Subscriber _pc_sub_sub;
         ros::Publisher _costmap_pub;
+        ros::Publisher _costmap_inflated_pub;
 
         nav_msgs::OccupancyGrid _costmap;
+        nav_msgs::OccupancyGrid _costmap_inflated;
 
         bool _use_pc_sub;
 

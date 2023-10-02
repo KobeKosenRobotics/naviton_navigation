@@ -9,7 +9,7 @@ service_recorder_attributes    : wpRecorder/attributes
 
 lookupTimeout           : 0.2 # [s]
 
-frame_id_robot          : base_link
+frame_id_robot          : naviton/base_link
 frame_id_map            : map
 
 pitch                   : 1.0 # [m]

@@ -20,8 +20,8 @@ naviton:
     # Wheel separation and diameter. These are both optional.
     # diff_drive_controller will attempt to read either one or both from the
     # URDF if not specified as a parameter
-    wheel_separation : 0.555
-    wheel_radius : 0.1575 #0.315
+    #wheel_separation : 0.555
+    #wheel_radius : 0.157 #0.315
 
     # Wheel separation and radius multipliers
     wheel_separation_multiplier: 1.0 # default: 1.0
@@ -33,23 +33,23 @@ naviton:
     # Base frame_id
     base_frame_id: base_link
 
-    enable_odom_tf: true
+    enable_odom_tf: false
         
     # Velocity and acceleration limits
     # Whenever a min_* is unspecified, default to -max_*
     linear:
       x:
         has_velocity_limits    : true
-        max_velocity           : 0.825  # m/s
-        min_velocity           : -0.825 # m/s
+        max_velocity           : 1.667  # m/s
+        min_velocity           : -1.667 # m/s
         has_acceleration_limits: true
-        max_acceleration       : 1.0  # m/s^2
-        min_acceleration       : -1.0 # m/s^2
+        max_acceleration       : 5.0  # m/s^2
+        min_acceleration       : -5.0 # m/s^2
     angular:
       z:
         has_velocity_limits    : true
         max_velocity           : 3.14  # rad/s
         min_velocity           : -3.14
         has_acceleration_limits: true
-        max_acceleration       : 1.0  # rad/s^2
-        min_acceleration       : -1.0
+        max_acceleration       : 5.0  # rad/s^2
+        min_acceleration       : -5.0
