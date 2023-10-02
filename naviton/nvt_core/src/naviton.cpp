@@ -4,8 +4,8 @@ Naviton::Naviton(ros::NodeHandle &nh, ros::NodeHandle &pn)
 {
     std::string service_wpManager_set, topic_nowWp_local;
     
-    pn.param<std::string>("service_wpManager_set", service_wpManager_set, "/waypoint_manager/wpManager/set");
-    pn.param<std::string>("topic_nowWp_local", topic_nowWp_local, "/waypoint_manager/wpManager/nowWp_local");
+    pn.param<std::string>("service_wpManager_set", service_wpManager_set, "/naviton/waypoint/wpManager/set");
+    pn.param<std::string>("topic_nowWp_local", topic_nowWp_local, "/naviton//waypoint/wpManager/nowWp_local");
 
     _wpManager_set_client = nh.serviceClient<waypoint_manager_msgs::waypoint_manager_set>(service_wpManager_set);
     _nowWp_local_subscriber = nh.subscribe(topic_nowWp_local, 10, &Naviton::nowWp_local_cb, this);

@@ -6,6 +6,7 @@
   <!-- declare arguments with default values -->
   <arg name="calibration" default="$(find velodyne_pointcloud)/params/32db.yaml"/>
   <arg name="device_ip" default="" />
+  <arg name="frame_id_prefix" default="" />
   <arg name="frame_id" default="velodyne_link" />
   <arg name="manager" default="$(arg frame_id)_nodelet_manager" />
   <arg name="max_range" default="100.0" />
@@ -23,7 +24,7 @@
   <!-- start nodelet manager and driver nodelets -->
   <include file="$(find nvt_core)/launch/include/sensors/velodyne/nodelet_manager.launch">
     <arg name="device_ip" value="$(arg device_ip)"/>
-    <arg name="frame_id" value="$(arg frame_id)"/>
+    <arg name="frame_id" value="$(arg frame_id_prefix)$(arg frame_id)"/>
     <arg name="manager" value="$(arg manager)" />
     <arg name="model" value="32E"/>
     <arg name="pcap" value="$(arg pcap)"/>

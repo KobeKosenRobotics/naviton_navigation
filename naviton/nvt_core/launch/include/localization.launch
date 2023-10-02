@@ -10,13 +10,20 @@
     <arg name="init_pos_y" default="0.0" />
     <arg name="init_pos_z" default="0.0" />
 
-    <!-- ======== HDL Localization ======== -->
-    <include file="$(find nvt_core)/launch/include/localization/hdl_localization.launch">
-        <arg name="map_file_dir" value="$(arg map_file_dir)" />
-        <arg name="map_file" value="$(arg map_file)" />
-        <arg name="init_pos_x" value="$(arg init_pos_x)" />
-        <arg name="init_pos_y" value="$(arg init_pos_y)" />
-        <arg name="init_pos_z" value="$(arg init_pos_z)" />
-    </include>
+    <!-- ======== Localization ======== -->
+    <!-- <group ns="localization"> -->
+        <!-- HDL Localization -->
+        <include file="$(find nvt_core)/launch/include/localization/hdl_localization.launch">
+            <arg name="map_file_dir" value="$(arg map_file_dir)" />
+            <arg name="map_file" value="$(arg map_file)" />
+            <arg name="init_pos_x" value="$(arg init_pos_x)" />
+            <arg name="init_pos_y" value="$(arg init_pos_y)" />
+            <arg name="init_pos_z" value="$(arg init_pos_z)" />
+            <arg name="points_topic" value="/naviton/sensors/velodyne/velodyne_points" />
+            <arg name="odom_child_frame_id" value="naviton/base_link" />
+            <arg name="robot_odom_frame_id" value="odom" />
+        </include>
+    
+    <!-- </group> -->
     
 </launch>

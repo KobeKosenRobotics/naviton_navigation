@@ -11,31 +11,33 @@
     <!-- Mode-->
     <arg name="mode" default="true" />    <!-- false: Recording, true: Tracking -->
 
-    <!-- ======== Waypoint Recorder ======== -->
-    <group unless="$(arg mode)">
-        <!-- Recorder -->
-        <include file="$(find waypoint_manager)/launch/waypoint_recorder.launch">
-            <arg name="param_file" value="$(arg param_file_waypoint_recorder)" />
-            <arg name="file_directory" value="$(arg file_directory)" />
+    <!-- ======== Waypoint ======== -->
+    <group ns="waypoint">
+
+        <group unless="$(arg mode)">
+            <!-- Recorder -->
+            <include file="$(find waypoint_manager)/launch/waypoint_recorder.launch">
+                <arg name="param_file" value="$(arg param_file_waypoint_recorder)" />
+                <arg name="file_directory" value="$(arg file_directory)" />
+            </include>
+        </group>
+        
+        <group if="$(arg mode)">
+            <!-- Loader -->
+            <include file="$(find waypoint_manager)/launch/waypoint_loader.launch">
+                <arg name="param_file" value="$(arg param_file_waypoint_loader)" />
+                <arg name="file_directory" value="$(arg file_directory)" />
+                <arg name="file_name" value="$(arg file_name)" />
+            </include>
+            <!-- Manager -->
+            <include file="$(find waypoint_manager)/launch/waypoint_manager.launch">
+                <arg name="param_file" value="$(arg param_file_waypoint_manager)" />
+            </include>
+        </group>
+        
+        <!-- Visualizer -->
+        <include file="$(find waypoint_manager)/launch/waypoint_visualizer.launch">
+            <arg name="param_file" value="$(arg param_file_waypoint_visualizer)" />
         </include>
     </group>
-    
-    <!-- ======== Waypoint Loader ======== -->
-    <group if="$(arg mode)">
-        <!-- Loader -->
-        <include file="$(find waypoint_manager)/launch/waypoint_loader.launch">
-            <arg name="param_file" value="$(arg param_file_waypoint_loader)" />
-            <arg name="file_directory" value="$(arg file_directory)" />
-            <arg name="file_name" value="$(arg file_name)" />
-        </include>
-        <!-- Manager -->
-        <include file="$(find waypoint_manager)/launch/waypoint_manager.launch">
-            <arg name="param_file" value="$(arg param_file_waypoint_manager)" />
-        </include>
-    </group>
-    
-    <!-- ======== Waypoint Visualizer ======== -->
-    <include file="$(find waypoint_manager)/launch/waypoint_visualizer.launch">
-        <arg name="param_file" value="$(arg param_file_waypoint_visualizer)" />
-    </include>
 </launch>
