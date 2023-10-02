@@ -1,27 +1,36 @@
 <launch>
-    <arg name="model" default="naviton" />
-    <arg name="description_package" default="$(find nvt_description)" />
-    <arg name="urdf_file" default="$(find xacro)/xacro '$(arg description_package)/urdf/$(arg model).urdf.xacro'" />
+        <arg name="model" default="naviton" />
+        <arg name="description_package" default="$(find nvt_description)" />
+        <arg name="urdf_file" default="$(find xacro)/xacro '$(arg description_package)/urdf/$(arg model).urdf.xacro'" />
 
-    <arg name="init_pos_x" default="0.0"/>
-    <arg name="init_pos_y" default="0.0"/>
-    <arg name="init_pos_z" default="0.0"/>
+        <arg name="init_pos_x" default="0.0"/>
+        <arg name="init_pos_y" default="0.0"/>
+        <arg name="init_pos_z" default="0.0"/>
 
-    <param  name="/naviton/robot_description"
-		    command="$(arg urdf_file)" />
+        <group ns="naviton">
 
-    <node   name="urdf_spawner"  
-            pkg="gazebo_ros" 
-            type="spawn_model" 
-            respawn="false" 
-            output="screen" 
-            args="-param /naviton/robot_description -urdf -model $(arg model) -x $(arg init_pos_x) -y $(arg init_pos_y) -z $(arg init_pos_z)" />
+                <param  name="robot_description"
+                        command="$(arg urdf_file)" />
 
-    <node   name="robot_state_publisher"
+                <node   name="urdf_spawner"  
+                pkg="gazebo_ros" 
+                type="spawn_model" 
+                respawn="false" 
+                output="screen" 
+                args="-param robot_description -urdf -model $(arg model) -x $(arg init_pos_x) -y $(arg init_pos_y) -z $(arg init_pos_z)" >
+
+                </node>
+        
+                <node   name="robot_state_publisher"
                 pkg="robot_state_publisher"
                 type="robot_state_publisher"
                 respawn="false"
-                output="screen"
-                ns="naviton">
-        </node>
+                output="screen">
+                
+                <param name="tf_prefix" value="naviton" />
+
+                </node>
+        
+        </group>
+
 </launch>

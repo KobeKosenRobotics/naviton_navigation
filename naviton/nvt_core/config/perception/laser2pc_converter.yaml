@@ -1,4 +1,4 @@
 frequency   : 20                  # [hz]
 
-laser_topic : /lrf_scan/front
-pc_topic    : /lrf_scan/front_pc
+laser_topic : /naviton/sensors/lrf/scan
+pc_topic    : /naviton/sensors/lrf/scan_pc

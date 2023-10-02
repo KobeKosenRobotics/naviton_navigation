@@ -7,6 +7,6 @@
     <!--param  name="naviton/robot_description"
 		    command="$(arg urdf_file)" /-->
 
-    <node name="nvt_hwInterface_node" pkg="nvt_control" type="nvt_hwInterface_node" output="screen" respawn="false" ns="naviton" />
+    <node name="nvt_hwInterface_node" pkg="nvt_control" type="nvt_hwInterface_node" output="screen" respawn="false" />
 
 </launch>

@@ -15,6 +15,7 @@
             type="spawn_model" 
             respawn="false" 
             output="screen" 
+            tf_prefix = "master"
             args="-param /naviton/robot_description -urdf -model $(arg model) -x $(arg init_pos_x) -y $(arg init_pos_y) -z $(arg init_pos_z)" />
 
     <node   name="robot_state_publisher"

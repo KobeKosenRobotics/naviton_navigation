@@ -3,14 +3,14 @@
 TeensyHandler::TeensyHandler(ros::NodeHandle &nh, ros::NodeHandle &pn)
 {
     std::string topic_sub, topic_odom;
-    pn.param<std::string>("teensyData_topic", topic_sub, "teensy_data");
+    pn.param<std::string>("teensyData_topic", topic_sub, "firmware/teensy/teensy_data");
     pn.param<std::string>("odom_topic", topic_odom, "mobile_base_controller/odom");
 
     _teensyData_sub = nh.subscribe(topic_sub, 10, &TeensyHandler::teensyData_cb, this);
     _odom_pub = nh.advertise<nav_msgs::Odometry>(topic_odom, 10);
 
     pn.param<std::string>("frame_id_odom", _frame_id_odom, "odom");
-    pn.param<std::string>("frame_id_base_link", _frame_id_base_link, "base_link");
+    pn.param<std::string>("frame_id_base_link", _frame_id_base_link, "naviton/base_link");
 }
 
 void TeensyHandler::teensyData_cb(std_msgs::Float32MultiArrayConstPtr msg)
