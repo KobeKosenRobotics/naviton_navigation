@@ -22,7 +22,7 @@ error_cost_gain: 1.0
 speed_cost_gain: 5.0
 costmap_cost_gain: 0.0
 
-local_map_threshould: 5
+obstacle_distance_threshould: 1 # [m]
 
 # Robot params
 min_velocity      : -1.0

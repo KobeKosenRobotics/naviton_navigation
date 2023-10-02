@@ -93,7 +93,7 @@ class DWAPlanner
         nav_msgs::OccupancyGrid _local_map;
         geometry_msgs::Twist _current_velocity;
         double _target_velocity;
-        double _local_map_threshould;
+        double _obstacle_distance_threshould;
         bool _local_goal_subscribed;
         bool _local_map_updated;
         bool _odom_updated;
