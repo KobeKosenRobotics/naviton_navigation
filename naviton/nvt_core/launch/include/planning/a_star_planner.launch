@@ -1,5 +1,0 @@
-<launch>
-
-    <arg name="param_file" default="$(find nvt_core)/config/planning/a_star_planner.yaml"/>
-
-</launch>

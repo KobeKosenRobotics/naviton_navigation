@@ -66,7 +66,7 @@ DWAPlanner::DWAPlanner(ros::NodeHandle &nh, ros::NodeHandle &pn)
     pn.param<double>("speed_cost_gain", _speed_cost_gain, 0.0);
     pn.param<double>("costmap_cost_gain", _costmap_cost_gain, 0.0);
 
-    pn.param<double>("local_map_threshould", _local_map_threshould, 0.0);
+    pn.param<double>("obstacle_distance_threshould", _obstacle_distance_threshould, 1.0);
     pn.param<double>("target_velocity", _target_velocity, 0.0);
 
     _dt = 1.0 / frequency;
@@ -88,6 +88,11 @@ void DWAPlanner::update()
     cmd_vel.linear.x = result_trajectory[0].velocity;
     cmd_vel.angular.z = result_trajectory[0].yawrate;
 
+    if(cmd_vel.linear.x < 0 && _local_goal.pose.position.x < 0)
+    {
+        cmd_vel.linear.x = 0.0;
+        cmd_vel.angular.z = _max_d_yawrate * _dt;
+    }
     _cmd_vel_pub.publish(cmd_vel);
 
     _odom_updated = false;
@@ -99,7 +104,6 @@ std::vector<DWAPlanner::State> DWAPlanner::planning()
 
     double min_cost = 1e6;
 
-    std::vector<std::vector<DWAPlanner::State>> trajectories;
     std::vector<DWAPlanner::State> best_trajectory;
 
     for(int v = 0; v <= _velocity_resolution; v++)
@@ -122,8 +126,8 @@ std::vector<DWAPlanner::State> DWAPlanner::planning()
             double error_cost = calc_error_cost(trajectory);
             double speed_cost = calc_speed_cost(trajectory);
             double costmap_cost = calc_costmap_cost(trajectory);
+            
             if(costmap_cost < 0.0) continue;
-            trajectories.push_back(trajectory);
 
             double final_cost = _error_cost_gain * error_cost + _speed_cost_gain * speed_cost + _costmap_cost_gain * costmap_cost;
             if(final_cost > min_cost) continue;
@@ -136,7 +140,7 @@ std::vector<DWAPlanner::State> DWAPlanner::planning()
     if(min_cost == 1e6)
     {
         best_trajectory.clear();
-        State state(0.0, 0.0, 0.0, _current_velocity.linear.x, _current_velocity.angular.z);
+        State state(0.0, 0.0, 0.0, window.min_velocity, 0.0);
         best_trajectory.push_back(state);
     }
 
@@ -158,7 +162,7 @@ DWAPlanner::Window DWAPlanner::generate_window()
 void DWAPlanner::visualize_trajectory(const std::vector<State>& trajectory)
 {
     visualization_msgs::Marker marker;
-    marker.header.frame_id = "base_link";
+    marker.header.frame_id = _local_map.header.frame_id;
     marker.header.stamp = ros::Time::now();
     marker.color.r = 1;
     marker.color.g = 0;
@@ -201,16 +205,21 @@ double DWAPlanner::calc_speed_cost(const std::vector<State>& trajectory)
 
 double DWAPlanner::calc_costmap_cost(const std::vector<State>& trajectory)
 {
+    int sign = 1; // 1 : success, -1 : failure
+
     double cost = 0;
+    
+    double costmap_threshould = (_obstacle_distance_threshould / (_local_map.info.width * _local_map.info.resolution)) * -198.0 + 100.0;
+    if(costmap_threshould < 1) costmap_threshould = 1;
 
     for(const auto& state : trajectory)
     {
         int index = get_index_from_xy(state.x, state.y);
-        if(index == -1 || _local_map.data[index] > _local_map_threshould) return -1;
-        cost += _local_map.data[index];
+        if(index == -1 || _local_map.data[index] > costmap_threshould) sign = -1;
+        cost += (index != -1) ? _local_map.data[index] : 100;
     }
 
-    return cost;
+    return cost * sign;
 }
 
 double DWAPlanner::lerp(double a, double b, double t)

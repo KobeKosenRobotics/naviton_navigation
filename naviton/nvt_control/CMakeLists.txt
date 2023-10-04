@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
   controller_manager
+  nav_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -107,7 +108,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES nvt_control
-  CATKIN_DEPENDS roscpp rospy std_msgs tf
+  CATKIN_DEPENDS roscpp rospy std_msgs tf nav_msgs
 #  DEPENDS system_lib
 )
 
@@ -155,6 +156,10 @@ include_directories(
 set(HEADERS include/nvt_control/nvt_hwInterface.h)
 add_executable(nvt_hwInterface_node src/nvt_hwInterface src/nodes/nvt_hwInterface_node)
 target_link_libraries(nvt_hwInterface_node ${catkin_LIBRARIES})
+
+set(HEADERS include/nvt_control/teensy_handler.h)
+add_executable(teensy_handler_node src/teensy_handler src/nodes/teensy_handler_node)
+target_link_libraries(teensy_handler_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##

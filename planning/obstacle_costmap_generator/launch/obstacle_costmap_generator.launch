@@ -1,0 +1,11 @@
+<launch>
+    <arg name="param_file" default="$(find obstacle_costmap_generator)/config/obstacle_costmap_generator.yaml" />
+    
+    <group ns="obstacle_costmap_generator">
+        
+        <node pkg="obstacle_costmap_generator" type="obstacle_costmap_generator_node" name="obstacle_costmap_generator_node" output="screen">
+            <rosparam command="load" file="$(arg param_file)" />
+        </node>
+    
+    </group>
+</launch>

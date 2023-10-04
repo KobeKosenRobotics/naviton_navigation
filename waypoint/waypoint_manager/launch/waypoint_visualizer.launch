@@ -1,10 +1,8 @@
 <launch>
     <arg name="param_file" default="$(find waypoint_manager)/config/waypoint_visualizer.yaml" />
     
-    <group ns="waypoint_manager">
-        <node pkg="waypoint_manager" type="waypoint_visualizer_node" name="waypoint_visualizer_node" output="screen">
-            <rosparam command="load" file="$(arg param_file)" />
-        </node>
-    </group>
+    <node pkg="waypoint_manager" type="waypoint_visualizer_node" name="waypoint_visualizer_node" output="screen">
+        <rosparam command="load" file="$(arg param_file)" />
+    </node>
 
 </launch>

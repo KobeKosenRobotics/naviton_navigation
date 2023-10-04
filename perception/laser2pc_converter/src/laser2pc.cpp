@@ -9,9 +9,15 @@ Laser2PointCloud::Laser2PointCloud(ros::NodeHandle &nh, ros::NodeHandle &pn)
     _pc_pub = nh.advertise<sensor_msgs::PointCloud2>(topic_pub, 10);
 }
 
-void Laser2PointCloud::laser_cb(const sensor_msgs::LaserScan::ConstPtr& laser_msg)
+void Laser2PointCloud::update()
 {
     sensor_msgs::PointCloud2 cloud;
-    _projector.projectLaser(*laser_msg, cloud);
+    _projector.projectLaser(_laser_scan, cloud);
+    cloud.header.frame_id = _laser_scan.header.frame_id;
     _pc_pub.publish(cloud);
+}
+
+void Laser2PointCloud::laser_cb(const sensor_msgs::LaserScan::ConstPtr& msg)
+{
+    _laser_scan = *msg;
 }

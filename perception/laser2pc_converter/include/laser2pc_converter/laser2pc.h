@@ -10,13 +10,15 @@ class Laser2PointCloud
 {
     public:
         Laser2PointCloud(ros::NodeHandle &nh, ros::NodeHandle &pn);
-        
+        void update();
     private:
-        void laser_cb(const sensor_msgs::LaserScan::ConstPtr& laser_msg);
+        void laser_cb(const sensor_msgs::LaserScan::ConstPtr& msg);
 
         ros::Subscriber _laser_sub;
         ros::Publisher _pc_pub;
+
         laser_geometry::LaserProjection _projector;
+        sensor_msgs::LaserScan _laser_scan;
 };
 
 #endif
