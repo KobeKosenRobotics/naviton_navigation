@@ -9,16 +9,17 @@ Naviton::Naviton(ros::NodeHandle &nh, ros::NodeHandle &pn)
 
     _wpManager_set_client = nh.serviceClient<waypoint_manager_msgs::waypoint_manager_set>(service_wpManager_set);
     _nowWp_local_subscriber = nh.subscribe(topic_nowWp_local, 10, &Naviton::nowWp_local_cb, this);
+    _nowWp_local.index = -1;
 }
 
 void Naviton::init()
 {
     _innerIndex = 0;
+    std::cout << _innerIndex << std::endl;
 }
 
 void Naviton::update()
 {
-    std::cout << _innerIndex << std::endl;
     if(_innerIndex == -1) return;
 
     if(_innerIndex != _nowWp_local.index)
@@ -33,7 +34,23 @@ void Naviton::update()
     double distance_sqr = point.x*point.x+point.y*point.y+point.z*point.z;
     if(distance_sqr < 4.0)
     {
-        _innerIndex++;
+        auto next_waypoint_attribute
+            = std::find_if(_nowWp_local.attributes.begin(), _nowWp_local.attributes.end(),
+            [](waypoint_msgs::waypoint_attribute &attribute)
+            {
+                return(attribute.type == attribute.TYPE_NEXT_WAYPOINT);
+            } );
+        std::cout << _nowWp_local.attributes.size() << std::endl;
+
+        if(next_waypoint_attribute != _nowWp_local.attributes.end())
+        {
+            _innerIndex = std::round(next_waypoint_attribute->value);
+        }
+        else
+        {
+            _innerIndex++;
+        }
+        std::cout << _innerIndex << std::endl;
     }
 }
 
