@@ -51,6 +51,7 @@ CATKIN_IGNORE
 
 # pcd files
 /naviton/nvt_core/config/localization/map_files/*.pcd
+!/naviton/nvt_core/config/localization/map_files/kcct_circuit.pcd
 
 # waypoint files
 /naviton/nvt_core/config/waypoint/recorded_files/*.csv
