@@ -16,10 +16,10 @@ target_velocity: 0.5
 velocity_resolution: 10
 yawrate_resolution: 10
 
-predict_time: 3.0
+predict_time: 6.0
 
 error_cost_gain: 1.0
-speed_cost_gain: 5.0
+speed_cost_gain: 0.0
 costmap_cost_gain: 0.0
 
 obstacle_distance_threshould: 1 # [m]
@@ -28,8 +28,9 @@ obstacle_distance_threshould: 1 # [m]
 min_velocity      : -1.0
 max_velocity      : 1.0
 
-max_yawrate       : 0.8
+min_yawrate       : 0.25
+max_yawrate       : 0.6
 
-max_d_yawrate     : 5.0
+max_d_yawrate     : 7.0
 
 max_acceleration  : 2.0
