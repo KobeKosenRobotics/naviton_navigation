@@ -13,7 +13,7 @@
     <arg name="map_file" value="kcct_circuit.pcd" />
 
     <!-- Waypoint CSV -->
-    <arg name="waypoint_file" value="kcct_circuit_full.csv" />
+    <arg name="waypoint_file" value="kcct_circuit_short.csv" />
 
     <!-- Initial Pose -->
     <arg name="init_pos_x" value="0.0" />

@@ -70,7 +70,7 @@ void ObstacleCostmapGenerator::generate_costmap()
         geometry_msgs::TransformStamped transform_stamped;
         try
         {
-            _buffer.lookupTransform(_base_link_frame_id, _pc.header.frame_id, ros::Time(0), ros::Duration(1.0));
+            transform_stamped = _buffer.lookupTransform(_base_link_frame_id, _pc.header.frame_id, ros::Time(0), ros::Duration(1.0));
         }
         catch (tf2::TransformException& ex)
         {
