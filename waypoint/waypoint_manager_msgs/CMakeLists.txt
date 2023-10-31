@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   message_generation  
   std_msgs
+  waypoint_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -73,6 +74,7 @@ generate_messages(
   DEPENDENCIES
   geometry_msgs
   std_msgs
+  waypoint_msgs
 )
 
 ################################################
@@ -107,7 +109,7 @@ generate_messages(
 catkin_package(
 INCLUDE_DIRS include
 #  LIBRARIES waypoint_msgs
-  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs
+  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs waypoint_msgs
 #  DEPENDS system_lib
 )
 

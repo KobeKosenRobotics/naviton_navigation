@@ -6,7 +6,6 @@
 
 #include <ros/ros.h>
 
-#include <waypoint_msgs/waypoint.h>
 #include <waypoint_msgs/waypoints.h>
 
 class WaypointLoader
