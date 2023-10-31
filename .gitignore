@@ -55,3 +55,4 @@ CATKIN_IGNORE
 
 # waypoint files
 /naviton/nvt_core/config/waypoint/recorded_files/*.csv
+!/naviton/nvt_core/config/waypoint/recorded_files/kcct_circuit_full.csv
