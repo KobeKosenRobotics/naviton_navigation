@@ -40,7 +40,6 @@ void Naviton::update()
             {
                 return(attribute.type == attribute.TYPE_NEXT_WAYPOINT);
             } );
-        std::cout << _nowWp_local.attributes.size() << std::endl;
 
         if(next_waypoint_attribute != _nowWp_local.attributes.end())
         {

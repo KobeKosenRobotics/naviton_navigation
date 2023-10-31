@@ -13,7 +13,7 @@
     <arg name="map_file" value="kcct_circuit.pcd" />
 
     <!-- Waypoint CSV -->
-    <arg name="waypoint_file" value="kcct_circuit_short.csv" />
+    <arg name="waypoint_file" value="kcct_circuit_full.csv" />
 
     <!-- Initial Pose -->
     <arg name="init_pos_x" value="0.0" />
@@ -51,8 +51,10 @@
             <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core perception.launch" name="nvt_perception" output="screen" />
 
             <!-- ======== Planning ======== -->
-            <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core planning.launch" name="nvt_core" output="screen" />
+            <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core planning.launch" name="nvt_planning" output="screen" />
 
+            <!-- ======== Core ======== -->
+            <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core core.launch" name="nvt_core" output="screen" />
         </group>
 
         <!-- ======== Waypoint ======== -->
