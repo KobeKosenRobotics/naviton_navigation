@@ -5,7 +5,6 @@
 
 #include <visualization_msgs/MarkerArray.h>
 
-#include <waypoint_msgs/waypoint.h>
 #include <waypoint_msgs/waypoints.h>
 
 class WaypointVisualizer

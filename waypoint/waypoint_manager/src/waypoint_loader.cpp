@@ -52,12 +52,14 @@ void WaypointLoader::load(std::string file_path)
         while (getline(i_stream, comma_buffer, ','))
         {
             std::istringstream i_stream_(comma_buffer);
-            std::string attribute;
-            if(!getline(i_stream_, attribute, ':')) continue;
-            std::string attribute_value;
-            if(!getline(i_stream_, attribute_value, ':')) continue;
+            std::string type;
+            if(!getline(i_stream_, type, ':')) continue;
+            std::string value;
+            if(!getline(i_stream_, value, ':')) continue;
+            waypoint_msgs::waypoint_attribute attribute;
+            attribute.type = std::stod(type);
+            attribute.value = std::stod(value);
             wp.attributes.push_back(attribute);
-            wp.attribute_values.push_back(std::stod(attribute_value));
         }
 
         _wps.waypoints.push_back(wp);

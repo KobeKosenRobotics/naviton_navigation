@@ -1,4 +1,3 @@
-string[] atrributes
-float32[] attribute_values
+waypoint_msgs/waypoint_attribute[] attributes
 -----
 string log
