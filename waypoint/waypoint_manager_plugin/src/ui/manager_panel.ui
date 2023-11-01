@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RecorderUI</class>
- <widget class="QWidget" name="RecorderUI">
+ <class>ManagerUI</class>
+ <widget class="QWidget" name="ManagerUI">
   <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>416</width>
+    <width>331</width>
     <height>201</height>
    </rect>
   </property>
@@ -34,26 +34,13 @@
         <font>
          <pointsize>12</pointsize>
          <weight>75</weight>
-         <italic>false</italic>
          <bold>true</bold>
-         <underline>false</underline>
         </font>
        </property>
        <property name="text">
-        <string>Waypoint Recorder</string>
+        <string>Waypoint Manager</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="start_button_panel">
-       <item>
-        <widget class="QPushButton" name="start_button">
-         <property name="text">
-          <string>Start Recording</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" name="end_button_panel">
@@ -61,9 +48,9 @@
         <number>10</number>
        </property>
        <item>
-        <widget class="QPushButton" name="end_button">
+        <widget class="QPushButton" name="init_pose_button">
          <property name="text">
-          <string>End Recording</string>
+          <string>Publish Initial Pose</string>
          </property>
         </widget>
        </item>
@@ -74,7 +61,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>File Name</string>
+          <string>Target Waypoint Index:</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -82,15 +69,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="file_name"/>
-       </item>
-       <item>
-        <widget class="QLabel" name="extension">
-         <property name="text">
-          <string>.csv</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+        <widget class="QSpinBox" name="wp_index">
+         <property name="maximum">
+          <number>1000</number>
          </property>
         </widget>
        </item>

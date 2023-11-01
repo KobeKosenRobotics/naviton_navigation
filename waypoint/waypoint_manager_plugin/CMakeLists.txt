@@ -62,14 +62,17 @@ link_directories(${catkin_LIBRARY_DIRS})
 # source codes #
 set(HEADERS
   include/waypoint_manager_plugin/recorder_panel.h
+  include/waypoint_manager_plugin/manager_panel.h
   )
 
 qt5_wrap_ui(UIC_FILES
   src/ui/recorder_panel.ui
+  src/ui/manager_panel.ui
   )
 
 set(SOURCE_FILES
   src/recorder_panel.cpp
+  src/manager_panel.cpp
   )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADERS} ${UIC_FILES})
