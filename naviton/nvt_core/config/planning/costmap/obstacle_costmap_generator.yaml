@@ -1,0 +1,13 @@
+frequency               : 10              # [hz]
+
+#pc_topic                : /naviton/sensors/velodyne/velodyne_points/obstacle
+pc_topic                : /naviton/sensors/lrf/scan_pc
+costmap_topic           : local_costmap
+
+base_link_frame_id      : naviton/base_link
+
+width                   : 16          # [m]
+resolution              : 0.1         # [m]
+
+height_min              : 0.0         # [m]
+height_max              : 1.0         # [m]

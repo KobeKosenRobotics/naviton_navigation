@@ -1,9 +1,0 @@
-local_path_topic      : /sample_path
-costmap_topic         : path_costmap
-
-lane_width_min        : 1.0   # [m]
-lane_width_max        : 2.5   # [m]
-
-path_interval_max     : 1.0   # [m]
-
-frequency             : 20    # [hz]

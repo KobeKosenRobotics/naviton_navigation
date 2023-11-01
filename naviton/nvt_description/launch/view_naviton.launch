@@ -1,7 +1,13 @@
 <launch>
+    
     <include file="$(find nvt_description)/launch/robot_model.launch" />
 
-    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" ns="naviton" /> 
+    <group ns="naviton">
     
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nvt_description)/rviz/nvt_description.rviz" required="true" />
+        <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" /> 
+    
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nvt_description)/rviz/nvt_description.rviz" required="true" />
+    
+    </group>
+
 </launch>

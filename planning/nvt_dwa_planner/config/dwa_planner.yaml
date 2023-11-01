@@ -1,0 +1,38 @@
+frequency: 20.0
+
+# ROS params
+local_goal_topic: /waypoint_manager/wpManager/nowWpPose_local
+local_map_topic: /costmap_generator/obstacle_costmap/inflated
+odom_topic: /naviton/mobile_base_controller/odom
+
+cmd_vel_topic: /naviton/mobile_base_controller/cmd_vel
+
+publish_trajectory: true
+#trajectory_topic: 
+
+# DWA params
+target_velocity: 0.5
+
+velocity_resolution: 10
+yawrate_resolution: 10
+
+predict_time: 6.0
+
+error_cost_gain: 1.0
+speed_cost_gain: 0.0
+costmap_cost_gain: 0.0
+
+obstacle_distance_threshould: 1 # [m]
+
+# Robot params
+min_linear_speed  : 0.1
+min_angular_speed : 0.25
+min_velocity      : -1.0
+max_velocity      : 1.0
+
+min_yawrate       : 0.25
+max_yawrate       : 0.6
+
+max_d_yawrate     : 7.0
+
+max_acceleration  : 2.0

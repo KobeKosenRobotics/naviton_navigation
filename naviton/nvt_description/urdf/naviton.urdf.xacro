@@ -22,7 +22,7 @@
     <!-- ======== Wheels ======== -->
     <!-- Right -->
     <xacro:wheel_v0 prefix="right" parent="base_link">
-	    <origin xyz="0 -0.2775 0.1575"/>
+	    <origin xyz="0 -0.265 0.1575"/>
 	    <axis xyz="0 1 0"/>
     </xacro:wheel_v0>
     <xacro:wheel_trans_v0 prefix="right" />
@@ -30,7 +30,7 @@
     
     <!-- Left -->
     <xacro:wheel_v0 prefix="left" parent="base_link">
-	    <origin xyz="0 0.2775 0.1575" rpy="0 0 ${M_PI}"/>
+	    <origin xyz="0 0.265 0.1575" rpy="0 0 ${M_PI}"/>
 	    <axis xyz="0 -1 0"/>
     </xacro:wheel_v0>
     <xacro:wheel_trans_v0 prefix="left" />
@@ -38,15 +38,15 @@
 
     <!-- ======== Sensors ======== -->
     <!-- VHDL-32E -->
-    <xacro:HDL-32E parent="base_link" name="velodyne_link" topic="velodyne_points" hz="10" samples="1024" gpu="true">
+    <xacro:HDL-32E parent="base_link" name="velodyne_link" topic="sensors/velodyne/velodyne_points" hz="10" samples="1024" gpu="true">
         <origin xyz="0 0 0.8" rpy="0 0 0" />
     </xacro:HDL-32E>
 
     <!-- LRF -->
     <xacro:lrf_v0 prefix="front" parent="base_link">
-  	    <origin xyz="0.225 0.0 0.195" />
+  	    <origin xyz="0.155 0.0 0.195" rpy="${M_PI} 0 0"/>
     </xacro:lrf_v0>
-    <xacro:lrf_gazebo_v0    topic_name="/lrf_scan/front" prefix="front"
+    <xacro:lrf_gazebo_v0    topic_name="sensors/lrf/scan" prefix="front"
 					        min_rad="-1.65806278939" max_rad="1.65806278939"
 					        min_range="0.10" max_range="60.0" />
 

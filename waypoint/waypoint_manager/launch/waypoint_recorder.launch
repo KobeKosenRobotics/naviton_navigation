@@ -2,11 +2,9 @@
     <arg name="param_file" default="$(find waypoint_manager)/config/waypoint_recorder.yaml" />
     <arg name="file_directory" default="$(find waypoint_manager)/recordedFiles" />
 
-    <group ns="waypoint_manager">
-        <node pkg="waypoint_manager" type="waypoint_recorder_node" name="waypoint_recorder_node" output="screen">
-            <rosparam command="load" file="$(arg param_file)" />
-            <param name="file_dir" value="$(arg file_directory)" />
-        </node>
-    </group>
+    <node pkg="waypoint_manager" type="waypoint_recorder_node" name="waypoint_recorder_node" output="screen">
+        <rosparam command="load" file="$(arg param_file)" />
+        <param name="file_dir" value="$(arg file_directory)" />
+    </node>
 
 </launch>

@@ -1,10 +1,12 @@
 <launch>
 
+<param name="/use_sim_time" value="false" />
+
 <!-- ======== Description ======== -->
 <include file="$(find nvt_description)/launch/robot_model.launch" />
 
 <!-- ======== Sensor Drivers ======== -->
-<include file="$(find nvt_core)/launch/include/sensors/sensors.launch" />
+<include file="$(find nvt_core)/launch/include/sensors.launch" />
 
 <!-- ======== Rviz ======== -->
 <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nvt_core)/rviz/view_sensors.rviz" required="true" />

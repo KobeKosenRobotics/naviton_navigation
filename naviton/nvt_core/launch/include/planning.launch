@@ -1,14 +1,28 @@
 <launch>
 
     <!-- ======== Parameters ======== -->
-    <arg name="param_file_a_star_planner" default="$(find nvt_core)/config/planning/a_star_planner.yaml" />
+    <arg name="param_file_obstacle_costmap_generator" default="$(find nvt_core)/config/planning/costmap/obstacle_costmap_generator.yaml" />
+    <arg name="param_file_dwa_planner" default="$(find nvt_core)/config/planning/planner/dwa_planner.yaml" />
 
-    <!-- ======== Costmap Generator ======== -->
-    <include file="$(find nvt_core)/launch/include/planning/costmap_generator.launch">
-    </include>
+    <!-- ======== Planning ======== -->
+    <group ns="planning">
 
-    <!-- ======== A* Planner ======== -->
-    <!-- include file="$(find a_star_planner)/launch/a_star_planner.launch">
-        <arg name="param_file" value="$(arg param_file_a_star_planner)" />
-    </include -->
+        <!-- ======== Costmap ======== -->
+        <group ns="costmap">
+            <!-- Obstacle Costmap Generator -->
+            <include file="$(find obstacle_costmap_generator)/launch/obstacle_costmap_generator.launch">
+                <arg name="param_file" value="$(arg param_file_obstacle_costmap_generator)" />
+            </include>
+        </group>
+
+        <!-- ======== Planner ======== -->
+        <group ns="planner">
+            <!-- DWA Planner -->
+            <include file="$(find nvt_dwa_planner)/launch/dwa_planner.launch">
+                <arg name="param_file" value="$(arg param_file_dwa_planner)" />
+            </include>
+        </group>
+
+    </group>
+    
 </launch>
