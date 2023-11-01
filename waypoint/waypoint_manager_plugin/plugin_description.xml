@@ -1,0 +1,8 @@
+<library path="libwaypoint_manager_plugin">
+  <!-- Recorder Panel -->
+  <class name="waypoint_manager_plugin/RecorderPanel" type="waypoint_manager_plugin::RecorderPanel" base_class_type="rviz::Panel">
+    <description>
+      Waypoint Recorder Panel plugin.
+    </description>
+  </class>
+</library>

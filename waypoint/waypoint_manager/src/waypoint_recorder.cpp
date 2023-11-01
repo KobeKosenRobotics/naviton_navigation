@@ -84,13 +84,13 @@ bool WaypointRecorder::recorder_end_cb(waypoint_manager_msgs::waypoint_recorder_
     std::cout << "WaypointRecorder: End" << std::endl;
     save("wpData_latest");
     if(!req.save) return true;
-    std::cout << "WaypointRecorder: Save" << std::endl;
     save(req.file_name);
     return true;
 }
 
 void WaypointRecorder::save(std::string file_name)
 {
+    std::cout << "WaypointRecorder: Save as " << file_name << ".csv" << std::endl;
     std::ofstream ofs_csv_file(_file_dir +  "/" + file_name + ".csv", std::ios::trunc);
 
     ofs_csv_file << "number" << ',';
