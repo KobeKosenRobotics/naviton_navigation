@@ -7,7 +7,7 @@
     <group ns="core">
         
         <!-- Naviton -->
-        <node pkg="nvt_core" type="naviton_node" name="naviton_node" output="screnn">
+        <node pkg="nvt_core" type="naviton_node" name="naviton_node" output="screen">
             <rosparam command="load" file="$(arg param_file)" />
         </node>
     
