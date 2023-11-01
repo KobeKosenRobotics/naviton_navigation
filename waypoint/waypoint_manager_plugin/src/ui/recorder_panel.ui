@@ -74,7 +74,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>File Name</string>
+          <string>File Name:</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
