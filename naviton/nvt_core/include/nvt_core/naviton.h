@@ -17,8 +17,6 @@ class Naviton
         ros::ServiceClient _wpManager_set_client;
         ros::Subscriber _nowWp_local_subscriber;
         waypoint_msgs::waypoint _nowWp_local;
-
-        int _innerIndex;
 };
 
 #endif
