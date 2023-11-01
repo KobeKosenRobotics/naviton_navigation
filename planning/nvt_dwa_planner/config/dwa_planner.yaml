@@ -25,6 +25,8 @@ costmap_cost_gain: 0.0
 obstacle_distance_threshould: 1 # [m]
 
 # Robot params
+min_linear_speed  : 0.1
+min_angular_speed : 0.25
 min_velocity      : -1.0
 max_velocity      : 1.0
 

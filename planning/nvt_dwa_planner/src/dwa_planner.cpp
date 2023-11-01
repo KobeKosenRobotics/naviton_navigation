@@ -53,6 +53,8 @@ DWAPlanner::DWAPlanner(ros::NodeHandle &nh, ros::NodeHandle &pn)
 
     double frequency;
 
+    pn.param<double>("min_linear_speed", _min_linear_speed, 0.0);
+    pn.param<double>("min_angular_speed", _min_angular_speed, 0.0);
     pn.param<double>("min_velocity", _min_velocity, 0.0);
     pn.param<double>("max_velocity", _max_velocity, 0.0);
     pn.param<double>("min_yawrate", _min_yawrate, 0.0);
@@ -95,6 +97,19 @@ void DWAPlanner::update()
     {
         cmd_vel.linear.x = 0.0;
         cmd_vel.angular.z = (_local_goal.pose.position.y > 0 ? 1 : -1) * _min_yawrate;
+    }
+    else
+    {
+        double linear_speed = abs(cmd_vel.linear.x);
+        double angular_speed = abs(cmd_vel.angular.z);
+        double compensation_mag_linear =  linear_speed < _min_linear_speed ? _min_linear_speed / abs(cmd_vel.linear.x) : 1.0;
+        double compensation_mag_angular = angular_speed < _min_angular_speed ? _min_angular_speed / abs(cmd_vel.angular.z) : 1.0;
+        if(compensation_mag_linear > 1 && compensation_mag_angular > 1)
+        {
+            double compensation_mag = std::min(compensation_mag_linear, compensation_mag_angular);
+            cmd_vel.linear.x = cmd_vel.linear.x * compensation_mag;
+            cmd_vel.angular.z = cmd_vel.angular.z * compensation_mag;
+        }
     }
     _cmd_vel_pub.publish(cmd_vel);
 

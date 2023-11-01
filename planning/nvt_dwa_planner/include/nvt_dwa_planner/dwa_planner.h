@@ -72,6 +72,8 @@ class DWAPlanner
 
         ros::Publisher _trajectory_pub;
 
+        double _min_linear_speed;
+        double _min_angular_speed;
         double _min_velocity;
         double _max_velocity;
 
