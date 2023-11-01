@@ -53,8 +53,11 @@ DWAPlanner::DWAPlanner(ros::NodeHandle &nh, ros::NodeHandle &pn)
 
     double frequency;
 
+    pn.param<double>("min_linear_speed", _min_linear_speed, 0.0);
+    pn.param<double>("min_angular_speed", _min_angular_speed, 0.0);
     pn.param<double>("min_velocity", _min_velocity, 0.0);
     pn.param<double>("max_velocity", _max_velocity, 0.0);
+    pn.param<double>("min_yawrate", _min_yawrate, 0.0);
     pn.param<double>("max_yawrate", _max_yawrate, 0.0);
     pn.param<double>("max_acceleration", _max_acceleration, 0.0);
     pn.param<double>("max_d_yawrate", _max_d_yawrate, 0.0);
@@ -72,6 +75,8 @@ DWAPlanner::DWAPlanner(ros::NodeHandle &nh, ros::NodeHandle &pn)
     _dt = 1.0 / frequency;
     _velocity_resolution_inv = 1.0 / (double)_velocity_resolution;
     _yawrate_resolution_inv = 1.0 / (double)_yawrate_resolution;
+
+    _local_goal_subscribed = _local_map_updated = _odom_updated = false;
 }
 
 void DWAPlanner::update()
@@ -91,7 +96,20 @@ void DWAPlanner::update()
     if(cmd_vel.linear.x < 0 && _local_goal.pose.position.x < 0)
     {
         cmd_vel.linear.x = 0.0;
-        cmd_vel.angular.z = _max_d_yawrate * _dt;
+        cmd_vel.angular.z = (_local_goal.pose.position.y > 0 ? 1 : -1) * _min_yawrate;
+    }
+    else
+    {
+        double linear_speed = abs(cmd_vel.linear.x);
+        double angular_speed = abs(cmd_vel.angular.z);
+        double compensation_mag_linear =  linear_speed < _min_linear_speed ? _min_linear_speed / abs(cmd_vel.linear.x) : 1.0;
+        double compensation_mag_angular = angular_speed < _min_angular_speed ? _min_angular_speed / abs(cmd_vel.angular.z) : 1.0;
+        if(compensation_mag_linear > 1 && compensation_mag_angular > 1)
+        {
+            double compensation_mag = std::min(compensation_mag_linear, compensation_mag_angular);
+            cmd_vel.linear.x = cmd_vel.linear.x * compensation_mag;
+            cmd_vel.angular.z = cmd_vel.angular.z * compensation_mag;
+        }
     }
     _cmd_vel_pub.publish(cmd_vel);
 
@@ -130,6 +148,7 @@ std::vector<DWAPlanner::State> DWAPlanner::planning()
             if(costmap_cost < 0.0) continue;
 
             double final_cost = _error_cost_gain * error_cost + _speed_cost_gain * speed_cost + _costmap_cost_gain * costmap_cost;
+            if(velocity < 0.0) final_cost *= 2.0;
             if(final_cost > min_cost) continue;
             min_cost = final_cost;
 

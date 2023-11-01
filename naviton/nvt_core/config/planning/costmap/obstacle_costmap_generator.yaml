@@ -6,8 +6,8 @@ costmap_topic           : local_costmap
 
 base_link_frame_id      : naviton/base_link
 
-width                   : 20          # [m]
-resolution              : 0.2         # [m]
+width                   : 16          # [m]
+resolution              : 0.1         # [m]
 
 height_min              : 0.0         # [m]
 height_max              : 1.0         # [m]

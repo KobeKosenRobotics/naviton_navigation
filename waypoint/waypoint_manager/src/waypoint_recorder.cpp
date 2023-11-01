@@ -69,7 +69,7 @@ bool WaypointRecorder::recorder_start_cb(waypoint_manager_msgs::waypoint_recorde
     std::cout << "WaypointRecorder: Start" << std::endl;
     
     _wps.waypoints.clear();
-    _attirbutes_permanent.clear();
+    _attributes_permanent.clear();
     _recording = true;
 
     _point_old.x = _point_old.y = _point_old.z = DBL_MAX;
@@ -84,13 +84,13 @@ bool WaypointRecorder::recorder_end_cb(waypoint_manager_msgs::waypoint_recorder_
     std::cout << "WaypointRecorder: End" << std::endl;
     save("wpData_latest");
     if(!req.save) return true;
-    std::cout << "WaypointRecorder: Save" << std::endl;
     save(req.file_name);
     return true;
 }
 
 void WaypointRecorder::save(std::string file_name)
 {
+    std::cout << "WaypointRecorder: Save as " << file_name << ".csv" << std::endl;
     std::ofstream ofs_csv_file(_file_dir +  "/" + file_name + ".csv", std::ios::trunc);
 
     ofs_csv_file << "number" << ',';
@@ -117,7 +117,7 @@ void WaypointRecorder::save(std::string file_name)
         ofs_csv_file << pose.orientation.w << ',';
         for (int j = 0; j < _wps.waypoints[i].attributes.size(); j++)
         {
-            ofs_csv_file << _wps.waypoints[i].attributes[j] << ':' << _wps.waypoints[i].attribute_values[j] << ',';
+            ofs_csv_file << _wps.waypoints[i].attributes[j].type << ':' << _wps.waypoints[i].attributes[j].value << ',';
         }
         ofs_csv_file << "" << std::endl;
     }
@@ -126,7 +126,6 @@ void WaypointRecorder::save(std::string file_name)
 bool WaypointRecorder::recorder_record_cb(waypoint_manager_msgs::waypoint_recorder_record::Request& req, waypoint_manager_msgs::waypoint_recorder_record::Response& res)
 {
     if(!_recording) return false;
-    if(req.atrributes.size() != req.attribute_values.size()) return false;
 
     std::cout << "WaypointRecorder: AddRecord" << std::endl;
 
@@ -146,34 +145,21 @@ bool WaypointRecorder::recorder_record_cb(waypoint_manager_msgs::waypoint_record
         return false;
     }
 
-    std::vector<Attribute> attributes_tmp;
-    for(int i = 0; i < req.atrributes.size(); i++)
-    {
-        Attribute attribute_tmp;
-        attribute_tmp.attribute = req.atrributes[i];
-        attribute_tmp.value = req.attribute_values[i]; 
-        attributes_tmp.push_back(attribute_tmp);
-    }
-
-    record(attributes_tmp);
+    record(req.attributes);
     return true;
 }
 
 bool WaypointRecorder::recorder_attributes_cb(waypoint_manager_msgs::waypoint_recorder_attributes::Request& req, waypoint_manager_msgs::waypoint_recorder_attributes::Response& res)
 {
     if(!_recording) return false;
-    if(req.atrributes.size() != req.attribute_values.size()) return false;
-
+    
     std::cout << "WaypointRecorder: SetAttributes" << std::endl;
 
-    _attirbutes_permanent.clear();
+    _attributes_permanent.clear();
 
-    for(int i = 0; i < req.atrributes.size(); i++)
+    for(int i = 0; i < req.attributes.size(); i++)
     {
-        Attribute attribute_tmp;
-        attribute_tmp.attribute = req.atrributes[i];
-        attribute_tmp.value = req.attribute_values[i];
-        _attirbutes_permanent.push_back(attribute_tmp);
+        _attributes_permanent.push_back(req.attributes[i]);
     }
     return true;
 }
@@ -194,10 +180,9 @@ void WaypointRecorder::record()
     waypoint_msgs::waypoint wp;
     wp.index = _wpIndex;
     wp.pose = _pose_stamped;
-    for(const Attribute &attribute : _attirbutes_permanent)
+    for(const waypoint_msgs::waypoint_attribute &attribute : _attributes_permanent)
     {
-        wp.attributes.push_back(attribute.attribute);
-        wp.attribute_values.push_back(attribute.value);
+        wp.attributes.push_back(attribute);
     }
 
     _wps.waypoints.push_back(wp);
@@ -208,7 +193,7 @@ void WaypointRecorder::record()
     publishPath();
 }
 
-void WaypointRecorder::record(std::vector<Attribute> attributes)
+void WaypointRecorder::record(std::vector<waypoint_msgs::waypoint_attribute> attributes)
 {
     const auto& point = _pose_stamped.pose.position;
 
@@ -219,10 +204,9 @@ void WaypointRecorder::record(std::vector<Attribute> attributes)
     waypoint_msgs::waypoint wp;
     wp.index = _wpIndex;
     wp.pose = _pose_stamped;
-    for(const Attribute &attribute : attributes)
+    for(const waypoint_msgs::waypoint_attribute &attribute : attributes)
     {
-        wp.attributes.push_back(attribute.attribute);
-        wp.attribute_values.push_back(attribute.value);
+        wp.attributes.push_back(attribute);
     }
 
     _wps.waypoints.push_back(wp);

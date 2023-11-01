@@ -15,7 +15,6 @@
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 
-#include <waypoint_msgs/waypoint.h>
 #include <waypoint_msgs/waypoints.h>
 #include <waypoint_manager_msgs/waypoint_recorder_start.h>
 #include <waypoint_manager_msgs/waypoint_recorder_end.h>
@@ -24,12 +23,6 @@
 
 class WaypointRecorder
 {
-    struct Attribute
-    {
-        std::string attribute;
-        double value;
-    };
-
     public:
         WaypointRecorder(ros::NodeHandle &nh, ros::NodeHandle &pn);
     private:
@@ -39,7 +32,7 @@ class WaypointRecorder
         bool recorder_record_cb(waypoint_manager_msgs::waypoint_recorder_record::Request& req, waypoint_manager_msgs::waypoint_recorder_record::Response& res);
         bool recorder_attributes_cb(waypoint_manager_msgs::waypoint_recorder_attributes::Request& req, waypoint_manager_msgs::waypoint_recorder_attributes::Response& res);
         void record();
-        void record(std::vector<Attribute> attributes);
+        void record(std::vector<waypoint_msgs::waypoint_attribute> attributes);
         void publishPath();
 
         ros::Publisher _wps_publisher;
@@ -64,13 +57,13 @@ class WaypointRecorder
         std::string _frame_id_map;
         std::string _frame_id_robot;
 
-        std::vector<Attribute> _attirbutes_permanent;
-
         bool _recording = false;
         geometry_msgs::Point _point_old;
 
         std::string _file_dir;
         double _pitch2;
+
+        std::vector<waypoint_msgs::waypoint_attribute> _attributes_permanent;
 };
 
 #endif
