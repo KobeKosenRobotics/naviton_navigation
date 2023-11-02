@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  std_srvs
   tf
   waypoint_msgs
   waypoint_manager_msgs
@@ -108,7 +109,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES nvt_core
-  CATKIN_DEPENDS roscpp rospy std_msgs tf
+  CATKIN_DEPENDS roscpp rospy std_msgs std_srvs tf
 #  DEPENDS system_lib
 )
 
