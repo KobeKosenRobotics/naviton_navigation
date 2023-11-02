@@ -1,0 +1,10 @@
+<library path="libnvt_plugin">
+  
+  <!-- Core Panel -->
+  <class name="nvt_plugin/CorePanel" type="nvt_plugin::CorePanel" base_class_type="rviz::Panel">
+    <description>
+      Naviton Core Panel plugin.
+    </description>
+  </class>
+
+</library>
