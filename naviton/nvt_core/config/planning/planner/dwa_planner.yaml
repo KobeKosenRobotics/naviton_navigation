@@ -22,7 +22,7 @@ error_cost_gain: 10.0
 speed_cost_gain: 0.0
 costmap_cost_gain: 0.025
 
-obstacle_distance_threshould: 0.5 # [m]
+obstacle_distance_threshould: 0.55 # [m]
 
 # Robot params
 min_linear_speed  : 0.15
@@ -35,4 +35,4 @@ max_yawrate       : 0.7
 
 max_d_yawrate     : 4.0
 
-max_acceleration  : 3.5
+max_acceleration  : 4.5
