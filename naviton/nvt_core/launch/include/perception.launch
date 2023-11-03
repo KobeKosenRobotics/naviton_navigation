@@ -8,9 +8,9 @@
     <group ns="perception">
         
         <!-- Velodyne Cloud Separator -->
-        <include file="$(find velodyne_cloud_separator)/launch/velodyne_cloud_separator.launch">
+        <!-- <include file="$(find velodyne_cloud_separator)/launch/velodyne_cloud_separator.launch">
             <arg name="param_file" value="$(arg param_file_velodyne_cloud_separator)" />
-        </include>
+        </include> -->
 
         <!-- Laser to PointCloud2 Converter -->
         <include file="$(find laser2pc_converter)/launch/laser2pc_converter.launch">

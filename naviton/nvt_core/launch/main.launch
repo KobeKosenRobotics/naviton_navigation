@@ -10,10 +10,10 @@
     <arg name="world" value="$(find nvt_simulation)/worlds/autoware.world" />
 
     <!-- Map PCD -->
-    <arg name="map_file" value="kcct_circuit.pcd" />
+    <arg name="map_file" value="kcct_main_building.pcd" />
 
     <!-- Waypoint CSV -->
-    <arg name="waypoint_file" value="kcct_circuit_full.csv" />
+    <arg name="waypoint_file" value="wpData_latest.csv" />
 
     <!-- Initial Pose -->
     <arg name="init_pos_x" value="0.0" />

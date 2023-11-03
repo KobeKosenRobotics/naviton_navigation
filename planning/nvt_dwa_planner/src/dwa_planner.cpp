@@ -159,7 +159,7 @@ std::vector<DWAPlanner::State> DWAPlanner::planning()
     if(min_cost == 1e6)
     {
         best_trajectory.clear();
-        State state(0.0, 0.0, 0.0, window.min_velocity, 0.0);
+        State state(0.0, 0.0, 0.0, window.min_velocity * 0.5, 0.0);
         best_trajectory.push_back(state);
     }
 
