@@ -1,0 +1,24 @@
+<launch>
+
+    <arg name="bag_file" default="/home/share/rosbag/lrf_doors/elevator.bag" />
+    <param name="/use_sim_time" value="true" />
+
+    <!-- Laser to PointCloud Converter -->
+    <node pkg="laser2pc_converter" type="laser2pc_node" name="laser2pc_node">
+        <param name="laser_topic" value="scan" />
+        <param name="pc_topic" value="scan_pc" />
+    </node>
+
+    <!-- Door Detector -->
+    <node pkg="lrf_door_detector" type="door_detector_node" name="door_detector_node" output="screen">
+        <param name="pc_topic" value="scan_pc" />
+        <param name="pc_filtered_topic" value="scan_pc/filtered" />
+    </node>
+
+    <!-- ======== Rosbag ======== -->
+    <node pkg="lrf_door_detector" type="launch_delayed.sh" args="0 rosbag play $(arg bag_file) -r 1.0 --clock --topic /scan" name="launch_delayed" output="screen" />
+
+    <!-- ======== Rviz ======== -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find lrf_door_detector)/rviz/rosbag_test.rviz" required="true" />
+
+</launch>

@@ -9,6 +9,9 @@ project(lrf_door_detector)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
+  pcl_ros
+  roscpp
+  rospy
   sensor_msgs
   std_msgs
   tf
@@ -104,9 +107,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES lrf_door_detector
-#  CATKIN_DEPENDS geometry_msgs sensor_msgs std_msgs tf
+  INCLUDE_DIRS include
+  LIBRARIES lrf_door_detector
+  CATKIN_DEPENDS geometry_msgs pcl_ros roscpp rospy sensor_msgs std_msgs tf
 #  DEPENDS system_lib
 )
 
@@ -117,7 +120,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -150,6 +153,10 @@ include_directories(
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+
+set(HEADERS include/lrf_door_detector/door_detector.h)
+add_executable(door_detector_node src/door_detector src/nodes/door_detector_node)
+target_link_libraries(door_detector_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##
