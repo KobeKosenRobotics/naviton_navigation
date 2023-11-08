@@ -19,6 +19,8 @@ class Laser2PointCloud
 
         laser_geometry::LaserProjection _projector;
         sensor_msgs::LaserScan _laser_scan;
+
+        bool _scan_subscribed;
 };
 
 #endif
