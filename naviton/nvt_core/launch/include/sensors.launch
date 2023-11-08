@@ -18,6 +18,12 @@
         </include>
     </group>
 
+    <!-- D435i -->
+    <group ns="dcamera">
+        <include file="$(find nvt_core)/launch/include/sensors/realsense/d435i.launch">
+        </include>
+    </group>
+
 </group>
 
 </launch>
