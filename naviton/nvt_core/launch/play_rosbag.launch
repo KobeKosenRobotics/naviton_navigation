@@ -1,0 +1,21 @@
+<launch>
+    
+    <param name="/use_sim_time" value="true" />
+
+    <arg name="bag_file" default="/home/share/rosbag/2023-11-26-06-08-47.bag" />
+    <!-- <arg name="bag_file" default="/home/share/rosbag/2023-11-26-06-34-15.bag" /> -->
+    <arg name="playback_speed" default="5.0" />
+    
+    <arg name="map_file" default="$(find nvt_core)/config/localization/map_filed/atc.pcd" />
+    <arg name="wp_file" default="$(find nvt_core)/config/waypoint/recorded_files/atc1.csv"/>
+
+    <!-- ======== Description ======== -->
+    <include file="$(find nvt_description)/launch/robot_model.launch"/>
+
+    <!-- ======== Rviz ======== -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nvt_core)/rviz/main.rviz" required="true" />
+
+    <!-- ======== Rosbag ======== -->
+    <node pkg="nvt_core" type="launch_delayed.sh" args="1.5 rosbag play $(arg bag_file) -r $(arg playback_speed) --clock --loop" name="rosbag_play" output="screen" />
+    
+</launch>
