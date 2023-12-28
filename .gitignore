@@ -59,3 +59,4 @@ CATKIN_IGNORE
 !/naviton/nvt_core/config/waypoint/recorded_files/kcct_circuit_full.csv
 !/naviton/nvt_core/config/waypoint/recorded_files/atc1.csv
 !/naviton/nvt_core/config/waypoint/recorded_files/atc2.csv
+!/naviton/nvt_core/config/waypoint/recorded_files/autoware_world.csv
