@@ -2,7 +2,7 @@
 
     <!-- ======== Parameters ======== -->
     <!-- Mode-->
-    <arg name="sim" value="false" />
+    <arg name="sim" value="true" />
     <arg name="mode" value ="true" />    <!-- false: Recording, true: Tracking -->
     
     <!-- Basic -->
@@ -10,10 +10,10 @@
     <arg name="world" value="$(find nvt_simulation)/worlds/autoware.world" />
 
     <!-- Map PCD -->
-    <arg name="map_file" value="kcct_main_building.pcd" />
+    <arg name="map_file" value="autoware_world.pcd" />
 
     <!-- Waypoint CSV -->
-    <arg name="waypoint_file" value="wpData_latest.csv" />
+    <arg name="waypoint_file" value="autoware_world.csv" />
 
     <!-- Initial Pose -->
     <arg name="init_pos_x" value="0.0" />
@@ -31,7 +31,12 @@
     </group>
 
     <!-- ======== Description ======== -->
-    <node pkg="nvt_core" type="launch_delayed.sh" args="3 roslaunch nvt_description robot_model.launch model:=$(arg model) init_pos_x:=$(arg init_pos_x) init_pos_y:=$(arg init_pos_y) init_pos_z:=$(arg init_pos_z)" name="robot_model" output="screen" />
+    <include file="$(find nvt_description)/launch/robot_model.launch">
+        <arg name="model" value="$(arg model)" />
+        <arg name="init_pos_x" value="$(arg init_pos_x)" />
+        <arg name="init_pos_y" value="$(arg init_pos_y)" />
+        <arg name="init_pos_z" value="$(arg init_pos_z)" />
+    </include>
 
     <!-- ======== Control ======== -->
     <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_control nvt_control.launch model:=$(arg model) sim:=$(arg sim)" name="nvt_control" output="screen" />

@@ -44,7 +44,7 @@
 
     <!-- LRF -->
     <xacro:lrf_v0 prefix="front" parent="base_link">
-  	    <origin xyz="0.155 0.0 0.195" rpy="${M_PI} 0 0"/>
+  	    <origin xyz="0.235 0.0 0.205" rpy="0 0 0"/>
     </xacro:lrf_v0>
     <xacro:lrf_gazebo_v0    topic_name="sensors/lrf/scan" prefix="front"
 					        min_rad="-1.65806278939" max_rad="1.65806278939"
