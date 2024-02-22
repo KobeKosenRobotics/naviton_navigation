@@ -54,11 +54,17 @@
   <build_depend>std_msgs</build_depend>
   <build_depend>std_srvs</build_depend>
   <build_depend>tf</build_depend>
+  <build_depend>urg_node</exec_depend>
+  <build_depend>velodyne_pointcloud</exec_depend>
+  <build_depend>geometry2</exec_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>std_msgs</build_export_depend>
   <build_export_depend>std_srvs</build_export_depend>
   <build_export_depend>tf</build_export_depend>
+  <build_export_depend>urg_node</exec_depend>
+  <build_export_depend>velodyne_pointcloud</exec_depend>
+  <build_export_depend>geometry2</exec_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
