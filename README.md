@@ -12,7 +12,7 @@ Navigation system for outdoor mobile robot
 * nvidia docker (optional)
 
 ## 1. Setup 
-### recommend
+### Recommend
 ```bash
 cd ~/catkin_ws/src
 git clone https://github.com/KobeKosenRobotics/naviton_navigation.git
@@ -20,7 +20,7 @@ git clone https://github.com/KobeKosenRobotics/naviton_navigation.git
 ```
 or
 
-### manual
+### Manual
 ```bash
 sudo apt update
 sudo apt install -y python3-vcstool
