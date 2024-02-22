@@ -4,8 +4,12 @@
 # naviton_navigation
 Navigation system for outdoor mobile robot
 
+## Requirements
 * Ubuntu 20.04
 * ROS Noetic
+* nvidia driver
+* docker (optional)
+* nvidia docker (optional)
 
 ## 1. Setup 
 ### recommend
@@ -28,6 +32,22 @@ cd ../..
 rosdep install -i -y --from-paths src
 catkin build
 ```
+or
+
+### Docker
+#### Requirements
+* docker
+* nvidia docker
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/KobeKosenRobotics/naviton_navigation/main/docker/naviton/run.bash)" -g
+```
+
+When you exit and go out of the container, naviton_navigation.bash is created in the home directory.   
+From the second time on, use the following command.
+```bash
+./naviton_navigation.bash
+```
+
 
 ## 2. Demo
 ```bash
