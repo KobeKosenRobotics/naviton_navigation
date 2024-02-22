@@ -1,0 +1,36 @@
+<launch>
+
+    <!-- ======== Parameters ======== -->
+    <!-- Mode-->
+    <arg name="sim" value="true" />
+    <arg name="mode" value ="true" />    <!-- false: Recording, true: Tracking -->
+    
+    <!-- Basic -->
+    <arg name="model" value="naviton" />
+    <arg name="world" value="$(find nvt_simulation)/worlds/autoware.world" />
+
+    <!-- Map PCD -->
+    <arg name="map_file" value="autoware_world.pcd" />
+
+    <!-- Waypoint CSV -->
+    <arg name="waypoint_file" value="autoware_world.csv" />
+
+    <!-- Initial Pose -->
+    <arg name="init_pos_x" value="0.0" />
+    <arg name="init_pos_y" value="0.0" />
+    <arg name="init_pos_z" value="0.0" />
+
+
+    <include file="$(find nvt_core)/launch/main.launch">
+        <arg name="sim" value="$(arg sim)" />
+        <arg name="mode" value="$(arg mode)" />
+        <arg name="model" value="$(arg model)" />
+        <arg name="world" value="$(arg world)" />
+        <arg name="map_file" value="$(arg map_file)" />
+        <arg name="waypoint_file" value="$(arg waypoint_file)" />
+        <arg name="init_pos_x" value="$(arg init_pos_x)" />
+        <arg name="init_pos_y" value="$(arg init_pos_y)" />
+        <arg name="init_pos_z" value="$(arg init_pos_z)" />
+    </include>
+
+</launch>
