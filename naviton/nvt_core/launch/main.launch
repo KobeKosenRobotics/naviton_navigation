@@ -2,23 +2,23 @@
 
     <!-- ======== Parameters ======== -->
     <!-- Mode-->
-    <arg name="sim" value="true" />
-    <arg name="mode" value ="true" />    <!-- false: Recording, true: Tracking -->
+    <arg name="sim" default="true" />
+    <arg name="mode" default="true" />    <!-- false: Recording, true: Tracking -->
     
     <!-- Basic -->
-    <arg name="model" value="naviton" />
-    <arg name="world" value="$(find nvt_simulation)/worlds/autoware.world" />
+    <arg name="model" default="naviton" />
+    <arg name="world" default="$(find nvt_simulation)/worlds/autoware.world" />
 
     <!-- Map PCD -->
-    <arg name="map_file" value="autoware_world.pcd" />
+    <arg name="map_file" default="autoware_world.pcd" />
 
     <!-- Waypoint CSV -->
-    <arg name="waypoint_file" value="autoware_world.csv" />
+    <arg name="waypoint_file" default="autoware_world.csv" />
 
     <!-- Initial Pose -->
-    <arg name="init_pos_x" value="0.0" />
-    <arg name="init_pos_y" value="0.0" />
-    <arg name="init_pos_z" value="0.0" />
+    <arg name="init_pos_x" default="0.0" />
+    <arg name="init_pos_y" default="0.0" />
+    <arg name="init_pos_z" default="0.0" />
 
     <param name="/use_sim_time" value="$(arg sim)" />
 
