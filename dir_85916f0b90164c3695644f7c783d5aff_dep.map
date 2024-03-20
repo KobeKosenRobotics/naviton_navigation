@@ -1,0 +1,5 @@
+<map id="perception" name="perception">
+<area shape="rect" id="node2" href="dir_c2ba31d144d7197bac0733fbab681204.html" title="laser2pc_converter" alt="" coords="245,27,392,75"/>
+<area shape="rect" id="node3" href="dir_2eec9c46a417b82dd70b7818b5addb72.html" title="velodyne_cloud_separator" alt="" coords="27,27,221,75"/>
+<area shape="rect" id="clust1" href="dir_85916f0b90164c3695644f7c783d5aff.html" alt="" coords="16,16,517,85"/>
+</map>

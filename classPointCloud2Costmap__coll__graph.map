@@ -1,0 +1,4 @@
+<map id="PointCloud2Costmap" name="PointCloud2Costmap">
+<area shape="rect" id="node1" title=" " alt="" coords="33,109,192,136"/>
+<area shape="rect" id="node2" href="$structPointCloudProcessingSettings.html" title=" " alt="" coords="5,5,220,32"/>
+</map>

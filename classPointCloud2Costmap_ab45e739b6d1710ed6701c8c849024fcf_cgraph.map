@@ -1,0 +1,6 @@
+<map id="PointCloud2Costmap::input2costmap" name="PointCloud2Costmap::input2costmap">
+<area shape="rect" id="node1" title=" " alt="" coords="5,51,164,92"/>
+<area shape="rect" id="node2" href="$classPointCloud2Costmap.html#a1ce40251b6b33fabceae07514c8a34a3" title=" " alt="" coords="419,5,577,47"/>
+<area shape="rect" id="node3" href="$classPointCloud2Costmap.html#a564b516e681eaf33eee031c7b57ea6ef" title=" " alt="" coords="419,84,577,125"/>
+<area shape="rect" id="node4" href="$classPointCloud2Costmap.html#a42f5949ae68b6b5a050bac7c5f0ffad7" title=" " alt="" coords="212,51,371,92"/>
+</map>

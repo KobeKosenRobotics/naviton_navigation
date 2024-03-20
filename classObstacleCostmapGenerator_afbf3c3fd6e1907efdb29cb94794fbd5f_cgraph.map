@@ -1,0 +1,5 @@
+<map id="ObstacleCostmapGenerator::input2costmap" name="ObstacleCostmapGenerator::input2costmap">
+<area shape="rect" id="node1" title=" " alt="" coords="5,39,208,80"/>
+<area shape="rect" id="node2" href="$classObstacleCostmapGenerator.html#a54b9539e4d8544302252704c8612074e" title=" " alt="" coords="256,5,459,47"/>
+<area shape="rect" id="node3" href="$classObstacleCostmapGenerator.html#a35f087d9a9e54922f207f1ce207059e4" title=" " alt="" coords="256,71,459,112"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="PointCloud2Costmap::PointCloud2Costmap" name="PointCloud2Costmap::PointCloud2Costmap">
+<area shape="rect" id="node1" title=" " alt="" coords="5,72,172,113"/>
+<area shape="rect" id="node2" href="$classPointCloud2Costmap.html#a5535f5d6f87ea87ec3e5f76ffdbc6099" title=" " alt="" coords="220,39,379,80"/>
+<area shape="rect" id="node9" href="$classPointCloud2Costmap.html#a29fa3a585b8e2c11517c8bfb72d0e57a" title=" " alt="" coords="220,104,379,145"/>
+<area shape="rect" id="node3" href="$classPointCloud2Costmap.html#ad54c8189a7c37fa6f2321ac1e07e101d" title=" " alt="" coords="427,5,585,47"/>
+<area shape="rect" id="node4" href="$classPointCloud2Costmap.html#a806bd87bf4a8a7393010c7701a2f7164" title=" " alt="" coords="427,71,585,112"/>
+<area shape="rect" id="node5" href="$classPointCloud2Costmap.html#ab45e739b6d1710ed6701c8c849024fcf" title=" " alt="" coords="427,136,585,177"/>
+<area shape="rect" id="node6" href="$classPointCloud2Costmap.html#a1ce40251b6b33fabceae07514c8a34a3" title=" " alt="" coords="840,91,999,132"/>
+<area shape="rect" id="node7" href="$classPointCloud2Costmap.html#a564b516e681eaf33eee031c7b57ea6ef" title=" " alt="" coords="840,169,999,211"/>
+<area shape="rect" id="node8" href="$classPointCloud2Costmap.html#a42f5949ae68b6b5a050bac7c5f0ffad7" title=" " alt="" coords="633,136,792,177"/>
+</map>

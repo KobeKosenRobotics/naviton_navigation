@@ -1,0 +1,6 @@
+<map id="PointCloud2Costmap::cropping" name="PointCloud2Costmap::cropping">
+<area shape="rect" id="node1" title=" " alt="" coords="427,39,585,80"/>
+<area shape="rect" id="node2" href="$classPointCloud2Costmap.html#a5535f5d6f87ea87ec3e5f76ffdbc6099" title=" " alt="" coords="220,5,379,47"/>
+<area shape="rect" id="node4" href="$classPointCloud2Costmap.html#a29fa3a585b8e2c11517c8bfb72d0e57a" title=" " alt="" coords="220,71,379,112"/>
+<area shape="rect" id="node3" href="$classPointCloud2Costmap.html#ab0906b94df757d1c34d45f7399c50819" title=" " alt="" coords="5,39,172,80"/>
+</map>

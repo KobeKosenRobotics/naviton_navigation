@@ -1,0 +1,5 @@
+<map id="AStarPlanner" name="AStarPlanner">
+<area shape="rect" id="node1" title=" " alt="" coords="59,199,166,225"/>
+<area shape="rect" id="node2" href="$classAStarSolver.html" title=" " alt="" coords="149,109,247,136"/>
+<area shape="rect" id="node3" href="$structAStarSolver_1_1Vector2Int.html" title=" " alt="" coords="5,5,177,32"/>
+</map>
