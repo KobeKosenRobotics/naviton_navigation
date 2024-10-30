@@ -63,3 +63,19 @@ roslaunch nvt_core demo.launch
 https://github.com/KobeKosenRobotics/naviton_navigation/assets/36100321/c58cbdbf-f6b8-45e3-b195-c564d12e2b42
 
 https://github.com/KobeKosenRobotics/naviton_navigation/assets/36100321/857a1c53-bb76-4593-a6b9-b16d21827c23
+
+## Cite *Navit(oo)n*
+
+Thank you for citing [our paper](https://www.fujipress.jp/jrm/rb/robot003500061540/) if you use any of this code: 
+```
+@article{naviton2023,
+  title={Navit(oo)n: Open Source Mobile Robot Project for Nakanoshima Robot Challenge},
+  author={Hara, Shunya and Shimizu, Toshihiko and Ozawa, Masayoshi and Sakai, Masahiko and Oyama, Tadahiro and Samuel, Amar Julien},
+  journal={Journal of Robotics and Mechatronics},
+  volume={35},
+  number={6},
+  pages={1540--1549},
+  year={2023},
+  publisher={Fuji Technology Press Ltd.}
+}
+```
