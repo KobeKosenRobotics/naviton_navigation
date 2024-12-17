@@ -4,6 +4,7 @@
     <!-- Mode-->
     <arg name="sim" default="true" />
     <arg name="mode" default="true" />    <!-- false: Recording, true: Tracking -->
+    <arg name="remote" default="false" />
     
     <!-- Basic -->
     <arg name="model" default="naviton" />
@@ -56,7 +57,15 @@
             <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core perception.launch" name="nvt_perception" output="screen" />
 
             <!-- ======== Planning ======== -->
+            <group unless="$(arg remote)">
             <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core planning.launch" name="nvt_planning" output="screen" />
+            </group>
+            <group if="$(arg remote)">
+                <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core planning_remote.launch" name="nvt_planning" output="screen" />
+                
+                <!-- ======== Remote Manager ======== -->
+                <include file="$(find remote_manager)/launch/main.launch" />    
+            </group>
 
             <!-- ======== Core ======== -->
             <node pkg="nvt_core" type="launch_delayed.sh" args="5 roslaunch nvt_core core.launch" name="nvt_core" output="screen" />
