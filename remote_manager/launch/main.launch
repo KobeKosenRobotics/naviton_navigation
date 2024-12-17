@@ -1,0 +1,7 @@
+<launch>
+    <!-- Remote Manager -->      
+    <node name="remote_manager" pkg="remote_manager" type="remote_manager_node" output="screen" /> 
+        
+    <!-- MQTT Communication -->
+    <include file="$(find mqtt_client)/launch/standalone.launch"/>
+</launch>

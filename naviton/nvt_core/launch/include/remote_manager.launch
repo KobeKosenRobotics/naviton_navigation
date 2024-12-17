@@ -1,0 +1,5 @@
+<launch>
+
+    <include file="$(find remote_manager)/launch/main.launch" />
+
+</launch>
