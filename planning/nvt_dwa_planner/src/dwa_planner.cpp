@@ -29,18 +29,20 @@ DWAPlanner::Window::Window(double min_velocity_, double max_velocity_, double mi
 
 DWAPlanner::DWAPlanner(ros::NodeHandle &nh, ros::NodeHandle &pn)
 {
-    std::string topic_local_goal, topic_local_map, topic_odom, topic_target_velocity, topic_cmd_vel;
+    std::string topic_local_goal, topic_local_map, topic_odom, topic_target_velocity, topic_pause, topic_nowWp_local, topic_cmd_vel;
 
     pn.param<std::string>("local_goal_topic", topic_local_goal, "local_goal");
     pn.param<std::string>("local_map_topic", topic_local_map, "local_map");
     pn.param<std::string>("odom_topic", topic_odom, "odom");
     pn.param<std::string>("target_velocity_topic", topic_target_velocity, "target_velocity");
+    pn.param<std::string>("topic_nowWp_local", topic_nowWp_local, "/naviton/waypoint/wpManager/nowWp_local");
     pn.param<std::string>("cmd_vel_topic", topic_cmd_vel, "cmd_vel");
     
     _local_goal_sub = nh.subscribe(topic_local_goal, 10, &DWAPlanner::local_goal_cb, this);
     _local_map_sub = nh.subscribe(topic_local_map, 10, &DWAPlanner::local_map_cb, this);
     _odom_sub = nh.subscribe(topic_odom, 10, &DWAPlanner::odom_cb, this);
     _target_velocity_sub = nh.subscribe(topic_target_velocity, 10, &DWAPlanner::target_velocity_cb, this);
+    _nowWp_local_sub = nh.subscribe(topic_nowWp_local, 10, &DWAPlanner::nowWp_local_cb, this);
     _cmd_vel_pub = nh.advertise<geometry_msgs::Twist>(topic_cmd_vel, 10);
 
     pn.param<bool>("publish_trajectory", _publish_trajectory, false);
@@ -77,6 +79,9 @@ DWAPlanner::DWAPlanner(ros::NodeHandle &nh, ros::NodeHandle &pn)
     _yawrate_resolution_inv = 1.0 / (double)_yawrate_resolution;
 
     _local_goal_subscribed = _local_map_updated = _odom_updated = false;
+
+    _pause_start = false;
+    _pause_done = false;
 }
 
 void DWAPlanner::update()
@@ -93,6 +98,57 @@ void DWAPlanner::update()
     cmd_vel.linear.x = result_trajectory[0].velocity;
     cmd_vel.angular.z = result_trajectory[0].yawrate;
 
+    auto pause_attribute
+        = std::find_if(_nowWp_local.attributes.begin(), _nowWp_local.attributes.end(),
+        [](waypoint_msgs::waypoint_attribute &attribute)
+        {
+            return(attribute.type == attribute.TYPE_PAUSE_WAYPOINT);
+        } );
+
+    if(pause_attribute != _nowWp_local.attributes.end() || _pausing)
+    {
+        if(_pause_start)
+        {
+            if(!_pause_done)
+            {
+                _pause_now = ros::WallTime::now();
+                _pause_duration = _pause_now - _pause_begin;
+                if(_pause_duration.sec < pause_attribute->value)
+                {
+                    cmd_vel.linear.x = 0.0;
+                    cmd_vel.angular.z = 0.0;
+                    _cmd_vel_pub.publish(cmd_vel);
+                }
+                else
+                {
+                    _pause_done = true;
+                }
+            }
+            else
+            {
+                _pause_start = false;
+            }
+        }
+        else
+        {
+            if (!_pause_done)
+            {
+                _pause_begin = ros::WallTime::now();
+                _pause_start = true;
+                _pausing = true;
+            }
+            else
+            {
+                _pausing = false;
+            }
+        }
+    }
+    else if (pause_attribute == _nowWp_local.attributes.end())
+    {
+        _pause_done = false;
+    }
+    
+    if(_pausing)return;
     if(cmd_vel.linear.x < 0 && _local_goal.pose.position.x < 0)
     {
         cmd_vel.linear.x = 0.0;
@@ -282,4 +338,9 @@ void DWAPlanner::odom_cb(const nav_msgs::OdometryConstPtr& msg)
 void DWAPlanner::target_velocity_cb(const geometry_msgs::TwistConstPtr& msg)
 {
     _target_velocity = msg->linear.x;
+}
+
+void DWAPlanner::nowWp_local_cb(waypoint_msgs::waypointConstPtr msg)
+{
+    _nowWp_local = *msg;
 }

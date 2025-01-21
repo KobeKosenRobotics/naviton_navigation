@@ -13,6 +13,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   tf
+  waypoint_msgs
+  waypoint_manager_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -108,7 +110,7 @@ find_package(Eigen3 REQUIRED COMPONENTS system)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES nvt_dwa_planner
-  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy tf
+  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy tf   waypoint_msgs waypoint_manager_msgs
 #  DEPENDS system_lib
 )
 

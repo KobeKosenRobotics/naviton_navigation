@@ -17,6 +17,9 @@
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 
+#include <waypoint_msgs/waypoint.h>
+#include <waypoint_manager_msgs/waypoint_manager_set.h>
+
 #include <Eigen/Dense>
 
 class DWAPlanner
@@ -65,9 +68,10 @@ class DWAPlanner
         void local_map_cb(const nav_msgs::OccupancyGridConstPtr& msg);
         void odom_cb(const nav_msgs::OdometryConstPtr& msg);
         void target_velocity_cb(const geometry_msgs::TwistConstPtr& msg);
+        void nowWp_local_cb(waypoint_msgs::waypointConstPtr msg);
 
     private:
-        ros::Subscriber _local_goal_sub, _local_map_sub, _odom_sub, _target_velocity_sub;
+        ros::Subscriber _local_goal_sub, _local_map_sub, _odom_sub, _target_velocity_sub, _nowWp_local_sub;
         ros::Publisher _cmd_vel_pub;
 
         ros::Publisher _trajectory_pub;
@@ -105,6 +109,16 @@ class DWAPlanner
 
         double _velocity_resolution_inv;
         double _yawrate_resolution_inv;
+
+        waypoint_msgs::waypoint _nowWp_local;
+        bool _pause_start;
+        bool _pause_done;
+        bool _pausing;
+        bool _pause_attr;
+
+        ros::WallTime _pause_begin;
+        ros::WallTime _pause_now;
+        ros::WallDuration _pause_duration;
 };
 
 #endif
