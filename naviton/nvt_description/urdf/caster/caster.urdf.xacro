@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find ${package_name})/urdf/caster/caster_body.urdf.xacro" />
+  <xacro:include filename="$(find ${package_name})/urdf/caster/caster_wheel.urdf.xacro" />
+
+  <xacro:macro name="caster_v0" params="prefix parent *joint_origin *joint_axis">
+    <joint name="${prefix}_caster_joint" type="continuous">
+	    <xacro:insert_block name="joint_origin"/>
+	    <parent link="${parent}"/>
+	  	<child link="${prefix}_caster_body_link"/>
+	    <xacro:insert_block name="joint_axis"/>
+	  </joint>
+    
+    <joint name="${prefix}_caster_wheel_joint" type="continuous">
+	    <origin xyz="0 -0.050 -0.115" rpy="0 0 0"/>
+      <parent link="${prefix}_caster_body_link"/>
+	    <child link="${prefix}_caster_wheel_link"/>
+	    <axis xyz="1 0 0"/>
+	  </joint>
+
+    <!-- ======== body ======== -->
+    <xacro:caster_body_v0 prefix="${prefix}" />
+    <xacro:caster_body_gazebo_v0 prefix="${prefix}" />
+
+    <!-- ======== Wheel ======== -->
+    <xacro:caster_wheel_v0 prefix="${prefix}" />
+    <xacro:caster_wheel_gazebo_v0 prefix="${prefix}" />
+  </xacro:macro>
+</robot>
