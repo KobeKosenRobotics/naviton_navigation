@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="naviton">
+
+    <xacro:property name="package_name" value="nvt_description" />
+    <xacro:property name="robot_name" value="naviton" />
+
+    <!-- ======== Include ======== -->
+    <xacro:include filename="$(find ${package_name})/urdf/base/base_v2.urdf.xacro" />
+    <xacro:include filename="$(find ${package_name})/urdf/wheel/wheel.urdf.xacro" />
+    <xacro:include filename="$(find ${package_name})/urdf/wheel/wheel.transmission.xacro" />
+    <xacro:include filename="$(find ${package_name})/urdf/caster/caster.urdf.xacro" />
+    <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro" />
+    <xacro:include filename="$(find ${package_name})/urdf/sensors/lrf/lrf.urdf.xacro" />
+    <!-- xacro:include filename="$(find nvt_simulation)/urdf/sensors/imu/imu.urdf.xacro" /-->
+
+    <!-- ======== Base ======== -->
+    <link name="base_link"/>
+    <xacro:base_v0 parent="base_link">
+	    <origin xyz="0 0 1.1575" />
+    </xacro:base_v0>
+    <xacro:base_gazebo_v0 />
+
+    <!-- ======== Wheels ======== -->
+    <!-- Right -->
+    <xacro:wheel_v0 prefix="right" parent="body_link">
+	    <origin xyz="0 -0.260 0"/>
+	    <axis xyz="0 1 0"/>
+    </xacro:wheel_v0>
+    <xacro:wheel_trans_v0 prefix="right" />
+    <xacro:wheel_gazebo_v0 prefix="right" />
+    
+    <!-- Left -->
+    <xacro:wheel_v0 prefix="left" parent="body_link">
+	    <origin xyz="0 0.260 0"/>
+	    <axis xyz="0 1 0"/>
+    </xacro:wheel_v0>
+    <xacro:wheel_trans_v0 prefix="left" />
+    <xacro:wheel_gazebo_v0 prefix="left" />
+    
+    <!-- ======== casters ======== -->
+    <!-- Right -->
+    <xacro:caster_v0 prefix="right" parent="body_link">
+	    <origin xyz="-0.35 -0.148 0.042" rpy="0 0 ${-M_PI/2}"/>
+	    <axis xyz="0 0 1"/>
+    </xacro:caster_v0>
+
+    <!-- Left -->
+    <xacro:caster_v0 prefix="left" parent="body_link">
+	    <origin xyz="-0.35 0.148 0.042" rpy="0 0 ${-M_PI/2}"/>
+	    <axis xyz="0 0 1"/>
+    </xacro:caster_v0>
+
+    <!-- ======== Sensors ======== -->
+    <!-- VHDL-32E -->
+    <xacro:HDL-32E parent="body_link" name="velodyne_link" topic="sensors/velodyne/velodyne_points" hz="10" samples="1024" gpu="true">
+        <origin xyz="-0.06 0 0.88" rpy="0 0 0" />
+    </xacro:HDL-32E>
+
+    <!-- LRF -->
+    <xacro:lrf_v0 prefix="front" parent="body_link">
+  	    <origin xyz="0.2 0 0" rpy="0 0 0"/>
+    </xacro:lrf_v0>
+    <xacro:lrf_gazebo_v0    topic_name="sensors/lrf/scan" prefix="front"
+					        min_rad="-1.65806278939" max_rad="1.65806278939"
+					        min_range="0.10" max_range="60.0" />
+
+    <!-- ======== Gazebo ======== -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace> /naviton </robotNamespace>
+            <robotSimType> gazebo_ros_control/DefaultRobotHWSim </robotSimType>
+        </plugin>
+    </gazebo>
+
+</robot>
+
