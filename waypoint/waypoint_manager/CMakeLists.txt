@@ -178,6 +178,13 @@ add_executable(waypoint_visualizer_node src/waypoint_visualizer src/nodes/waypoi
 add_dependencies(waypoint_visualizer_node waypoint_msgs_generate_messages_cpp)
 target_link_libraries(waypoint_visualizer_node ${catkin_LIBRARIES})
 
+# Waypoint Coordinator (Relative Position Publisher)
+set(HEADERS include/waypoint_manager/waypoint_coordinater.h)
+add_executable(waypoint_coordinater_node src/waypoint_coordinater src/nodes/waypoint_coordinater_node.cpp)
+add_dependencies(waypoint_coordinater_node waypoint_msgs_generate_messages_cpp)
+add_dependencies(waypoint_coordinater_node waypoint_manager_msgs_generate_messages_cpp)
+target_link_libraries(waypoint_coordinater_node ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############
