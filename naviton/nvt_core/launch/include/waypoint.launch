@@ -33,6 +33,10 @@
             <include file="$(find waypoint_manager)/launch/waypoint_manager.launch">
                 <arg name="param_file" value="$(arg param_file_waypoint_manager)" />
             </include>
+            <!-- Coordinater -->
+            <include file="$(find waypoint_manager)/launch/waypoint_coordinater.launch">
+                <arg name="param_file" value="$(arg param_file_waypoint_coordinater)" />
+            </include>
         </group>
         
         <!-- Visualizer -->
