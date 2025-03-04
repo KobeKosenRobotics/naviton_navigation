@@ -3,5 +3,8 @@
     <node name="remote_manager" pkg="remote_manager" type="remote_manager_node" output="screen" /> 
         
     <!-- MQTT Communication -->
-    <include file="$(find mqtt_client)/launch/standalone.launch"/>
+    <!-- <include file="$(find mqtt_client)/launch/standalone.launch"/> -->
+
+    <!-- ichimill Communication -->
+    <node pkg="remote_manager" name="ichimill_connection_node" type="ichimill_connection.py"/>
 </launch>

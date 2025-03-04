@@ -85,4 +85,6 @@
     <!-- ======== Rviz ======== -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nvt_core)/rviz/main.rviz" required="true" />
 
+    <>
+
 </launch>
