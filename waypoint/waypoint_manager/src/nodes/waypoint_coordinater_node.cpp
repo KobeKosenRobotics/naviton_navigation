@@ -1,4 +1,3 @@
-#include <ros/ros.h>
 #include "waypoint_manager/waypoint_coordinater.h"
 
 int main(int argc, char **argv)
