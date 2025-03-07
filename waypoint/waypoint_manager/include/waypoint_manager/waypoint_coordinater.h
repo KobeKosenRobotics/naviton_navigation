@@ -5,7 +5,12 @@
 #include <waypoint_msgs/waypoint.h>
 #include <waypoint_msgs/waypoints.h>
 #include <ros/ros.h>
-#include <tf/transform_datatypes.h>  // tfライブラリのインクルード
+#include <tf2/transform_datatypes.h>  // tfライブラリのインクルード
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2/LinearMath/Transform.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <geometry_msgs/Pose.h>
 
 class WaypointCoordinater
 {
@@ -21,7 +26,7 @@ public:
 
 private:
     ros::Publisher now_wp_publisher;  // 絶対座標をパブリッシュするためのパブリッシャ
-    tf::Transform _absolute_position; // 絶対座標用の変数
+    tf2::Transform _absolute_position; // 絶対座標用の変数
     int _index_now;                  // 現在のウェイポイントインデックス
     waypoint_msgs::waypoints _wps;  // ウェイポイントリスト
 };

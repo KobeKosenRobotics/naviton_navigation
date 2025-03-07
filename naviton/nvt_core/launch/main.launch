@@ -2,7 +2,7 @@
 
     <!-- ======== Parameters ======== -->
     <!-- Mode-->
-    <arg name="sim" default="true" />
+    <arg name="sim" default="false" />
     <arg name="mode" default="true" />    <!-- false: Recording, true: Tracking -->
     <arg name="remote" default="false" />
     
@@ -84,7 +84,5 @@
 
     <!-- ======== Rviz ======== -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nvt_core)/rviz/main.rviz" required="true" />
-
-    <>
 
 </launch>
