@@ -27,7 +27,7 @@ void Naviton::update()
 
     geometry_msgs::Point point = _nowWp_local.pose.pose.position;
     double distance_sqr = point.x*point.x+point.y*point.y+point.z*point.z;
-    if(distance_sqr < 4.0)
+    if(distance_sqr < 6.25)
     {
         waypoint_manager_msgs::waypoint_manager_set srv;
 
