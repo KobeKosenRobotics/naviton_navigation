@@ -30,6 +30,7 @@ private:
     tf2::Transform _absolute_position; // 絶対座標用の変数
     int _index_now;                  // 現在のウェイポイントインデックス
     waypoint_msgs::waypoints _wps;  // ウェイポイントリスト
+    waypoint_msgs::waypoint waypoint_to_calculate;
 
     ros::Subscriber waypoints_sub;
     void waypointsCallback(const waypoint_msgs::waypoints::ConstPtr &msg);
