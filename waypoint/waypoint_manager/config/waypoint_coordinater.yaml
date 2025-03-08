@@ -5,12 +5,12 @@ topic_waypoints: wpLoader/waypoints
 topic_absolute_position: "wpManager/absolute_position"
 
 # 絶対座標（位置）
-absolute_x: 10.0
-absolute_y: 20.0
+absolute_x: 34.7055543
+absolute_y: 135.5004355
 absolute_z: 0.0
 
 # 絶対座標（回転：クォータニオン）
 absolute_orientation_x: 0.0
 absolute_orientation_y: 0.0
-absolute_orientation_z: 0.0
-absolute_orientation_w: 1.0  # 単位クォータニオン（回転なしの初期値）
+absolute_orientation_z: -0.002617990887417953
+absolute_orientation_w: -0.9999965730559848

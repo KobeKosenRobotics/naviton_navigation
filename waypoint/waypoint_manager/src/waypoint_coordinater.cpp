@@ -81,7 +81,7 @@ void WaypointCoordinater::publish()
     }
 
     // 任意のウェイポイント番号を指定し、その座標を基に相対座標を計算
-    int wp_number = 2;  // 任意のウェイポイント番号（例えば、3番目のウェイポイント）
+    int wp_number = 1;  // 任意のウェイポイント番号（例えば、3番目のウェイポイント）
     waypoint_msgs::waypoint waypoint_to_calculate = _wps.waypoints[wp_number];
 
     // 相対位置を計算
@@ -91,7 +91,7 @@ void WaypointCoordinater::publish()
     geometry_msgs::PoseStamped absolute_pose;
 
     // tf2ベクトルに変換して回転を適用
-    tf2::Vector3 relative_position(relative_pose.position.x, relative_pose.position.y, relative_pose.position.z);
+    tf2::Vector3 relative_position(relative_pose.position.x*10000, relative_pose.position.y*10000, relative_pose.position.z*10000);
     tf2::Vector3 absolute_position = _absolute_position.getOrigin() + relative_position;
 
     absolute_pose.pose.position.x = absolute_position.x();
