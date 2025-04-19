@@ -12,6 +12,7 @@
 #include <geometry_msgs/Pose.h>
 #include <tf2_ros/transform_listener.h>  // TFリスナー用インクルード
 #include <tf2_ros/buffer.h>  // TFバッファ用インクルード
+#include <sensor_msgs/NavSatFix.h>
 
 class WaypointCoordinater
 {
@@ -24,20 +25,25 @@ public:
 
     // 絶対座標をパブリッシュ
     void publish();
+    void nowWp_cb(waypoint_msgs::waypointConstPtr msg);
 
 private:
     ros::Publisher abs_wp_publisher;  // 絶対座標をパブリッシュするためのパブリッシャ
+    ros::Subscriber _nowWp_subscriber;
     tf2::Transform _absolute_position; // 絶対座標用の変数
     int _index_now;                  // 現在のウェイポイントインデックス
     waypoint_msgs::waypoints _wps;  // ウェイポイントリスト
     waypoint_msgs::waypoint waypoint_to_calculate;
-
+    waypoint_msgs::waypoint _nowWp;
     ros::Subscriber waypoints_sub;
     void waypointsCallback(const waypoint_msgs::waypoints::ConstPtr &msg);
 
     // TFリスナー関連
     std::shared_ptr<tf2_ros::Buffer> tf_buffer;  // TFバッファ
     std::shared_ptr<tf2_ros::TransformListener> tf_listener;  // TFリスナー
+
+    double absolute_x, absolute_y, absolute_z;
+    double absolute_qx, absolute_qy, absolute_qz, absolute_qw;
 };
 
 #endif // WAYPOINT_COORDINATER_H
