@@ -21,7 +21,7 @@ jobs:
       - name: get repository name
         run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Copy repository
         run: cp -rp /__w/${{ env.REPOSITORY_NAME }}/${{ env.REPOSITORY_NAME }} /home/catkin_ws/src
 
