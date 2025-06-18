@@ -11,7 +11,7 @@ on:
 jobs:
   push_to_registry:
     name: Push Docker image to Github Container registry
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     timeout-minutes: 120
     strategy:
       fail-fast: false
@@ -21,7 +21,7 @@ jobs:
       ROS_DISTRO: ${{ matrix.rosdistro }}
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Set up Docker Build
         uses: docker/setup-buildx-action@v1
       - name: Login to GitHub Container Registry
