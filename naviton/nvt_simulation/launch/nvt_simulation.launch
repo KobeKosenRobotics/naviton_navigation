@@ -15,5 +15,7 @@
         <arg name="use_sim_time" value="$(arg use_sim_time)"/>
         <arg name="headless" value="$(arg headless)"/>
     </include>
+    
+    <node pkg="tf" type="static_transform_publisher" name="front_lrf_link_broadcaster" args="0 0 0 0 0 0 /naviton/front_lrf_link /front_lrf_link 100"/>
 
 </launch>
