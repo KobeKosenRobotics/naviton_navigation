@@ -5,7 +5,7 @@ local_goal_topic: /naviton/waypoint/wpManager/nowWpPose_local
 local_map_topic: /naviton/planning/costmap/obstacle_costmap_generator/local_costmap
 odom_topic: /naviton/mobile_base_controller/odom
 
-cmd_vel_topic: /naviton/mobile_base_controller/cmd_vel
+cmd_vel_topic: /naviton/mobile_base_controller/cmd_vel_raw
 
 publish_trajectory: true
 #trajectory_topic: 

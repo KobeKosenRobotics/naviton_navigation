@@ -12,7 +12,7 @@ namespace nvt_plugin
     void CorePanel::onInitialize()
     {
         connect(_ui->start_button, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
-        connect(_ui->pause_button, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
+        connect(_ui->pause_button, SIGNAL(clicked()), this, SLOT(onPauseButtonClicked()));
 
         parentWidget()->setVisible(true);
 

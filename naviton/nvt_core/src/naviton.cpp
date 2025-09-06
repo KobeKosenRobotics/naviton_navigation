@@ -9,6 +9,7 @@ Naviton::Naviton(ros::NodeHandle &nh, ros::NodeHandle &pn)
 
     _nvt_start_server = nh.advertiseService("/naviton/core/start", &Naviton::start_cb, this);
     _nvt_pause_server = nh.advertiseService("/naviton/core/pause", &Naviton::pause_cb, this);
+    _set_pause_client = nh.serviceClient<std_srvs::SetBool>("/safety_planner/set_pause");
     _wpManager_set_client = nh.serviceClient<waypoint_manager_msgs::waypoint_manager_set>(service_wpManager_set);
     _nowWp_local_subscriber = nh.subscribe(topic_nowWp_local, 10, &Naviton::nowWp_local_cb, this);
 }
@@ -50,9 +51,14 @@ void Naviton::update()
                 ROS_INFO("Skip to waypoint %d", (int)std::round(_nowWp_local.attributes.at(0).value));
                 break;
             case waypoint_msgs::waypoint_attribute::TYPE_PAUSE:
-                ROS_INFO("Pause at waypoint %d", _nowWp_local.index);
+            {   
+                ROS_INFO_STREAM("Pause at waypoint " << _nowWp_local.index);
+                std_srvs::SetBool srv;
+                srv.request.data = true;
+                _set_pause_client.call(srv);
                 _paused = true;
-                return;
+                break;
+            }
             case waypoint_msgs::waypoint_attribute::TYPE_WP_FOLLOW:
                 ROS_INFO("Follow waypoints from %d", (int)std::round(_nowWp_local.attributes.at(0).value));
                 break;
@@ -69,12 +75,24 @@ void Naviton::nowWp_local_cb(waypoint_msgs::waypointConstPtr msg)
 
 bool Naviton::start_cb(std_srvs::Empty::Request& req, std_srvs::Empty::Response& res)
 {
+    {
+        std_srvs::SetBool srv;
+        srv.request.data = false;
+        _set_pause_client.call(srv);
+    }
     _paused = false;
+    ROS_INFO_STREAM("Naviton started.");
     return true;
 }
 
 bool Naviton::pause_cb(std_srvs::Empty::Request& req, std_srvs::Empty::Response& res)
 {
+    {
+        std_srvs::SetBool srv;
+        srv.request.data = true;
+        _set_pause_client.call(srv);
+    }
     _paused = true;
+    ROS_INFO_STREAM("Naviton paused.");
     return true;
 }

@@ -1,0 +1,11 @@
+    cmd_vel_raw: /naviton/mobile_base_controller/cmd_vel_raw
+    scan_cloud: /naviton/sensors/lrf/scan_pc
+    cmd_vel: /naviton/mobile_base_controller/cmd_vel
+
+    # rectangular region defaults
+    front_min_x: 0.0
+    front_max_x: 1.0
+    front_min_y: -0.5
+    front_max_y: 0.5
+    front_min_z: -0.5
+    front_max_z: 1.5

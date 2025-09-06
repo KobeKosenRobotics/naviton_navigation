@@ -4,6 +4,7 @@
 #include <ros/ros.h>
 
 #include <std_srvs/Empty.h>
+#include <std_srvs/SetBool.h>
 
 #include <waypoint_msgs/waypoint.h>
 #include <waypoint_manager_msgs/waypoint_manager_set.h>
@@ -23,6 +24,7 @@ class Naviton
         ros::ServiceServer _nvt_start_server;
         ros::ServiceServer _nvt_pause_server;
         ros::ServiceClient _wpManager_set_client;
+        ros::ServiceClient _set_pause_client;
         ros::Subscriber _nowWp_local_subscriber;
         waypoint_msgs::waypoint _nowWp_local;
 

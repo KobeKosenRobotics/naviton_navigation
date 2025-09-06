@@ -3,6 +3,7 @@
     <!-- ======== Parameters ======== -->
     <arg name="param_file_obstacle_costmap_generator" default="$(find nvt_core)/config/planning/costmap/obstacle_costmap_generator.yaml" />
     <arg name="param_file_dwa_planner" default="$(find nvt_core)/config/planning/planner/dwa_planner.yaml" />
+    <arg name="param_file_safety_planner" default="$(find nvt_core)/config/planning/planner/safety_planner.yaml" />
 
     <!-- ======== Planning ======== -->
     <group ns="planning">
@@ -20,6 +21,10 @@
             <!-- DWA Planner -->
             <include file="$(find nvt_dwa_planner)/launch/dwa_planner.launch">
                 <arg name="param_file" value="$(arg param_file_dwa_planner)" />
+            </include>
+
+            <include file="$(find safety_planner)/launch/safety_planner.launch">
+                <arg name="param_file" value="$(arg param_file_safety_planner)" />
             </include>
         </group>
 

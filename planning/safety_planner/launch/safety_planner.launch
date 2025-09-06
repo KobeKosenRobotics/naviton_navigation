@@ -1,0 +1,7 @@
+<launch>
+<arg name="param_file" default="$(find safety_planner)/config/safety_planner.yaml"/>
+
+  <node pkg="safety_planner" type="safety_planner_node" name="safety_planner" output="screen">
+    <rosparam command="load" file="$(arg param_file)" />
+  </node>
+</launch>
