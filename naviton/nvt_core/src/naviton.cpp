@@ -31,22 +31,34 @@ void Naviton::update()
     {
         waypoint_manager_msgs::waypoint_manager_set srv;
 
-        auto next_waypoint_attribute
-            = std::find_if(_nowWp_local.attributes.begin(), _nowWp_local.attributes.end(),
-            [](waypoint_msgs::waypoint_attribute &attribute)
-            {
-                return(attribute.type == attribute.TYPE_NEXT_WAYPOINT);
-            } );
-
-        if(next_waypoint_attribute != _nowWp_local.attributes.end())
-        {
-            srv.request.index = std::round(next_waypoint_attribute->value);
-        }
-        else
+        if(_nowWp_local.attributes.empty())
         {
             srv.request.index = _nowWp_local.index + 1;
+            _wpManager_set_client.call(srv);
+            return;
         }
-        _wpManager_set_client.call(srv);
+        switch(static_cast<int>(std::round(_nowWp_local.attributes.at(0).type)))
+        {
+            case waypoint_msgs::waypoint_attribute::TYPE_NEXT_WAYPOINT:
+                srv.request.index = _nowWp_local.index + 1;
+                _wpManager_set_client.call(srv);
+                ROS_INFO("Next waypoint %d", (int)std::round(_nowWp_local.attributes.at(0).value));
+                break;
+            case waypoint_msgs::waypoint_attribute::TYPE_SKIP:
+                srv.request.index = std::round(_nowWp_local.attributes.at(0).value);
+                _wpManager_set_client.call(srv);
+                ROS_INFO("Skip to waypoint %d", (int)std::round(_nowWp_local.attributes.at(0).value));
+                break;
+            case waypoint_msgs::waypoint_attribute::TYPE_PAUSE:
+                ROS_INFO("Pause at waypoint %d", _nowWp_local.index);
+                _paused = true;
+                return;
+            case waypoint_msgs::waypoint_attribute::TYPE_WP_FOLLOW:
+                ROS_INFO("Follow waypoints from %d", (int)std::round(_nowWp_local.attributes.at(0).value));
+                break;
+            default:
+                break;
+        }
     }
 }
 

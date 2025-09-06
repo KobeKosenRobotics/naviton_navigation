@@ -65,6 +65,13 @@ void WaypointLoader::load(std::string file_path)
         _wps.waypoints.push_back(wp);
         index++;
     }
+    if(_wps.waypoints.back().attributes.empty())
+    {
+        waypoint_msgs::waypoint_attribute attribute;
+        attribute.type = waypoint_msgs::waypoint_attribute::TYPE_PAUSE;
+        attribute.value = 0;
+        _wps.waypoints.back().attributes.push_back(attribute);
+    }
 }
 
 void WaypointLoader::publish()
