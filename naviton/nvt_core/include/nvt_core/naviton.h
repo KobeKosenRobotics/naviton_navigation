@@ -32,6 +32,7 @@ class Naviton
 
         bool _paused;
         double _next_wp_distance;
+        double _next_stop_wp_distance;
 };
 
 #endif
