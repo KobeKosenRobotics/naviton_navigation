@@ -31,6 +31,7 @@ class Naviton
         waypoint_msgs::waypoint _nowWp_local;
 
         bool _paused;
+        double _next_wp_distance;
 };
 
 #endif

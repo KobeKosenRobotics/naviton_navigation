@@ -6,6 +6,7 @@ Naviton::Naviton(ros::NodeHandle &nh, ros::NodeHandle &pn)
     
     pn.param<std::string>("service_wpManager_set", service_wpManager_set, "/naviton/waypoint/wpManager/set");
     pn.param<std::string>("topic_nowWp_local", topic_nowWp_local, "/naviton/waypoint/wpManager/nowWp_local");
+    pn.param<double>("next_wp_distance", _next_wp_distance, 2.0);
 
     _nvt_start_server = nh.advertiseService("/naviton/core/start", &Naviton::start_cb, this);
     _nvt_pause_server = nh.advertiseService("/naviton/core/pause", &Naviton::pause_cb, this);
@@ -30,7 +31,7 @@ void Naviton::update()
 
     geometry_msgs::Point point = _nowWp_local.pose.pose.position;
     double distance_sqr = point.x*point.x+point.y*point.y+point.z*point.z;
-    if(distance_sqr < 4.0)
+    if(distance_sqr < _next_wp_distance * _next_wp_distance)
     {
         waypoint_manager_msgs::waypoint_manager_set srv;
         if(_nowWp_local.attributes.empty())
