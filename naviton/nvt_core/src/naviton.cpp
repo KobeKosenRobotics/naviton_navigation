@@ -31,11 +31,9 @@ void Naviton::update()
     if(distance_sqr < 4.0)
     {
         waypoint_manager_msgs::waypoint_manager_set srv;
-
         if(_nowWp_local.attributes.empty())
         {
-            srv.request.index = _nowWp_local.index + 1;
-            _wpManager_set_client.call(srv);
+            ROS_ERROR("No waypoint attribute.");
             return;
         }
         switch(static_cast<int>(std::round(_nowWp_local.attributes.at(0).type)))
