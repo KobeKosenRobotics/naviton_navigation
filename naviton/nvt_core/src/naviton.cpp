@@ -97,10 +97,10 @@ bool Naviton::start_cb(std_srvs::Empty::Request& req, std_srvs::Empty::Response&
     {
         waypoint_manager_msgs::waypoint_manager_set srv;
         srv.request.index = _nowWp_local.index + 1;
-        _nowWp_local.attributes.at(0).type = waypoint_msgs::waypoint_attribute::TYPE_WP_FOLLOW;
+        _nowWp_local.attributes.at(0).type = waypoint_msgs::waypoint_attribute::TYPE_NEXT_WAYPOINT;
         _wpManager_set_client.call(srv);
         std_srvs::SetBool bool_srv;
-        bool_srv.request.data = true;
+        bool_srv.request.data = false;
         _set_follow_client.call(bool_srv);
         _set_safety_client.call(bool_srv);
     }
