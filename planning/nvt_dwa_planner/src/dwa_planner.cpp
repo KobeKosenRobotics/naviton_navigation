@@ -1,4 +1,5 @@
 #include "nvt_dwa_planner/dwa_planner.h"
+#include <std_srvs/SetBool.h>
 
 DWAPlanner::State::State(double x_, double y_, double yaw_, double velocity_, double yawrate_)
     : x(x_), y(y_), yaw(yaw_), velocity(velocity_), yawrate(yawrate_)
@@ -27,7 +28,8 @@ DWAPlanner::Window::Window(double min_velocity_, double max_velocity_, double mi
 
 }
 
-DWAPlanner::DWAPlanner(ros::NodeHandle &nh, ros::NodeHandle &pn)
+DWAPlanner::DWAPlanner(ros::NodeHandle &nh, ros::NodeHandle &pn):
+    _is_following(false)
 {
     std::string topic_local_goal, topic_local_map, topic_odom, topic_target_velocity, topic_cmd_vel;
 
@@ -42,6 +44,7 @@ DWAPlanner::DWAPlanner(ros::NodeHandle &nh, ros::NodeHandle &pn)
     _odom_sub = nh.subscribe(topic_odom, 10, &DWAPlanner::odom_cb, this);
     _target_velocity_sub = nh.subscribe(topic_target_velocity, 10, &DWAPlanner::target_velocity_cb, this);
     _cmd_vel_pub = nh.advertise<geometry_msgs::Twist>(topic_cmd_vel, 10);
+    _set_follow_server = nh.advertiseService("/dwa_planner/set_follow", &DWAPlanner::setFollowCb, this);
 
     pn.param<bool>("publish_trajectory", _publish_trajectory, false);
     if(_publish_trajectory)
@@ -269,8 +272,18 @@ void DWAPlanner::local_goal_cb(const geometry_msgs::PoseStampedConstPtr& msg)
 
 void DWAPlanner::local_map_cb(const nav_msgs::OccupancyGridConstPtr& msg)
 {
-    _local_map = *msg;
-    _local_map_updated = true;
+    if(_is_following)
+    {
+        _local_map = *msg;
+        const int map_size = msg->data.size();
+        _local_map.data.assign(map_size, 0);
+        _local_map_updated = true;
+    }
+    else
+    {
+        _local_map = *msg;
+        _local_map_updated = true;
+    }
 }
 
 void DWAPlanner::odom_cb(const nav_msgs::OdometryConstPtr& msg)
@@ -282,4 +295,12 @@ void DWAPlanner::odom_cb(const nav_msgs::OdometryConstPtr& msg)
 void DWAPlanner::target_velocity_cb(const geometry_msgs::TwistConstPtr& msg)
 {
     _target_velocity = msg->linear.x;
+}
+
+bool DWAPlanner::setFollowCb(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res)
+{
+    _is_following = req.data;
+    res.success = true;
+    res.message = _is_following ? "following enabled" : "following disabled";
+    return true;
 }

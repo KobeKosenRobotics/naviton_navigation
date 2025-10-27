@@ -25,6 +25,8 @@ class Naviton
         ros::ServiceServer _nvt_pause_server;
         ros::ServiceClient _wpManager_set_client;
         ros::ServiceClient _set_pause_client;
+        ros::ServiceClient _set_follow_client;
+        ros::ServiceClient _set_safety_client;
         ros::Subscriber _nowWp_local_subscriber;
         waypoint_msgs::waypoint _nowWp_local;
 

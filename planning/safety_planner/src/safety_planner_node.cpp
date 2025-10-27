@@ -32,6 +32,7 @@ public:
 
     // service to set pause
     srv_pause_ = nh_.advertiseService("/safety_planner/set_pause", &SafetyPlanner::setPauseCb, this);
+    srv_safety_ = nh_.advertiseService("/safety_planner/set_safety", &SafetyPlanner::setSafetyCb, this);
     }
 
     void cmdRawCb(const geometry_msgs::Twist::ConstPtr& msg)
@@ -65,13 +66,19 @@ public:
         while(ros::ok())
         {
             geometry_msgs::Twist out;
-            if(paused_ || obstacle_present_)
+            if(paused_)
             {
                 // zero velocities
             }
             else
             {
-                out = latest_cmd_;
+                if(safety_enabled_ && obstacle_present_){
+                    // zero velocities
+
+                }
+                else{
+                    out = latest_cmd_;
+                }
             }
             pub_cmd_.publish(out);
             ros::spinOnce();
@@ -84,6 +91,16 @@ public:
         paused_ = req.data;
         res.success = true;
         res.message = paused_ ? "safety_planner paused" : "safety_planner resumed";
+        return true;
+    }
+
+    bool setSafetyCb(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res)
+    {
+        // This service can be used to enable/disable safety checks
+        // For simplicity, we just set paused_ here
+        safety_enabled_ = req.data;
+        res.success = true;
+        res.message = safety_enabled_ ? "safety checks enabled" : "safety checks disabled";
         return true;
     }
 
@@ -104,7 +121,9 @@ private:
     geometry_msgs::Twist latest_cmd_;
     bool obstacle_present_;
     bool paused_;
+    bool safety_enabled_;
     ros::ServiceServer srv_pause_;
+    ros::ServiceServer srv_safety_;
 };
 
 int main(int argc, char** argv)

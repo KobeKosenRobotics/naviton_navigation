@@ -19,6 +19,8 @@
 
 #include <Eigen/Dense>
 
+#include <std_srvs/SetBool.h>
+
 class DWAPlanner
 {
     public:
@@ -66,11 +68,16 @@ class DWAPlanner
         void odom_cb(const nav_msgs::OdometryConstPtr& msg);
         void target_velocity_cb(const geometry_msgs::TwistConstPtr& msg);
 
+    bool setFollowCb(std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res);
+
     private:
         ros::Subscriber _local_goal_sub, _local_map_sub, _odom_sub, _target_velocity_sub;
         ros::Publisher _cmd_vel_pub;
 
         ros::Publisher _trajectory_pub;
+
+        ros::ServiceServer _set_follow_server;
+        bool _is_following;
 
         double _min_linear_speed;
         double _min_angular_speed;

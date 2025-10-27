@@ -10,6 +10,8 @@ Naviton::Naviton(ros::NodeHandle &nh, ros::NodeHandle &pn)
     _nvt_start_server = nh.advertiseService("/naviton/core/start", &Naviton::start_cb, this);
     _nvt_pause_server = nh.advertiseService("/naviton/core/pause", &Naviton::pause_cb, this);
     _set_pause_client = nh.serviceClient<std_srvs::SetBool>("/safety_planner/set_pause");
+    _set_follow_client = nh.serviceClient<std_srvs::SetBool>("/dwa_planner/set_follow");
+    _set_safety_client = nh.serviceClient<std_srvs::SetBool>("/safety_planner/set_safety");
     _wpManager_set_client = nh.serviceClient<waypoint_manager_msgs::waypoint_manager_set>(service_wpManager_set);
     _nowWp_local_subscriber = nh.subscribe(topic_nowWp_local, 10, &Naviton::nowWp_local_cb, this);
 }
@@ -42,6 +44,12 @@ void Naviton::update()
                 srv.request.index = _nowWp_local.index + 1;
                 _wpManager_set_client.call(srv);
                 ROS_INFO("Next waypoint %d", (int)std::round(_nowWp_local.attributes.at(0).value));
+                {
+                    std_srvs::SetBool srv;
+                    srv.request.data = false;
+                    _set_follow_client.call(srv);
+                    _set_safety_client.call(srv);
+                }
                 break;
             case waypoint_msgs::waypoint_attribute::TYPE_SKIP:
                 srv.request.index = std::round(_nowWp_local.attributes.at(0).value);
@@ -59,6 +67,12 @@ void Naviton::update()
             }
             case waypoint_msgs::waypoint_attribute::TYPE_WP_FOLLOW:
                 ROS_INFO("Follow waypoints from %d", (int)std::round(_nowWp_local.attributes.at(0).value));
+                {
+                    std_srvs::SetBool srv;
+                    srv.request.data = true;
+                    _set_follow_client.call(srv);
+                    _set_safety_client.call(srv);
+                }
                 break;
             default:
                 break;
