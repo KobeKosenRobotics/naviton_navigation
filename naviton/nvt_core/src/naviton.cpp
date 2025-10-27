@@ -66,6 +66,8 @@ void Naviton::update()
                 break;
             }
             case waypoint_msgs::waypoint_attribute::TYPE_WP_FOLLOW:
+                srv.request.index = _nowWp_local.index + 1;
+                _wpManager_set_client.call(srv);
                 ROS_INFO("Follow waypoints from %d", (int)std::round(_nowWp_local.attributes.at(0).value));
                 {
                     std_srvs::SetBool srv;

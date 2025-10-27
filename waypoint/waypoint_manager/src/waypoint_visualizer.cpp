@@ -26,10 +26,6 @@ void WaypointVisualizer::waypoints_cb(waypoint_msgs::waypointsConstPtr msg)
         marker.header.frame_id = msg->header.frame_id;
         marker.header.stamp = ros::Time::now();
         marker.id = msg->waypoints[i].index;
-        marker.color.r = 0.0;
-        marker.color.g = 0.0;
-        marker.color.b = 0.0;
-        marker.color.a = 1.0; 
         marker.pose = msg->waypoints[i].pose.pose;
         marker.scale.x = _text_size;
         marker.scale.y = _text_size;
@@ -38,6 +34,42 @@ void WaypointVisualizer::waypoints_cb(waypoint_msgs::waypointsConstPtr msg)
         marker.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
         marker.action = visualization_msgs::Marker::ADD;
         marker.text = std::to_string(i);
+        switch (static_cast<int>(msg->waypoints[i].attributes[0].type))
+        {
+        case waypoint_msgs::waypoint_attribute::TYPE_NEXT_WAYPOINT:
+            marker.color.r = 0.0;
+            marker.color.g = 0.0;
+            marker.color.b = 0.0;
+            marker.color.a = 1.0; 
+            break;
+        case waypoint_msgs::waypoint_attribute::TYPE_SKIP:
+            marker.color.r = 0.5;
+            marker.color.g = 0.5;
+            marker.color.b = 0.5;
+            marker.color.a = 1.0; 
+            marker.text = std::to_string(i);
+            marker.text += "->";
+            marker.text += std::to_string(static_cast<int>(msg->waypoints[i].attributes[0].value));
+            break;
+        case waypoint_msgs::waypoint_attribute::TYPE_PAUSE:
+            marker.color.r = 1.0;
+            marker.color.g = 0.0;
+            marker.color.b = 0.0;
+            marker.color.a = 1.0; 
+            break;
+        case waypoint_msgs::waypoint_attribute::TYPE_WP_FOLLOW:
+            marker.color.r = 0.0;
+            marker.color.g = 0.0;
+            marker.color.b = 1.0;
+            marker.color.a = 1.0; 
+            break;
+        default:
+            marker.color.r = 0.0;
+            marker.color.g = 0.0;
+            marker.color.b = 0.0;
+            marker.color.a = 1.0; 
+            break;
+        }
         /*
         for(int j = 0; j < msg->waypoints[i].attributes.size() && j < msg->waypoints[i].attribute_values.size(); j++)
         {
