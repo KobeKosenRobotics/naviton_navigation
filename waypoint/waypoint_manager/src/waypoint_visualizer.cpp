@@ -34,6 +34,15 @@ void WaypointVisualizer::waypoints_cb(waypoint_msgs::waypointsConstPtr msg)
         marker.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
         marker.action = visualization_msgs::Marker::ADD;
         marker.text = std::to_string(i);
+        if(msg->waypoints[i].attributes.empty())
+        {
+            marker.color.r = 0.0;
+            marker.color.g = 0.0;
+            marker.color.b = 0.0;
+            marker.color.a = 1.0; 
+            markerArray.markers.push_back(marker);
+            continue;
+        }
         switch (static_cast<int>(msg->waypoints[i].attributes[0].type))
         {
         case waypoint_msgs::waypoint_attribute::TYPE_NEXT_WAYPOINT:
