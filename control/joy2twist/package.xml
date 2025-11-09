@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>joy2twist</name>
+  <version>0.0.1</version>
+  <description>Convert sensor_msgs/Joy to geometry_msgs/Twist</description>
+  <maintainer email="you@example.com">Your Name</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>rospy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+
+  <export/>
+</package>
